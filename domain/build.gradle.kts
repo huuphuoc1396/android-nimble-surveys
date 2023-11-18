@@ -10,7 +10,7 @@ java {
 
 dependencies {
 
-    implementation(Libs.Kotlin.COROUTINE_CORE)
+    implementation(Libs.Kotlin.COROUTINES_CORE)
     implementation(Libs.JAVAX_INJECT)
 
     testImplementation(Libs.JUNIT)

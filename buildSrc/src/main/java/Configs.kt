@@ -10,10 +10,6 @@ object Configs {
     const val MIN_SDK = 21
     const val TARGET_SDK = 34
 
-    const val VERSION_GRADLE = "8.1.3"
-    const val VERSION_KOTLIN = "1.9.10"
-    const val VERSION_COMPOSE_COMPILER = "1.5.3"
-
     const val ANDROID_JUNIT_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
     const val PROGUARD_FILE = "proguard-android-optimize.txt"

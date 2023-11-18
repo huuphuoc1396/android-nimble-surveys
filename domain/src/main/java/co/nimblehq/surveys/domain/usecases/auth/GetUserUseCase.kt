@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.di.IoDispatcher
+import co.nimblehq.surveys.domain.di.annotations.IoDispatcher
 import co.nimblehq.surveys.domain.errors.exceptions.CaughtException
 import co.nimblehq.surveys.domain.errors.mappers.ErrorMapper
 import co.nimblehq.surveys.domain.models.UserModel

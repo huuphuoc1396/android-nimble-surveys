@@ -1,4 +1,4 @@
-package co.nimblehq.surveys.domain.di
+package co.nimblehq.surveys.domain.di.annotations
 
 import javax.inject.Qualifier
 

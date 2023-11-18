@@ -7,7 +7,7 @@ sealed class NetworkCaughtException : CaughtException() {
     data object NoConnection : NetworkCaughtException()
 
     data class Server(
-        val code: String,
+        val code: Int,
         val serverMsg: String,
     ) : NetworkCaughtException()
 }

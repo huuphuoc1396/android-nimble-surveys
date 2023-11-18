@@ -1,6 +1,9 @@
 plugins {
     id(Plugins.ANDROID_APP)
     id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.KOTLIN_KAPT)
+    id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.HILT_ANDROID)
 }
 
 android {
@@ -48,13 +51,17 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Configs.VERSION_COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
 
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 }
 
@@ -67,11 +74,19 @@ dependencies {
     implementation(Libs.AndroidX.LIFECYCLE_RUNTIME_KTX)
     implementation(Libs.AndroidX.ACTIVITY_COMPOSE)
 
+    implementation(Libs.Hilt.ANDROID)
+    kapt(Libs.Hilt.COMPILER)
+
+    implementation(Libs.Kotlin.COROUTINES_ANDROID)
+
     implementation(platform(Libs.AndroidX.COMPOSE_BOM))
     implementation(Libs.AndroidX.COMPOSE_UI)
     implementation(Libs.AndroidX.COMPOSE_UI_GRAPHICS)
     implementation(Libs.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
     implementation(Libs.AndroidX.COMPOSE_MATERIAL3)
+
+    implementation(Libs.Hilt.ANDROID)
+    kapt(Libs.Hilt.COMPILER)
 
     implementation(Libs.TIMBER)
 
