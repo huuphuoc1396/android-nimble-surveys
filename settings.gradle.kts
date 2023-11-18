@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android-nimble-surveys"
+rootProject.name = "Android Nimble Surveys"
 include(":app")
-include(":domain")
 include(":data")
+include(":domain")
