@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "android-nimble-surveys"
 include(":app")
+include(":domain")
