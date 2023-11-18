@@ -7,3 +7,11 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    implementation(Libs.Kotlin.COROUTINE_CORE)
+    implementation(Libs.JAVAX_INJECT)
+
+    testImplementation(Libs.JUNIT)
+}

@@ -73,6 +73,8 @@ dependencies {
     implementation(Libs.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
     implementation(Libs.AndroidX.COMPOSE_MATERIAL3)
 
+    implementation(Libs.TIMBER)
+
     debugImplementation(Libs.AndroidX.COMPOSE_UI_TOOLING)
     debugImplementation(Libs.AndroidX.COMPOSE_UI_TEST_MANIFEST)
 

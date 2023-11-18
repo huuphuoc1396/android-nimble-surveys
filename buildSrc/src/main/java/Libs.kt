@@ -16,8 +16,15 @@ object Libs {
 
         const val TEST_JUNIT = "androidx.test.ext:junit:1.1.5"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.5.1"
-
     }
 
+    object Kotlin {
+        const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    }
+
+    const val TIMBER = "com.jakewharton.timber:timber:5.0.1"
+
     const val JUNIT = "junit:junit:4.13.2"
+
+    const val JAVAX_INJECT = "javax.inject:javax.inject:1"
 }
