@@ -10,8 +10,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://www.jitpack.io") }
     }
 }
 
-rootProject.name = "android-nimble-surveys"
+rootProject.name = "Android Nimble Surveys"
 include(":app")
+include(":data")
+include(":domain")

@@ -1,5 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.1.3" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
+    id(Plugins.ANDROID_APP) version Versions.GRADLE apply false
+    id(Plugins.ANDROID_LIB) version Versions.GRADLE apply false
+
+    id(Plugins.KOTLIN_ANDROID) version Versions.KOTLIN apply false
+    id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
+
+    id(Plugins.HILT_ANDROID) version Versions.HILT apply false
+
+    id(Plugins.GOOGLE_SERVICES) version Versions.GOOGLE_SERVICES apply false
+    id(Plugins.FIREBASE_CRASHLYTICS) version Versions.FIREBASE_CRASHLYTICS apply false
 }
