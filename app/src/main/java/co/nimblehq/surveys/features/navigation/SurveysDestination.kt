@@ -6,7 +6,7 @@ import androidx.navigation.navArgument
 
 const val KEY_ID = "id"
 
-sealed class Destination(
+sealed class SurveysDestination(
     val route: String = "",
 ) {
 
@@ -16,17 +16,17 @@ sealed class Destination(
 
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
-    data object Up : Destination()
+    data object Up : SurveysDestination()
 
-    data object Splash : Destination("splash")
+    data object Splash : SurveysDestination("splash")
 
-    data object Login : Destination("login")
+    data object Login : SurveysDestination("login")
 
-    data object Home : Destination("home")
+    data object Home : SurveysDestination("home")
 
-    data object ForgotPassword : Destination("forgot_password")
+    data object ForgotPassword : SurveysDestination("forgot_password")
 
-    data object SurveyDetail : Destination("survey_detail/{$KEY_ID}") {
+    data object SurveyDetail : SurveysDestination("survey_detail/{$KEY_ID}") {
 
         override val arguments = listOf(
             navArgument(KEY_ID) { type = NavType.StringType }
