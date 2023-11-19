@@ -5,6 +5,8 @@ object Versions {
     const val COMPOSE_COMPILER = "1.5.3"
     const val HILT = "2.48"
     const val HILT_NAV_COMPOSE = "1.1.0"
+    const val GOOGLE_SERVICES = "4.4.0"
+    const val FIREBASE_CRASHLYTICS = "2.9.9"
 
     const val CORE_KTX = "1.9.0"
     const val LIFECYCLE_RUNTIME_KTX = "2.6.2"
@@ -33,4 +35,6 @@ object Versions {
     const val LOGGING_INTERCEPTOR = "4.11.0"
 
     const val ACCOMPANIST = "0.31.5-beta"
+
+    const val FIREBASE_BOM = "32.6.0"
 }

@@ -11,4 +11,7 @@ object Plugins {
     const val JAVA_LIB = "java-library"
 
     const val HILT_ANDROID = "com.google.dagger.hilt.android"
+
+    const val GOOGLE_SERVICES = "com.google.gms.google-services"
+    const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
 }

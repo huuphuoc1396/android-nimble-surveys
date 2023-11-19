@@ -60,4 +60,10 @@ object Libs {
         const val SWIPE_REFRESH = "com.google.accompanist:accompanist-swiperefresh:${Versions.ACCOMPANIST}"
         const val SYSTEM_UI = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
     }
+
+    object Firebase {
+        const val BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
+        const val ANALYTICS = "com.google.firebase:firebase-analytics"
+        const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics"
+    }
 }

@@ -7,4 +7,7 @@ plugins {
     id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
 
     id(Plugins.HILT_ANDROID) version Versions.HILT apply false
+
+    id(Plugins.GOOGLE_SERVICES) version Versions.GOOGLE_SERVICES apply false
+    id(Plugins.FIREBASE_CRASHLYTICS) version Versions.FIREBASE_CRASHLYTICS apply false
 }

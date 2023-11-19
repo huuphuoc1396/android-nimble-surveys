@@ -4,6 +4,8 @@ plugins {
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
     id(Plugins.HILT_ANDROID)
+    id(Plugins.GOOGLE_SERVICES)
+    id(Plugins.FIREBASE_CRASHLYTICS)
 }
 
 android {
@@ -130,4 +132,8 @@ dependencies {
 
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
+
+    implementation(platform(Libs.Firebase.BOM))
+    implementation(Libs.Firebase.ANALYTICS)
+    implementation(Libs.Firebase.CRASHLYTICS)
 }
