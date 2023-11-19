@@ -44,6 +44,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "${JavaVersion.VERSION_17}"
+        freeCompilerArgs = listOf("-Xcontext-receivers")
     }
 
     buildFeatures {
@@ -83,9 +84,15 @@ dependencies {
     implementation(Libs.AndroidX.COMPOSE_UI)
     implementation(Libs.AndroidX.COMPOSE_UI_GRAPHICS)
     implementation(Libs.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
-    implementation(Libs.AndroidX.COMPOSE_MATERIAL3)
+    implementation(Libs.AndroidX.COMPOSE_MATERIAL)
+
+    implementation(Libs.Accompanist.INSETS)
+    implementation(Libs.Accompanist.PAGER)
+    implementation(Libs.Accompanist.SWIPE_REFRESH)
+    implementation(Libs.Accompanist.SYSTEM_UI)
 
     implementation(Libs.Hilt.ANDROID)
+    implementation(Libs.Hilt.NAV_COMPOSE)
     kapt(Libs.Hilt.COMPILER)
 
     implementation(Libs.TIMBER)

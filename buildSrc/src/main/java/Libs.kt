@@ -12,7 +12,8 @@ object Libs {
         const val COMPOSE_UI_TEST_JUNIT4 = "androidx.compose.ui:ui-test-junit4"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling"
         const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest"
-        const val COMPOSE_MATERIAL3 = "androidx.compose.material3:material3"
+        const val COMPOSE_MATERIAL = "androidx.compose.material:material"
+        const val NAV_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAV_COMPOSE}"
 
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
@@ -32,6 +33,7 @@ object Libs {
     object Hilt {
         const val ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
         const val COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT}"
+        const val NAV_COMPOSE = "androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAV_COMPOSE}"
     }
 
     object Moshi {
@@ -51,4 +53,11 @@ object Libs {
     }
 
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
+
+    object Accompanist {
+        const val INSETS = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"
+        const val PAGER = "com.google.accompanist:accompanist-pager:${Versions.ACCOMPANIST}"
+        const val SWIPE_REFRESH = "com.google.accompanist:accompanist-swiperefresh:${Versions.ACCOMPANIST}"
+        const val SYSTEM_UI = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
+    }
 }

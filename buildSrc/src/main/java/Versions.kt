@@ -4,12 +4,14 @@ object Versions {
     const val KOTLIN = "1.9.10"
     const val COMPOSE_COMPILER = "1.5.3"
     const val HILT = "2.48"
+    const val HILT_NAV_COMPOSE = "1.1.0"
 
     const val CORE_KTX = "1.9.0"
     const val LIFECYCLE_RUNTIME_KTX = "2.6.2"
     const val ACTIVITY_COMPOSE = "1.8.1"
 
     const val COMPOSE_BOM = "2023.03.00"
+    const val NAV_COMPOSE = "2.7.5"
 
     const val TEST_JUNIT = "1.1.5"
     const val TEST_ESPRESSO_CORE = "3.5.1"
@@ -29,4 +31,6 @@ object Versions {
     const val CHUCKER = "4.0.0"
 
     const val LOGGING_INTERCEPTOR = "4.11.0"
+
+    const val ACCOMPANIST = "0.31.5-beta"
 }
