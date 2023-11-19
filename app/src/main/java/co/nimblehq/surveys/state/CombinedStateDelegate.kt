@@ -92,7 +92,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
 
     override suspend fun CombinedStateDelegate<UiState, State, Event>.updateUiState(
         transform: (uiState: UiState, state: State) -> UiState
-    ) = updateUiState { uiState -> transform(uiState, internalState) }
+    ) = update { uiState -> transform(uiState, internalState) }
 
     /**
      * Subscription to changes in internal state with transformation
@@ -103,7 +103,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
         transform: (state: State, uiState: UiState) -> UiState,
     ): Job {
         return internalStateFlow.onEach { state ->
-            updateUiState { uiState -> transform(state, uiState) }
+            update { uiState -> transform(state, uiState) }
         }.launchIn(coroutineScope)
     }
 
@@ -113,7 +113,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
         transform: suspend (state: State, uiState: UiState, value: T) -> UiState
     ): Job {
         return internalStateFlow.combine(flow) { state, value -> transform(state, uiState, value) }
-            .onEach { newState -> updateUiState { _ -> newState } }
+            .onEach { newState -> update { _ -> newState } }
             .launchIn(coroutineScope)
     }
 
@@ -130,7 +130,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
                 value1,
                 value2
             )
-        }.onEach { newState -> updateUiState { _ -> newState } }
+        }.onEach { newState -> update { _ -> newState } }
             .launchIn(coroutineScope)
     }
 
@@ -154,7 +154,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
                 value2,
                 value3
             )
-        }.onEach { newState -> updateUiState { _ -> newState } }
+        }.onEach { newState -> update { _ -> newState } }
             .launchIn(coroutineScope)
     }
 
@@ -181,7 +181,7 @@ class CombinedStateDelegateImpl<UiState, State, Event>(
                 value3,
                 value4
             )
-        }.onEach { newState -> updateUiState { _ -> newState } }
+        }.onEach { newState -> update { _ -> newState } }
             .launchIn(coroutineScope)
     }
 }

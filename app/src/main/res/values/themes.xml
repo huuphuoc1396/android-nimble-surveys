@@ -4,6 +4,5 @@
     <style name="Theme.Surveys" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/background</item>
     </style>
 </resources>

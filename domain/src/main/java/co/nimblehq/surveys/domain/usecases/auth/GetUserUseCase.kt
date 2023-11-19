@@ -3,6 +3,7 @@ package co.nimblehq.surveys.domain.usecases.auth
 import co.nimblehq.surveys.domain.di.annotations.IoDispatcher
 import co.nimblehq.surveys.domain.errors.exceptions.CaughtException
 import co.nimblehq.surveys.domain.errors.mappers.ErrorMapper
+import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.models.UserModel
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.usecases.EmptyParams
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.Flow
 class GetUserUseCase constructor(
     private val authRepository: AuthRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher,
-) : StreamUseCase<EmptyParams, UserModel>(dispatcher) {
+    remoteErrorMapper: RemoteErrorMapper,
+) : StreamUseCase<EmptyParams, UserModel>(dispatcher, remoteErrorMapper) {
 
     override suspend fun execute(
         params: EmptyParams,

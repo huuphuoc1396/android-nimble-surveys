@@ -1,14 +1,13 @@
 package co.nimblehq.surveys.features.splash
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import co.nimblehq.surveys.extensions.launch
 import co.nimblehq.surveys.features.splash.SplashViewModel.Event
 import co.nimblehq.surveys.features.splash.SplashViewModel.UiState
 import co.nimblehq.surveys.state.UiStateDelegate
 import co.nimblehq.surveys.state.UiStateDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +31,7 @@ class SplashViewModel @Inject constructor() :
     }
 
     private fun initSplash() {
-        viewModelScope.launch {
+        launch {
             delay(SPLASH_DELAY)
             sendEvent(Event.GoToLogin)
         }

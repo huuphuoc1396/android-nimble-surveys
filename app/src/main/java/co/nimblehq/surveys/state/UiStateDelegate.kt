@@ -37,14 +37,14 @@ interface UiStateDelegate<UiState, Event> {
      *
      * @param transform  - function to transform UI state.
      */
-    suspend fun UiStateDelegate<UiState, Event>.updateUiState(
+    suspend fun UiStateDelegate<UiState, Event>.update(
         transform: (uiState: UiState) -> UiState,
     )
 
     /**
      * Changing the state without blocking the coroutine.
      */
-    fun UiStateDelegate<UiState, Event>.asyncUpdateUiState(
+    fun UiStateDelegate<UiState, Event>.asyncUpdate(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job
@@ -82,7 +82,7 @@ class UiStateDelegateImpl<UiState, Event>(
     override val singleEvents: Flow<Event>
         get() = singleEventsChannel.receiveAsFlow()
 
-    override suspend fun UiStateDelegate<UiState, Event>.updateUiState(
+    override suspend fun UiStateDelegate<UiState, Event>.update(
         transform: (uiState: UiState) -> UiState,
     ) {
         mutexState.withLock {
@@ -94,12 +94,12 @@ class UiStateDelegateImpl<UiState, Event>(
         singleEventsChannel.send(event)
     }
 
-    override fun UiStateDelegate<UiState, Event>.asyncUpdateUiState(
+    override fun UiStateDelegate<UiState, Event>.asyncUpdate(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job {
         return coroutineScope.launch {
-            updateUiState { state -> transform(state) }
+            update { state -> transform(state) }
         }
     }
 }
