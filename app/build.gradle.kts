@@ -98,6 +98,7 @@ dependencies {
 
     implementation(Libs.AndroidX.CORE_KTX)
     implementation(Libs.AndroidX.LIFECYCLE_RUNTIME_KTX)
+    implementation(Libs.AndroidX.LIFECYCLE_RUNTIME_COMPOSE)
     implementation(Libs.AndroidX.ACTIVITY_COMPOSE)
 
     implementation(Libs.Hilt.ANDROID)
