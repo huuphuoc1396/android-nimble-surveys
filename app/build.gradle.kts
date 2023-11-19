@@ -23,18 +23,38 @@ android {
         }
     }
 
+    signingConfigs {
+        getByName(Builds.Debug.name) {
+            storeFile = file("../debug.keystore")
+            storePassword = "qv1HnZCp"
+            keyAlias = "nimble-surveys"
+            keyPassword = "qv1HnZCp"
+        }
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = BuildTypes.Release.isMinifyEnabled
-            isShrinkResources = BuildTypes.Release.isShrinkResources
+        getByName(Builds.Release.name) {
+            isMinifyEnabled = Builds.Release.isMinifyEnabled
+            isShrinkResources = Builds.Release.isShrinkResources
+            signingConfig = signingConfigs[Builds.Debug.name]
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
 
-        debug {
-            isMinifyEnabled = BuildTypes.Debug.isMinifyEnabled
-            isShrinkResources = BuildTypes.Debug.isShrinkResources
+        getByName(Builds.Debug.name) {
+            isMinifyEnabled = Builds.Debug.isMinifyEnabled
+            isShrinkResources = Builds.Debug.isShrinkResources
+            signingConfig = signingConfigs[Builds.Debug.name]
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
+    }
+
+    flavorDimensions += Builds.SHARED_DIMENSION
+    productFlavors {
+        create(Builds.Flavors.DEV) {
+            applicationIdSuffix = ".${Builds.Flavors.DEV}"
+        }
+
+        create(Builds.Flavors.PROD) {}
     }
 
     compileOptions {
@@ -44,7 +64,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "${JavaVersion.VERSION_17}"
-        freeCompilerArgs = listOf("-Xcontext-receivers")
+        freeCompilerArgs = listOf(
+            "-Xcontext-receivers",
+            "-Xstring-concat=inline",
+        )
     }
 
     buildFeatures {

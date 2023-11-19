@@ -16,13 +16,20 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = BuildTypes.Release.isMinifyEnabled
+            isMinifyEnabled = Builds.Release.isMinifyEnabled
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
 
         debug {
-            isMinifyEnabled = BuildTypes.Debug.isMinifyEnabled
+            isMinifyEnabled = Builds.Debug.isMinifyEnabled
         }
+    }
+
+    flavorDimensions += Builds.SHARED_DIMENSION
+    productFlavors {
+        create(Builds.Flavors.DEV) {}
+
+        create(Builds.Flavors.PROD) {}
     }
 
     compileOptions {
@@ -32,6 +39,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "${JavaVersion.VERSION_17}"
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline",
+        )
     }
 }
 
