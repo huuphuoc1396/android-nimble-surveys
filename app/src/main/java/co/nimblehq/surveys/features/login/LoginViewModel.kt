@@ -32,11 +32,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onEmailChanged(email: String) {
-        asyncUpdate(viewModelScope) { state -> state.copy(email = email) }
+        reduceAsync(viewModelScope) { state -> state.copy(email = email) }
     }
 
     fun onPasswordChanged(password: String) {
-        asyncUpdate(viewModelScope) { state -> state.copy(password = password) }
+        reduceAsync(viewModelScope) { state -> state.copy(password = password) }
     }
 
     fun onLoginClick() {
@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
                 password = uiState.password,
             )
             val isLoggedIn = loginUseCase(loginParams)
-                .onFailure(::handleFailure)
+                .onFailure { error -> sendError(error) }
                 .getOrNull()
             if (isLoggedIn == true) {
                 sendEvent(Event.GoToHome)

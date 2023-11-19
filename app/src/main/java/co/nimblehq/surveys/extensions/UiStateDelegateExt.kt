@@ -36,3 +36,16 @@ fun <State, Event> UiStateDelegate<State, Event>.collectEventEffect(
         minActiveState = lifecycleState,
     ).collect(collector)
 }
+
+@Composable
+fun UiStateDelegate<*, *>.collectErrorEffect(
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
+    lifecycleState: Lifecycle.State = Lifecycle.State.RESUMED,
+    vararg keys: Any?,
+    collector: FlowCollector<Throwable>,
+) = LaunchedEffect(Unit, *keys) {
+    error.flowWithLifecycle(
+        lifecycle = lifecycleOwner.lifecycle,
+        minActiveState = lifecycleState,
+    ).collect(collector)
+}

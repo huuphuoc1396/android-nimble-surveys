@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,7 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.R
+import co.nimblehq.surveys.extensions.collectErrorEffect
 import co.nimblehq.surveys.extensions.collectEventEffect
+import co.nimblehq.surveys.features.error.showToast
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
@@ -38,6 +41,11 @@ fun SplashScreen(
                 }
             }
         }
+    }
+
+    val context = LocalContext.current
+    viewModel.collectErrorEffect { throwable ->
+        throwable.showToast(context)
     }
 
     SplashContent()

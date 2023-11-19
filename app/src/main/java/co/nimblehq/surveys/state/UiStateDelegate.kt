@@ -27,7 +27,7 @@ interface UiStateDelegate<UiState, Event> {
 
     val isLoading: StateFlow<Boolean>
 
-    val error: StateFlow<Throwable?>
+    val error: Flow<Throwable>
 
     /**
      * State is read-only
@@ -41,14 +41,14 @@ interface UiStateDelegate<UiState, Event> {
      *
      * @param transform  - function to transform UI state.
      */
-    suspend fun UiStateDelegate<UiState, Event>.update(
+    suspend fun UiStateDelegate<UiState, Event>.reduce(
         transform: (uiState: UiState) -> UiState,
     )
 
     /**
      * Changing the state without blocking the coroutine.
      */
-    fun UiStateDelegate<UiState, Event>.asyncUpdate(
+    fun UiStateDelegate<UiState, Event>.reduceAsync(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job
@@ -59,7 +59,7 @@ interface UiStateDelegate<UiState, Event> {
 
     fun hideLoading()
 
-    fun handleFailure(throwable: Throwable)
+    suspend fun sendError(error: Throwable)
 }
 
 /**
@@ -73,15 +73,13 @@ interface UiStateDelegate<UiState, Event> {
 class UiStateDelegateImpl<UiState, Event>(
     initialUiState: UiState,
     singleLiveEventCapacity: Int = Channel.BUFFERED,
-    private val mutexState: Mutex = Mutex()
+    private val mutexState: Mutex = Mutex(),
 ) : UiStateDelegate<UiState, Event> {
 
     /**
      * The source of truth that drives our app.
      */
     private val _uiState = MutableStateFlow(initialUiState)
-    private val _isLoading = MutableStateFlow(false)
-    private val _error = MutableStateFlow<Throwable?>(null)
 
     override val uiStateFlow: StateFlow<UiState>
         get() = _uiState.asStateFlow()
@@ -94,13 +92,17 @@ class UiStateDelegateImpl<UiState, Event>(
     override val singleEvents: Flow<Event>
         get() = singleEventsChannel.receiveAsFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+
     override val isLoading: StateFlow<Boolean>
         get() = _isLoading
 
-    override val error: StateFlow<Throwable?>
-        get() = _error
+    private val _errorChannel = Channel<Throwable>(singleLiveEventCapacity)
 
-    override suspend fun UiStateDelegate<UiState, Event>.update(
+    override val error: Flow<Throwable>
+        get() = _errorChannel.receiveAsFlow()
+
+    override suspend fun UiStateDelegate<UiState, Event>.reduce(
         transform: (uiState: UiState) -> UiState,
     ) {
         mutexState.withLock {
@@ -112,12 +114,12 @@ class UiStateDelegateImpl<UiState, Event>(
         singleEventsChannel.send(event)
     }
 
-    override fun UiStateDelegate<UiState, Event>.asyncUpdate(
+    override fun UiStateDelegate<UiState, Event>.reduceAsync(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job {
         return coroutineScope.launch {
-            update { state -> transform(state) }
+            reduce { state -> transform(state) }
         }
     }
 
@@ -129,7 +131,7 @@ class UiStateDelegateImpl<UiState, Event>(
         _isLoading.value = false
     }
 
-    override fun handleFailure(throwable: Throwable) {
-        _error.value = throwable
+    override suspend fun sendError(error: Throwable) {
+        _errorChannel.send(error)
     }
 }

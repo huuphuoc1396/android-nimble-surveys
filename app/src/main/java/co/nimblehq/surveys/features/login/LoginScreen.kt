@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,11 +38,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.R
+import co.nimblehq.surveys.extensions.collectErrorEffect
 import co.nimblehq.surveys.extensions.collectEventEffect
 import co.nimblehq.surveys.extensions.collectLoadingWithLifecycle
 import co.nimblehq.surveys.extensions.collectUiStateWithLifecycle
 import co.nimblehq.surveys.features.components.CustomTextField
 import co.nimblehq.surveys.features.components.LoadingContent
+import co.nimblehq.surveys.features.error.showToast
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
@@ -65,8 +68,13 @@ fun LoginScreen(
         }
     }
 
+    val context = LocalContext.current
+    viewModel.collectErrorEffect { throwable ->
+        throwable.showToast(context)
+    }
+
     val isLoading by viewModel.collectLoadingWithLifecycle()
-    LoadingContent(isLoading = isLoading) {
+    LoadingContent(isLoading) {
         LoginContent(viewModel)
     }
 }

@@ -14,8 +14,8 @@ import co.nimblehq.surveys.ui.theme.SandyBrown
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoadingContent(
-    modifier: Modifier = Modifier,
     isLoading: Boolean,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
