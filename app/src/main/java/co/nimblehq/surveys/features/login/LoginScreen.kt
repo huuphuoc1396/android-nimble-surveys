@@ -12,31 +12,34 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.R
-import co.nimblehq.surveys.extensions.uistate.collectEvent
-import co.nimblehq.surveys.extensions.uistate.collectWithLifecycle
+import co.nimblehq.surveys.extensions.collectEventEffect
+import co.nimblehq.surveys.extensions.collectLoadingWithLifecycle
+import co.nimblehq.surveys.extensions.collectUiStateWithLifecycle
 import co.nimblehq.surveys.features.components.CustomTextField
 import co.nimblehq.surveys.features.components.LoadingContent
 import co.nimblehq.surveys.features.navigation.AppDestination
@@ -46,37 +49,34 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 @Composable
 fun LoginScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: LoginViewModel = hiltViewModel(),
-    lifecycle: LifecycleOwner = LocalLifecycleOwner.current
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.collectWithLifecycle()
-    LaunchedEffect(key1 = Unit) {
-        viewModel.collectEvent(lifecycle) { event ->
-            when (event) {
-                LoginViewModel.Event.GoToHome -> {
-                    navController.navigate(AppDestination.Home) {
-                        popUpTo(AppDestination.Login.route) { inclusive = true }
-                    }
+    viewModel.collectEventEffect { event ->
+        when (event) {
+            LoginViewModel.Event.GoToHome -> {
+                navController.navigate(AppDestination.Home) {
+                    popUpTo(AppDestination.Login.route) { inclusive = true }
                 }
+            }
 
-                LoginViewModel.Event.GoToForgotPassword -> {
-                    navController.navigate(AppDestination.ForgotPassword)
-                }
+            LoginViewModel.Event.GoToForgotPassword -> {
+                navController.navigate(AppDestination.ForgotPassword)
             }
         }
     }
 
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val isLoading by viewModel.collectLoadingWithLifecycle()
     LoadingContent(isLoading = isLoading) {
-        LoginContent(uiState, viewModel)
+        LoginContent(viewModel)
     }
 }
 
 @Composable
 private fun LoginContent(
-    uiState: LoginViewModel.UiState,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
 ) {
+    val uiState by viewModel.collectUiStateWithLifecycle()
+    val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
             .statusBarsPadding()
@@ -104,6 +104,10 @@ private fun LoginContent(
                 hint = stringResource(R.string.email),
                 value = uiState.email,
                 onValueChange = viewModel::onEmailChanged,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
             )
             Spacer(modifier = Modifier.size(20.dp))
             Box(
@@ -113,6 +117,14 @@ private fun LoginContent(
                     hint = stringResource(R.string.password),
                     value = uiState.password,
                     onValueChange = viewModel::onPasswordChanged,
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Go,
+                    ),
+                    keyboardActions = KeyboardActions(onGo = {
+                        viewModel.onLoginClick()
+                    })
                 )
                 TextButton(
                     onClick = viewModel::onForgotClick,

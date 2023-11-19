@@ -5,19 +5,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.R
-import co.nimblehq.surveys.extensions.uistate.collectEvent
+import co.nimblehq.surveys.extensions.collectEventEffect
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
@@ -26,25 +23,28 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 fun SplashScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: SplashViewModel = hiltViewModel(),
-    lifecycle: LifecycleOwner = LocalLifecycleOwner.current
 ) {
-    LaunchedEffect(key1 = Unit) {
-        viewModel.collectEvent(lifecycle) { event ->
-            when (event) {
-                SplashViewModel.Event.GoToHome -> {
-                    navController.navigate(AppDestination.Home) {
-                        popUpTo(AppDestination.Splash.route) { inclusive = true }
-                    }
+    viewModel.collectEventEffect { event ->
+        when (event) {
+            SplashViewModel.Event.GoToHome -> {
+                navController.navigate(AppDestination.Home) {
+                    popUpTo(AppDestination.Splash.route) { inclusive = true }
                 }
+            }
 
-                SplashViewModel.Event.GoToLogin -> {
-                    navController.navigate(AppDestination.Login) {
-                        popUpTo(AppDestination.Splash.route) { inclusive = true }
-                    }
+            SplashViewModel.Event.GoToLogin -> {
+                navController.navigate(AppDestination.Login) {
+                    popUpTo(AppDestination.Splash.route) { inclusive = true }
                 }
             }
         }
     }
+
+    SplashContent()
+}
+
+@Composable
+private fun SplashContent() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

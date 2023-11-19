@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import co.nimblehq.surveys.ui.theme.SaddleBrown
+import co.nimblehq.surveys.ui.theme.SandyBrown
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -38,7 +38,7 @@ fun Loading(modifier: Modifier = Modifier) {
             .wrapContentSize(Alignment.Center)
     ) {
         CircularProgressIndicator(
-            color = SaddleBrown
+            color = SandyBrown
         )
     }
 }
