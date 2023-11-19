@@ -18,7 +18,6 @@ class LoginViewModel @Inject constructor(
     UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
 
     data class UiState(
-        val isLoading: Boolean = false,
         val email: String = "",
         val password: String = "",
     ) {
@@ -41,22 +40,23 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginClick() {
-        launch {
-            update { state -> state.copy(isLoading = true) }
+        launch(loading = this) {
             val loginParams = LoginUseCase.Params(
                 email = uiState.email,
                 password = uiState.password,
             )
-            val isLoggedIn = loginUseCase(loginParams).getOrNull()
+            val isLoggedIn = loginUseCase(loginParams)
+                .onFailure(::handleFailure)
+                .getOrNull()
             if (isLoggedIn == true) {
                 sendEvent(Event.GoToHome)
             }
-        }.invokeOnCompletion {
-            asyncUpdate(viewModelScope) { state -> state.copy(isLoading = false) }
         }
     }
 
     fun onForgotClick() {
-        launch { sendEvent(Event.GoToForgotPassword) }
+        launch {
+            sendEvent(Event.GoToForgotPassword)
+        }
     }
 }

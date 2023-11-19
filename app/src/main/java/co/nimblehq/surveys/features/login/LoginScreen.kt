@@ -31,12 +31,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.R
 import co.nimblehq.surveys.extensions.uistate.collectEvent
 import co.nimblehq.surveys.extensions.uistate.collectWithLifecycle
 import co.nimblehq.surveys.features.components.CustomTextField
+import co.nimblehq.surveys.features.components.LoadingContent
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
@@ -48,7 +50,6 @@ fun LoginScreen(
     lifecycle: LifecycleOwner = LocalLifecycleOwner.current
 ) {
     val uiState by viewModel.collectWithLifecycle()
-
     LaunchedEffect(key1 = Unit) {
         viewModel.collectEvent(lifecycle) { event ->
             when (event) {
@@ -65,6 +66,17 @@ fun LoginScreen(
         }
     }
 
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    LoadingContent(isLoading = isLoading) {
+        LoginContent(uiState, viewModel)
+    }
+}
+
+@Composable
+private fun LoginContent(
+    uiState: LoginViewModel.UiState,
+    viewModel: LoginViewModel
+) {
     Box(
         modifier = Modifier
             .statusBarsPadding()

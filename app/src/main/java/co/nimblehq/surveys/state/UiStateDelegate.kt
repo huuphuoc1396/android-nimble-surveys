@@ -25,6 +25,10 @@ interface UiStateDelegate<UiState, Event> {
 
     val singleEvents: Flow<Event>
 
+    val isLoading: StateFlow<Boolean>
+
+    val error: StateFlow<Throwable?>
+
     /**
      * State is read-only
      * The only way to change the state is to emit[reduce] an action,
@@ -50,6 +54,12 @@ interface UiStateDelegate<UiState, Event> {
     ): Job
 
     suspend fun UiStateDelegate<UiState, Event>.sendEvent(event: Event)
+
+    fun showLoading()
+
+    fun hideLoading()
+
+    fun handleFailure(throwable: Throwable)
 }
 
 /**
@@ -69,24 +79,32 @@ class UiStateDelegateImpl<UiState, Event>(
     /**
      * The source of truth that drives our app.
      */
-    private val uiMutableStateFlow = MutableStateFlow(initialUiState)
+    private val _uiState = MutableStateFlow(initialUiState)
+    private val _isLoading = MutableStateFlow(false)
+    private val _error = MutableStateFlow<Throwable?>(null)
 
     override val uiStateFlow: StateFlow<UiState>
-        get() = uiMutableStateFlow.asStateFlow()
+        get() = _uiState.asStateFlow()
 
     override val UiStateDelegate<UiState, Event>.uiState: UiState
-        get() = uiMutableStateFlow.value
+        get() = _uiState.value
 
     private val singleEventsChannel = Channel<Event>(singleLiveEventCapacity)
 
     override val singleEvents: Flow<Event>
         get() = singleEventsChannel.receiveAsFlow()
 
+    override val isLoading: StateFlow<Boolean>
+        get() = _isLoading
+
+    override val error: StateFlow<Throwable?>
+        get() = _error
+
     override suspend fun UiStateDelegate<UiState, Event>.update(
         transform: (uiState: UiState) -> UiState,
     ) {
         mutexState.withLock {
-            uiMutableStateFlow.emit(transform(uiState))
+            _uiState.emit(transform(uiState))
         }
     }
 
@@ -101,5 +119,17 @@ class UiStateDelegateImpl<UiState, Event>(
         return coroutineScope.launch {
             update { state -> transform(state) }
         }
+    }
+
+    override fun showLoading() {
+        _isLoading.value = true
+    }
+
+    override fun hideLoading() {
+        _isLoading.value = false
+    }
+
+    override fun handleFailure(throwable: Throwable) {
+        _error.value = throwable
     }
 }
