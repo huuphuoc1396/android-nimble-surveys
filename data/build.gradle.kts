@@ -47,6 +47,12 @@ android {
             "-Xstring-concat=inline",
         )
     }
+
+    externalNativeBuild {
+        cmake {
+            path = File("cpp/CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
