@@ -10,4 +10,6 @@ interface AuthRepository {
     suspend fun logout()
 
     fun getUser(): Flow<UserModel>
+
+    fun isLoggedIn(): Flow<Boolean>
 }

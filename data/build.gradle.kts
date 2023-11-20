@@ -60,6 +60,7 @@ dependencies {
     implementation(project(Modules.DOMAIN))
 
     implementation(Libs.AndroidX.CORE_KTX)
+    implementation(Libs.AndroidX.SECURITY_CRYPTO)
 
     implementation(Libs.Hilt.ANDROID)
     kapt(Libs.Hilt.COMPILER)
@@ -83,4 +84,7 @@ dependencies {
     testImplementation(Libs.JUNIT)
 
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
+
+    implementation(Libs.Datastore.SECURITY_DATASTORE)
+    implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
 }
