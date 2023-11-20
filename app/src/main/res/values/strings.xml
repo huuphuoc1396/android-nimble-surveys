@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Nimble Surveys</string>
+    <string name="app_name">Surveys</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_question">Forgot?</string>
+    <string name="login">Login</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="no_connection">No internet connection</string>
 </resources>

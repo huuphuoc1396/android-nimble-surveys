@@ -15,21 +15,25 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName(Builds.Release.name) {
             isMinifyEnabled = Builds.Release.isMinifyEnabled
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
 
-        debug {
+        getByName(Builds.Debug.name) {
             isMinifyEnabled = Builds.Debug.isMinifyEnabled
         }
     }
 
     flavorDimensions += Builds.SHARED_DIMENSION
     productFlavors {
-        create(Builds.Flavors.DEV) {}
+        create(Builds.Flavors.DEV) {
+            buildConfigField("String", "BASE_API_URL", "\"https://survey-api-staging.nimblehq.co\"")
+        }
 
-        create(Builds.Flavors.PROD) {}
+        create(Builds.Flavors.PROD) {
+            buildConfigField("String", "BASE_API_URL", "\"https://survey-api.nimblehq.co\"")
+        }
     }
 
     compileOptions {
@@ -43,6 +47,12 @@ android {
             "-Xstring-concat=inline",
         )
     }
+
+    externalNativeBuild {
+        cmake {
+            path = File("cpp/CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
@@ -50,6 +60,7 @@ dependencies {
     implementation(project(Modules.DOMAIN))
 
     implementation(Libs.AndroidX.CORE_KTX)
+    implementation(Libs.AndroidX.SECURITY_CRYPTO)
 
     implementation(Libs.Hilt.ANDROID)
     kapt(Libs.Hilt.COMPILER)
@@ -73,4 +84,7 @@ dependencies {
     testImplementation(Libs.JUNIT)
 
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
+
+    implementation(Libs.Datastore.SECURITY_DATASTORE)
+    implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
 }

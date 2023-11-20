@@ -1,9 +1,12 @@
 package co.nimblehq.surveys.features.survey.detail
 
 import androidx.compose.runtime.Composable
-import co.nimblehq.surveys.features.navigation.SurveysDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun SurveyDetailScreen(navigator: (destination: SurveysDestination) -> Unit, id: String) {
+fun SurveyDetailScreen(
+    navController: NavHostController = rememberNavController(),
+) {
     TODO("Not yet implemented")
 }

@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class StreamUseCase<in P, out R>(
     private val dispatcher: CoroutineDispatcher,
+    private val errorMapper: ErrorMapper<CaughtException>,
 ) : UseCase<P, Flow<R>> {
 
     suspend operator fun invoke(
         params: P,
-        errorMapper: ErrorMapper<CaughtException>,
     ): Flow<Result<R>> {
         return execute(
             params = params,

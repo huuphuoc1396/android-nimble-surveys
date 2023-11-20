@@ -7,11 +7,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 abstract class SingleUseCase<in P, out R>(
     private val dispatcher: CoroutineDispatcher,
+    private val errorMapper: ErrorMapper<CaughtException>,
 ) : UseCase<P, R> {
 
     suspend operator fun invoke(
         params: P,
-        errorMapper: ErrorMapper<CaughtException>,
     ): Result<R> {
         return safeSuspend(
             errorMapper = errorMapper,

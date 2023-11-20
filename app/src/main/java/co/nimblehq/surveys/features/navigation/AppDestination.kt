@@ -4,11 +4,13 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
-const val KEY_ID = "id"
-
-sealed class SurveysDestination(
+sealed class AppDestination(
     val route: String = "",
 ) {
+
+    companion object {
+        const val KEY_ID = "id"
+    }
 
     open val arguments: List<NamedNavArgument> = emptyList()
 
@@ -16,24 +18,24 @@ sealed class SurveysDestination(
 
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
-    data object Up : SurveysDestination()
+    data object Up : AppDestination()
 
-    data object Splash : SurveysDestination("splash")
+    data object Splash : AppDestination("splash")
 
-    data object Login : SurveysDestination("login")
+    data object Login : AppDestination("login")
 
-    data object Home : SurveysDestination("home")
+    data object Home : AppDestination("home")
 
-    data object ForgotPassword : SurveysDestination("forgot_password")
+    data object ForgotPassword : AppDestination("forgot_password")
 
-    data object SurveyDetail : SurveysDestination("survey_detail/{$KEY_ID}") {
+    data object SurveyDetail : AppDestination("survey_detail/{$KEY_ID}") {
 
         override val arguments = listOf(
             navArgument(KEY_ID) { type = NavType.StringType }
         )
 
         fun createRoute(id: String) = apply {
-            destination = "second/$id"
+            destination = "survey_detail/$id"
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,49 +16,40 @@ import co.nimblehq.surveys.features.splash.SplashScreen
 import co.nimblehq.surveys.features.survey.detail.SurveyDetailScreen
 
 @Composable
-fun SurveysNavHost(
+fun AppNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = SurveysDestination.Splash.destination
+    startDestination: String = AppDestination.Splash.destination
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(destination = SurveysDestination.Splash) {
-            SplashScreen(navigator = { destination ->
-                navController.navigate(destination, destination.parcelableArgument)
-            })
+        composable(destination = AppDestination.Splash) {
+            SplashScreen(navController = navController)
         }
 
-        composable(destination = SurveysDestination.Login) {
-            LoginScreen(navigator = { destination ->
-                navController.navigate(destination, destination.parcelableArgument)
-            })
+        composable(destination = AppDestination.Login) {
+            LoginScreen(navController = navController)
         }
 
-        composable(destination = SurveysDestination.ForgotPassword) {
-            ForgotPasswordScreen(navigator = { destination ->
-                navController.navigate(destination, destination.parcelableArgument)
-            })
+        composable(destination = AppDestination.ForgotPassword) {
+            ForgotPasswordScreen(navController = navController)
         }
 
-        composable(destination = SurveysDestination.Home) {
-            HomeScreen(navigator = { destination ->
-                navController.navigate(destination, destination.parcelableArgument)
-            })
+        composable(destination = AppDestination.Home) {
+            HomeScreen(navController = navController)
         }
 
-        composable(destination = SurveysDestination.SurveyDetail) { backStackEntry ->
+        composable(destination = AppDestination.SurveyDetail) { backStackEntry ->
             SurveyDetailScreen(
-                navigator = { destination -> navController.navigate(destination) },
-                id = backStackEntry.arguments?.getString(KEY_ID).orEmpty()
+                navController = navController,
             )
         }
     }
 }
 
 private fun NavGraphBuilder.composable(
-    destination: SurveysDestination,
+    destination: AppDestination,
     deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
@@ -70,22 +62,25 @@ private fun NavGraphBuilder.composable(
 }
 
 /**
- * Navigate to provided [SurveysDestination] with a Pair of key value String and Data [parcel]
+ * Navigate to provided [AppDestination] with a Pair of key value String and Data [parcel]
  * Caution to use this method. This method use savedStateHandle to store the Parcelable data.
  * When previousBackstackEntry is popped out from navigation stack, savedStateHandle will return null and cannot retrieve data.
  * eg.Login -> Home, the Login screen will be popped from the back-stack on logging in successfully.
  */
-private fun NavHostController.navigate(
-    destination: SurveysDestination,
-    parcel: Pair<String, Any?>? = null,
+fun NavHostController.navigate(
+    destination: AppDestination,
+    builder: NavOptionsBuilder.() -> Unit = {},
 ) {
     when (destination) {
-        is SurveysDestination.Up -> navigateUp()
+        is AppDestination.Up -> navigateUp()
         else -> {
-            parcel?.let { (key, value) ->
+            destination.parcelableArgument.let { (key, value) ->
                 currentBackStackEntry?.savedStateHandle?.set(key, value)
             }
-            navigate(route = destination.destination)
+            navigate(
+                route = destination.destination,
+                builder = builder,
+            )
         }
     }
 }

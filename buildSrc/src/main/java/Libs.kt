@@ -5,6 +5,7 @@ object Libs {
         const val LIFECYCLE_RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME_KTX}"
         const val LIFECYCLE_RUNTIME_COMPOSE = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.LIFECYCLE_RUNTIME_KTX}"
         const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
+        const val SECURITY_CRYPTO = "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}"
 
         const val COMPOSE_BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
         const val COMPOSE_UI = "androidx.compose.ui:ui"
@@ -66,5 +67,10 @@ object Libs {
         const val BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
         const val ANALYTICS = "com.google.firebase:firebase-analytics"
         const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics"
+    }
+
+    object Datastore{
+       const val SECURITY_DATASTORE = "io.github.osipxd:security-crypto-datastore:${Versions.SECURITY_DATASTORE}"
+       const val SECURITY_DATASTORE_PREFERENCES = "io.github.osipxd:security-crypto-datastore-preferences:${Versions.SECURITY_DATASTORE}"
     }
 }

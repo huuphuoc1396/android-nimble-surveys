@@ -25,6 +25,10 @@ interface UiStateDelegate<UiState, Event> {
 
     val singleEvents: Flow<Event>
 
+    val isLoading: StateFlow<Boolean>
+
+    val error: Flow<Throwable>
+
     /**
      * State is read-only
      * The only way to change the state is to emit[reduce] an action,
@@ -37,19 +41,25 @@ interface UiStateDelegate<UiState, Event> {
      *
      * @param transform  - function to transform UI state.
      */
-    suspend fun UiStateDelegate<UiState, Event>.updateUiState(
+    suspend fun UiStateDelegate<UiState, Event>.reduce(
         transform: (uiState: UiState) -> UiState,
     )
 
     /**
      * Changing the state without blocking the coroutine.
      */
-    fun UiStateDelegate<UiState, Event>.asyncUpdateUiState(
+    fun UiStateDelegate<UiState, Event>.reduceAsync(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job
 
     suspend fun UiStateDelegate<UiState, Event>.sendEvent(event: Event)
+
+    fun showLoading()
+
+    fun hideLoading()
+
+    suspend fun sendError(error: Throwable)
 }
 
 /**
@@ -63,30 +73,40 @@ interface UiStateDelegate<UiState, Event> {
 class UiStateDelegateImpl<UiState, Event>(
     initialUiState: UiState,
     singleLiveEventCapacity: Int = Channel.BUFFERED,
-    private val mutexState: Mutex = Mutex()
+    private val mutexState: Mutex = Mutex(),
 ) : UiStateDelegate<UiState, Event> {
 
     /**
      * The source of truth that drives our app.
      */
-    private val uiMutableStateFlow = MutableStateFlow(initialUiState)
+    private val _uiState = MutableStateFlow(initialUiState)
 
     override val uiStateFlow: StateFlow<UiState>
-        get() = uiMutableStateFlow.asStateFlow()
+        get() = _uiState.asStateFlow()
 
     override val UiStateDelegate<UiState, Event>.uiState: UiState
-        get() = uiMutableStateFlow.value
+        get() = _uiState.value
 
     private val singleEventsChannel = Channel<Event>(singleLiveEventCapacity)
 
     override val singleEvents: Flow<Event>
         get() = singleEventsChannel.receiveAsFlow()
 
-    override suspend fun UiStateDelegate<UiState, Event>.updateUiState(
+    private val _isLoading = MutableStateFlow(false)
+
+    override val isLoading: StateFlow<Boolean>
+        get() = _isLoading
+
+    private val _errorChannel = Channel<Throwable>(singleLiveEventCapacity)
+
+    override val error: Flow<Throwable>
+        get() = _errorChannel.receiveAsFlow()
+
+    override suspend fun UiStateDelegate<UiState, Event>.reduce(
         transform: (uiState: UiState) -> UiState,
     ) {
         mutexState.withLock {
-            uiMutableStateFlow.emit(transform(uiState))
+            _uiState.emit(transform(uiState))
         }
     }
 
@@ -94,12 +114,24 @@ class UiStateDelegateImpl<UiState, Event>(
         singleEventsChannel.send(event)
     }
 
-    override fun UiStateDelegate<UiState, Event>.asyncUpdateUiState(
+    override fun UiStateDelegate<UiState, Event>.reduceAsync(
         coroutineScope: CoroutineScope,
         transform: (state: UiState) -> UiState,
     ): Job {
         return coroutineScope.launch {
-            updateUiState { state -> transform(state) }
+            reduce { state -> transform(state) }
         }
+    }
+
+    override fun showLoading() {
+        _isLoading.value = true
+    }
+
+    override fun hideLoading() {
+        _isLoading.value = false
+    }
+
+    override suspend fun sendError(error: Throwable) {
+        _errorChannel.send(error)
     }
 }
