@@ -84,7 +84,6 @@ private fun LoginContent(
     viewModel: LoginViewModel,
 ) {
     val uiState by viewModel.collectUiStateWithLifecycle()
-    val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
             .statusBarsPadding()

@@ -1,6 +1,8 @@
 package co.nimblehq.surveys.data.di.modules
 
-import co.nimblehq.surveys.data.services.ApiService
+import co.nimblehq.surveys.data.BuildConfig
+import co.nimblehq.surveys.data.di.annotations.NonAuth
+import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.providers.ApiServiceProvider
 import co.nimblehq.surveys.data.services.providers.ConverterFactoryProvider
 import co.nimblehq.surveys.data.services.providers.RetrofitProvider
@@ -18,7 +20,7 @@ import retrofit2.Retrofit
 class ServiceModule {
 
     @Provides
-    fun provideBaseApiUrl() = ""
+    fun provideBaseApiUrl() = BuildConfig.BASE_API_URL
 
     @Provides
     fun provideMoshiConverterFactory(
@@ -26,16 +28,17 @@ class ServiceModule {
     ): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
-    fun provideRetrofit(
+    @NonAuth
+    fun provideNonAuthRetrofit(
         baseUrl: String,
-        okHttpClient: OkHttpClient,
+        @NonAuth okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
     ): Retrofit = RetrofitProvider
         .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
         .build()
 
     @Provides
-    fun provideApiService(
-        retrofit: Retrofit
-    ): ApiService = ApiServiceProvider.getApiService(retrofit)
+    fun provideNonAuthApiService(
+        @NonAuth retrofit: Retrofit
+    ): NonAuthApiService = ApiServiceProvider.getNonAuthApiService(retrofit)
 }

@@ -15,21 +15,25 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName(Builds.Release.name) {
             isMinifyEnabled = Builds.Release.isMinifyEnabled
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
 
-        debug {
+        getByName(Builds.Debug.name) {
             isMinifyEnabled = Builds.Debug.isMinifyEnabled
         }
     }
 
     flavorDimensions += Builds.SHARED_DIMENSION
     productFlavors {
-        create(Builds.Flavors.DEV) {}
+        create(Builds.Flavors.DEV) {
+            buildConfigField("String", "BASE_API_URL", "\"https://survey-api-staging.nimblehq.co\"")
+        }
 
-        create(Builds.Flavors.PROD) {}
+        create(Builds.Flavors.PROD) {
+            buildConfigField("String", "BASE_API_URL", "\"https://survey-api.nimblehq.co\"")
+        }
     }
 
     compileOptions {

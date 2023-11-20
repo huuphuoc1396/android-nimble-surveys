@@ -2,6 +2,7 @@ package co.nimblehq.surveys.data.services.providers
 
 import android.content.Context
 import co.nimblehq.surveys.data.BuildConfig
+import co.nimblehq.surveys.data.services.interceptors.HeaderInterceptor
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
@@ -17,11 +18,13 @@ object OkHttpClientProvider {
     fun getOkHttpClientBuilder(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         chuckerInterceptor: ChuckerInterceptor,
+        headerInterceptor: HeaderInterceptor,
     ): OkHttpClient.Builder = OkHttpClient.Builder().apply {
         if (BuildConfig.DEBUG) {
             addInterceptor(httpLoggingInterceptor)
             addInterceptor(chuckerInterceptor)
         }
+        addInterceptor(headerInterceptor)
         readTimeout(READ_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
     }
@@ -42,4 +45,6 @@ object OkHttpClientProvider {
             .alwaysReadResponseBody(true)
             .build()
     }
+
+    fun getHeaderInterceptor() = HeaderInterceptor()
 }

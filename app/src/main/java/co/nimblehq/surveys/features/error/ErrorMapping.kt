@@ -11,7 +11,7 @@ fun Throwable.userReadableMessage(context: Context): String {
         is NetworkCaughtException -> when (this) {
             NetworkCaughtException.NoConnection -> context.getString(R.string.no_connection)
 
-            is NetworkCaughtException.Server -> serverMsg
+            is NetworkCaughtException.Server -> serverMsg.ifEmpty { context.getString(R.string.unknown_error) }
         }
 
         is UnknownCaughtException -> context.getString(R.string.unknown_error)

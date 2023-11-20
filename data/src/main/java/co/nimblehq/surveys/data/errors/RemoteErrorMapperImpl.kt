@@ -1,14 +1,13 @@
 package co.nimblehq.surveys.data.errors
 
-import co.nimblehq.surveys.data.responses.ErrorResponse
 import co.nimblehq.surveys.data.services.providers.MoshiBuilderProvider
+import co.nimblehq.surveys.data.services.responses.error.Error404Response
+import co.nimblehq.surveys.data.services.responses.error.ErrorsResponse
 import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
-import com.squareup.moshi.JsonDataException
 import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
-import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -22,27 +21,45 @@ class RemoteErrorMapperImpl @Inject constructor() : RemoteErrorMapper {
             is InterruptedIOException -> NetworkCaughtException.NoConnection
 
             is HttpException -> {
-                val errorResponse = parseErrorResponse(throwable.response())
-                NetworkCaughtException.Server(
-                    code = errorResponse?.code ?: -1,
-                    serverMsg = errorResponse?.message.orEmpty()
-                )
+                if (throwable.code() == 404) {
+                    val errorResponse = parseError404Response(throwable.response())
+                    NetworkCaughtException.Server(
+                        code = throwable.code(),
+                        serverMsg = errorResponse?.error.orEmpty()
+                    )
+                } else {
+                    val errorResponse = parseErrorsResponse(throwable.response())
+                    val error = errorResponse?.errors?.firstOrNull()
+                    NetworkCaughtException.Server(
+                        code = throwable.code(),
+                        serverMsg = error?.detail.orEmpty()
+                    )
+                }
             }
 
             else -> null
         }
     }
 
-    private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
+    private fun parseErrorsResponse(response: Response<*>?): ErrorsResponse? {
         val jsonString = response?.errorBody()?.string()
         return try {
             val moshi = MoshiBuilderProvider.moshiBuilder.build()
-            val adapter = moshi.adapter(ErrorResponse::class.java)
+            val adapter = moshi.adapter(ErrorsResponse::class.java)
             adapter.fromJson(jsonString.orEmpty())
-        } catch (exception: IOException) {
+        } catch (exception: Exception) {
             Timber.e(exception)
             null
-        } catch (exception: JsonDataException) {
+        }
+    }
+
+    private fun parseError404Response(response: Response<*>?): Error404Response? {
+        val jsonString = response?.errorBody()?.string()
+        return try {
+            val moshi = MoshiBuilderProvider.moshiBuilder.build()
+            val adapter = moshi.adapter(Error404Response::class.java)
+            adapter.fromJson(jsonString.orEmpty())
+        } catch (exception: Exception) {
             Timber.e(exception)
             null
         }
