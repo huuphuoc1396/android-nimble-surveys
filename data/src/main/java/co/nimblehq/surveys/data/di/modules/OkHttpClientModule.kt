@@ -1,8 +1,11 @@
 package co.nimblehq.surveys.data.di.modules
 
 import android.content.Context
-import co.nimblehq.surveys.data.di.annotations.NonAuth
+import co.nimblehq.surveys.data.di.annotations.AuthClient
+import co.nimblehq.surveys.data.di.annotations.NonAuthClient
+import co.nimblehq.surveys.data.services.interceptors.AuthInterceptor
 import co.nimblehq.surveys.data.services.interceptors.HeaderInterceptor
+import co.nimblehq.surveys.data.services.interceptors.TokenAuthenticator
 import co.nimblehq.surveys.data.services.providers.OkHttpClientProvider
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
@@ -17,7 +20,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 class OkHttpClientModule {
 
     @Provides
-    @NonAuth
+    @NonAuthClient
     fun provideNonAuthOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         chuckerInterceptor: ChuckerInterceptor,
@@ -26,6 +29,22 @@ class OkHttpClientModule {
         httpLoggingInterceptor = httpLoggingInterceptor,
         chuckerInterceptor = chuckerInterceptor,
         headerInterceptor = headerInterceptor,
+    ).build()
+
+    @Provides
+    @AuthClient
+    fun provideAuthOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        chuckerInterceptor: ChuckerInterceptor,
+        headerInterceptor: HeaderInterceptor,
+        authInterceptor: AuthInterceptor,
+        tokenAuthenticator: TokenAuthenticator,
+    ) = OkHttpClientProvider.getOkHttpClientBuilder(
+        httpLoggingInterceptor = httpLoggingInterceptor,
+        chuckerInterceptor = chuckerInterceptor,
+        headerInterceptor = headerInterceptor,
+        authInterceptor = authInterceptor,
+        tokenAuthenticator = tokenAuthenticator,
     ).build()
 
     @Provides

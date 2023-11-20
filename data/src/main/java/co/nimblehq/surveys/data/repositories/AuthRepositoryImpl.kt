@@ -1,7 +1,9 @@
 package co.nimblehq.surveys.data.repositories
 
+import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.requests.login.LoginRequest
+import co.nimblehq.surveys.data.services.responses.user.toUserModel
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
 import co.nimblehq.surveys.domain.models.UserModel
 import co.nimblehq.surveys.domain.repositories.AuthRepository
@@ -10,6 +12,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val nonAuthApiService: NonAuthApiService,
+    private val authApiService: AuthApiService,
     private val encryptedPrefsDatastore: EncryptedPrefsDatastore,
 ) : AuthRepository {
 
@@ -17,7 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
         val data = nonAuthApiService.login(LoginRequest(email, password)).data
         val isLoggedIn = data != null
         if (isLoggedIn) {
-            encryptedPrefsDatastore.setAccessToken(data?.attributes?.accessToken.orEmpty())
+            encryptedPrefsDatastore.setAccessToken(data?.attributes?.authToken.orEmpty())
             encryptedPrefsDatastore.setRefreshToken(data?.attributes?.refreshToken.orEmpty())
         }
         encryptedPrefsDatastore.setLoggedIn(isLoggedIn)
@@ -32,7 +35,7 @@ class AuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getUser(): Flow<UserModel> {
-        TODO("Not yet implemented")
+    override suspend fun getUser(): UserModel? {
+        return authApiService.getUser().data?.toUserModel()
     }
 }
