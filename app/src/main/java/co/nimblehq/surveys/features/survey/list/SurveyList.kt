@@ -1,8 +1,12 @@
 package co.nimblehq.surveys.features.survey.list
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -12,18 +16,27 @@ import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.features.components.Loading
 import co.nimblehq.surveys.features.error.userReadableMessage
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SurveyList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<SurveyModel>,
+    state: LazyListState = rememberLazyListState(),
 ) {
+    val flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
     BoxWithConstraints {
-        LazyRow(modifier = modifier) {
+        LazyRow(
+            modifier = modifier,
+            state = state,
+            flingBehavior = flingBehavior,
+        ) {
             items(pagingItems.itemCount) { index ->
-                SurveyItem(
-                    Modifier.size(maxWidth, maxHeight),
-                    surveyModel = pagingItems[index]!!,
-                )
+                pagingItems[index]?.let { surveyModel ->
+                    SurveyItem(
+                        Modifier.size(maxWidth, maxHeight),
+                        surveyModel = surveyModel,
+                    )
+                }
             }
 
             when {
