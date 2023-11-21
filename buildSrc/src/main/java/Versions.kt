@@ -40,4 +40,6 @@ object Versions {
     const val FIREBASE_BOM = "32.6.0"
 
     const val SECURITY_DATASTORE = "1.0.0-beta01"
+
+    const val COIL: String = "2.5.0"
 }

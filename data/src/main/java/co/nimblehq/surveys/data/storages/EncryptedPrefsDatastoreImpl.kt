@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastore.clearAll
 import co.nimblehq.surveys.data.storages.datastore.get
 import co.nimblehq.surveys.data.storages.datastore.set
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,6 +26,7 @@ class EncryptedPrefsDatastoreImpl @Inject constructor(
         private const val FILE_NAME = "encrypted_datastore.preferences_pb"
 
         private val KEY_LOGGED_IN = booleanPreferencesKey("logged_in")
+        private val KEY_TOKEN_TYPE = stringPreferencesKey("token_type")
         private val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
         private val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
@@ -44,6 +46,12 @@ class EncryptedPrefsDatastoreImpl @Inject constructor(
         dataStore.set(KEY_LOGGED_IN, isLoggedIn)
     }
 
+    override val tokenType: Flow<String> = dataStore.get(KEY_TOKEN_TYPE, "")
+
+    override suspend fun setTokenType(tokenType: String) {
+        dataStore.set(KEY_TOKEN_TYPE, tokenType)
+    }
+
     override val accessToken: Flow<String> = dataStore.get(KEY_ACCESS_TOKEN, "")
 
     override suspend fun setAccessToken(accessToken: String) {
@@ -54,5 +62,9 @@ class EncryptedPrefsDatastoreImpl @Inject constructor(
 
     override suspend fun setRefreshToken(refreshToken: String) {
         dataStore.set(KEY_REFRESH_TOKEN, refreshToken)
+    }
+
+    override suspend fun clearAll() {
+        dataStore.clearAll()
     }
 }

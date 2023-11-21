@@ -18,3 +18,7 @@ suspend fun <T> DataStore<Preferences>.set(
 ) {
     edit { prefs -> prefs[key] = value }
 }
+
+suspend fun DataStore<Preferences>.clearAll() {
+    edit { prefs -> prefs.clear() }
+}

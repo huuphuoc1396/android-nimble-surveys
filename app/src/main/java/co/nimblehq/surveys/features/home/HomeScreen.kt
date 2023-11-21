@@ -1,12 +1,13 @@
 package co.nimblehq.surveys.features.home
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,9 +17,13 @@ import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.extensions.collectErrorEffect
 import co.nimblehq.surveys.extensions.collectEventEffect
 import co.nimblehq.surveys.extensions.collectLoadingWithLifecycle
+import co.nimblehq.surveys.extensions.collectUiStateWithLifecycle
 import co.nimblehq.surveys.features.components.LoadingContent
 import co.nimblehq.surveys.features.error.showToast
+import co.nimblehq.surveys.features.navigation.AppDestination
+import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -28,8 +33,11 @@ fun HomeScreen(
 
     viewModel.collectEventEffect { event ->
         when (event) {
-
-            else -> {}
+            HomeViewModel.Event.GoToLogin -> {
+                navController.navigate(AppDestination.Login) {
+                    popUpTo(AppDestination.Home.route) { inclusive = true }
+                }
+            }
         }
     }
 
@@ -40,20 +48,46 @@ fun HomeScreen(
 
     val isLoading by viewModel.collectLoadingWithLifecycle()
     LoadingContent(isLoading) {
-        HomeContent(viewModel)
+        val uiState by viewModel.collectUiStateWithLifecycle()
+        HomeContent(uiState, onLogoutClick = viewModel::onLogoutClick)
     }
 }
 
 @Composable
-private fun HomeContent(viewModel: HomeViewModel) {
-    Box(
-        modifier = Modifier
-            .statusBarsPadding()
-            .fillMaxSize()
+private fun HomeContent(
+    uiState: HomeViewModel.UiState,
+    onLogoutClick: () -> Unit,
+) {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    HomeDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            HomeDrawerContent(
+                name = uiState.userModel?.name,
+                avatarUrl = uiState.userModel?.avatarUrl,
+                onLogoutClick = {
+                    scope.launch { drawerState.close() }
+                    onLogoutClick()
+                }
+            )
+        }
     ) {
-        Text(text = "Home", style = MaterialTheme.typography.h2)
+        Column(
+            modifier = Modifier
+                .statusBarsPadding()
+                .fillMaxSize()
+        ) {
+            HomeTopBar(
+                avatarUrl = uiState.userModel?.avatarUrl,
+                onAccountClick = {
+                    scope.launch { drawerState.open() }
+                },
+            )
+        }
     }
 }
+
 
 @Preview
 @Composable

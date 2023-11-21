@@ -37,11 +37,13 @@ class TokenAuthenticator @Inject constructor(
             null
         }
         if (data != null) {
-            val newToken = data.attributes?.authToken.defaultEmpty()
-            encryptedPrefsDatastore.setAccessToken(data.attributes?.authToken.defaultEmpty())
+            val tokenType = data.attributes?.tokenType.defaultEmpty()
+            val accessToken = data.attributes?.accessToken.defaultEmpty()
+            encryptedPrefsDatastore.setTokenType(tokenType)
+            encryptedPrefsDatastore.setAccessToken(accessToken)
             encryptedPrefsDatastore.setRefreshToken(data.attributes?.refreshToken.defaultEmpty())
             encryptedPrefsDatastore.setLoggedIn(true)
-            return@runBlocking newToken
+            return@runBlocking "$tokenType $accessToken"
         }
         encryptedPrefsDatastore.setLoggedIn(false)
         return@runBlocking ""

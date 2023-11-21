@@ -13,12 +13,14 @@ class AuthInterceptor @Inject constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
-            .addHeader("Authorization", getAccessToken())
+            .addHeader("Authorization", getAuthToken())
             .build()
         return chain.proceed(request)
     }
 
-    private fun getAccessToken() = runBlocking {
-        encryptedPrefsDatastore.accessToken.firstOrNull().defaultEmpty()
+    private fun getAuthToken() = runBlocking {
+        val tokenType = encryptedPrefsDatastore.tokenType.firstOrNull().defaultEmpty()
+        val accessToken = encryptedPrefsDatastore.accessToken.firstOrNull().defaultEmpty()
+        return@runBlocking "$tokenType $accessToken"
     }
 }

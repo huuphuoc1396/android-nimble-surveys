@@ -16,8 +16,4 @@ data class AuthAttributesResponse(
     val refreshToken: String?,
     @Json(name = "token_type")
     val tokenType: String?
-) {
-
-    val authToken: String?
-        get() = if (tokenType != null && accessToken != null) "$tokenType $accessToken" else null
-}
+)

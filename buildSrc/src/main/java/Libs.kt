@@ -73,4 +73,6 @@ object Libs {
        const val SECURITY_DATASTORE = "io.github.osipxd:security-crypto-datastore:${Versions.SECURITY_DATASTORE}"
        const val SECURITY_DATASTORE_PREFERENCES = "io.github.osipxd:security-crypto-datastore-preferences:${Versions.SECURITY_DATASTORE}"
     }
+
+    const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
 }
