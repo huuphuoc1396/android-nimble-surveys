@@ -14,7 +14,7 @@ class GetSurveyListUseCase @Inject constructor(
     private val surveyRepository: SurveyRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher,
     remoteErrorMapper: RemoteErrorMapper,
-) : SingleUseCase<GetSurveyListUseCase.Params, SurveyPageModel?>(dispatcher, remoteErrorMapper) {
+) : SingleUseCase<GetSurveyListUseCase.Params, SurveyPageModel>(dispatcher, remoteErrorMapper) {
 
     data class Params(
         val page: Int,
@@ -24,7 +24,7 @@ class GetSurveyListUseCase @Inject constructor(
     override suspend fun execute(
         params: Params,
         errorMapper: ErrorMapper<CaughtException>
-    ): SurveyPageModel? {
+    ): SurveyPageModel {
         return surveyRepository.getSurveyList(
             page = params.page,
             size = params.size,

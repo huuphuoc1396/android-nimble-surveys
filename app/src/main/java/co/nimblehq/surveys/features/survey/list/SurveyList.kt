@@ -1,5 +1,7 @@
 package co.nimblehq.surveys.features.survey.list
 
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,40 +16,45 @@ import co.nimblehq.surveys.features.error.userReadableMessage
 fun SurveyList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<SurveyModel>,
-    onRetryClick: () -> Unit,
 ) {
-    LazyRow(modifier = modifier) {
-        items(pagingItems.itemCount) { index ->
-            pagingItems[index]?.let { surveyModel ->
-                SurveyItem(surveyModel = surveyModel)
-            }
-        }
-        when {
-            pagingItems.loadState.refresh is LoadState.Loading -> {
-                item { Loading() }
+    BoxWithConstraints {
+        LazyRow(modifier = modifier) {
+            items(pagingItems.itemCount) { index ->
+                SurveyItem(
+                    Modifier.size(maxWidth, maxHeight),
+                    surveyModel = pagingItems[index]!!,
+                )
             }
 
-            pagingItems.loadState.refresh is LoadState.Error -> {
-                val error = (pagingItems.loadState.refresh as LoadState.Error).error
-                item {
-                    SurveyPageErrorMessage(
-                        message = error.userReadableMessage(LocalContext.current),
-                        onRetryClick = onRetryClick,
-                    )
+            when {
+                pagingItems.loadState.refresh is LoadState.Loading -> {
+                    item { Loading(Modifier.size(maxWidth, maxHeight)) }
                 }
-            }
 
-            pagingItems.loadState.append is LoadState.Loading -> {
-                item { Loading() }
-            }
+                pagingItems.loadState.refresh is LoadState.Error -> {
+                    val error = (pagingItems.loadState.refresh as LoadState.Error).error
+                    item {
+                        SurveyPageErrorMessage(
+                            Modifier.size(maxWidth, maxHeight),
+                            message = error.userReadableMessage(LocalContext.current),
+                            onRetryClick = { pagingItems.retry() },
+                        )
+                    }
+                }
 
-            pagingItems.loadState.append is LoadState.Error -> {
-                val error = (pagingItems.loadState.append as LoadState.Error).error
-                item {
-                    SurveyPageErrorMessage(
-                        message = error.userReadableMessage(LocalContext.current),
-                        onRetryClick = onRetryClick,
-                    )
+                pagingItems.loadState.append is LoadState.Loading -> {
+                    item { Loading(Modifier.size(maxWidth, maxHeight)) }
+                }
+
+                pagingItems.loadState.append is LoadState.Error -> {
+                    val error = (pagingItems.loadState.append as LoadState.Error).error
+                    item {
+                        SurveyPageErrorMessage(
+                            Modifier.size(maxWidth, maxHeight),
+                            message = error.userReadableMessage(LocalContext.current),
+                            onRetryClick = { pagingItems.retry() },
+                        )
+                    }
                 }
             }
         }

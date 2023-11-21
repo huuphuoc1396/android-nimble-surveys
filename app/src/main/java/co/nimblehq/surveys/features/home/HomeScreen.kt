@@ -62,7 +62,6 @@ fun HomeScreen(
 private fun HomeContent(
     uiState: HomeViewModel.UiState,
     onLogoutClick: () -> Unit = {},
-    onRetryClick: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -79,10 +78,14 @@ private fun HomeContent(
             )
         }
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        Box(Modifier.fillMaxSize()) {
+            uiState.surveyPagingData?.let { pagingData ->
+                SurveyList(
+                    modifier = Modifier.fillMaxSize(),
+                    pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
+                )
+            }
+
             HomeTopBar(
                 modifier = Modifier.statusBarsPadding(),
                 avatarUrl = uiState.userModel?.avatarUrl,
@@ -90,14 +93,6 @@ private fun HomeContent(
                     scope.launch { drawerState.open() }
                 },
             )
-
-            uiState.surveyPagingData?.let { pagingData ->
-                SurveyList(
-                    modifier = Modifier.fillMaxSize(),
-                    pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
-                    onRetryClick = onRetryClick,
-                )
-            }
         }
     }
 }

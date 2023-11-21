@@ -9,8 +9,8 @@ import javax.inject.Inject
 class SurveyRepositoryImpl @Inject constructor(
     private val authApiService: AuthApiService,
 ) : SurveyRepository {
-    override suspend fun getSurveyList(page: Int, size: Int): SurveyPageModel? {
+    override suspend fun getSurveyList(page: Int, size: Int): SurveyPageModel {
         val surveyListResponse = authApiService.getSurveyList(page, size)
-        return surveyListResponse?.toSurveyPageModel()
+        return surveyListResponse.toSurveyPageModel()
     }
 }

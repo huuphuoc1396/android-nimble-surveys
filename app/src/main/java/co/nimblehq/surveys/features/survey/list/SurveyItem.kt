@@ -1,21 +1,22 @@
 package co.nimblehq.surveys.features.survey.list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import co.nimblehq.surveys.R
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.ui.theme.SurveysTheme
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import coil.compose.AsyncImage
 
 @Composable
 fun SurveyItem(
@@ -23,22 +24,27 @@ fun SurveyItem(
     surveyModel: SurveyModel,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomStart,
+        modifier.fillMaxHeight(),
+        contentAlignment = Alignment.BottomStart
     ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(surveyModel.coverUrl)
-                    .placeholder(R.drawable.bg_overlay)
-                    .build()
-            ),
+        AsyncImage(
+            surveyModel.coverUrl,
+            modifier = Modifier
+                .fillMaxSize()
+                .drawWithCache {
+                    val gradient = Brush.verticalGradient(
+                        colors = listOf(Color.Transparent, Color.Black)
+                    )
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(gradient, blendMode = BlendMode.Multiply)
+                    }
+                },
             contentDescription = null,
             contentScale = ContentScale.Crop,
         )
         Survey(
-            modifier.padding(20.dp),
+            modifier = Modifier.padding(20.dp),
             surveyModel = surveyModel,
         )
     }
