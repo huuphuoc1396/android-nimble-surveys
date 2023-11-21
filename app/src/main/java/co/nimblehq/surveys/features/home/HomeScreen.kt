@@ -3,6 +3,7 @@ package co.nimblehq.surveys.features.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import co.nimblehq.surveys.features.error.showToast
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -56,10 +58,10 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     uiState: HomeViewModel.UiState,
-    onLogoutClick: () -> Unit,
+    onLogoutClick: () -> Unit = {},
+    drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
+    scope: CoroutineScope = rememberCoroutineScope(),
 ) {
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
     HomeDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -67,8 +69,8 @@ private fun HomeContent(
                 name = uiState.userModel?.name,
                 avatarUrl = uiState.userModel?.avatarUrl,
                 onLogoutClick = {
-                    scope.launch { drawerState.close() }
                     onLogoutClick()
+                    scope.launch { drawerState.close() }
                 }
             )
         }
@@ -91,8 +93,8 @@ private fun HomeContent(
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+fun HomeContentPreview() {
     SurveysTheme {
-        HomeScreen()
+        HomeContent(HomeViewModel.UiState())
     }
 }

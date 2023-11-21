@@ -67,8 +67,8 @@ private fun SplashContent() {
 
 @Preview
 @Composable
-fun SplashScreenPreview() {
+fun SplashContentPreview() {
     SurveysTheme {
-        SplashScreen()
+        SplashContent()
     }
 }

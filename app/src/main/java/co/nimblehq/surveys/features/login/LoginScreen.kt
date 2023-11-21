@@ -26,7 +26,6 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -74,16 +73,26 @@ fun LoginScreen(
     }
 
     val isLoading by viewModel.collectLoadingWithLifecycle()
+    val uiState by viewModel.collectUiStateWithLifecycle()
     LoadingContent(isLoading) {
-        LoginContent(viewModel)
+        LoginContent(
+            uiState = uiState,
+            onEmailChanged = viewModel::onEmailChanged,
+            onPasswordChanged = viewModel::onPasswordChanged,
+            onLoginClick = viewModel::onLoginClick,
+            onForgotClick = viewModel::onForgotClick
+        )
     }
 }
 
 @Composable
 private fun LoginContent(
-    viewModel: LoginViewModel,
+    uiState: LoginViewModel.UiState = LoginViewModel.UiState(),
+    onEmailChanged: (String) -> Unit = {},
+    onPasswordChanged: (String) -> Unit = {},
+    onLoginClick: () -> Unit = {},
+    onForgotClick: () -> Unit = {},
 ) {
-    val uiState by viewModel.collectUiStateWithLifecycle()
     Box(
         modifier = Modifier
             .statusBarsPadding()
@@ -110,7 +119,7 @@ private fun LoginContent(
             CustomTextField(
                 hint = stringResource(R.string.email),
                 value = uiState.email,
-                onValueChange = viewModel::onEmailChanged,
+                onValueChange = onEmailChanged,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -123,18 +132,18 @@ private fun LoginContent(
                 CustomTextField(
                     hint = stringResource(R.string.password),
                     value = uiState.password,
-                    onValueChange = viewModel::onPasswordChanged,
+                    onValueChange = onPasswordChanged,
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Go,
                     ),
                     keyboardActions = KeyboardActions(onGo = {
-                        viewModel.onLoginClick()
+                        onLoginClick()
                     })
                 )
                 TextButton(
-                    onClick = viewModel::onForgotClick,
+                    onClick = onForgotClick,
                 ) {
                     Text(
                         text = stringResource(R.string.forgot_question),
@@ -149,7 +158,7 @@ private fun LoginContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                onClick = viewModel::onLoginClick,
+                onClick = onLoginClick,
                 enabled = uiState.isLoginEnabled,
             ) {
                 Text(text = stringResource(R.string.login))
@@ -161,8 +170,8 @@ private fun LoginContent(
 
 @Preview
 @Composable
-fun LoginScreenPreview() {
+fun LoginContentPreview() {
     SurveysTheme {
-        LoginScreen()
+        LoginContent()
     }
 }
