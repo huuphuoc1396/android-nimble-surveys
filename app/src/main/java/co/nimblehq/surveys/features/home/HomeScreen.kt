@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.features.home
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.DrawerState
@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import co.nimblehq.surveys.extensions.collectErrorEffect
 import co.nimblehq.surveys.extensions.collectEventEffect
 import co.nimblehq.surveys.extensions.collectLoadingWithLifecycle
@@ -23,8 +24,10 @@ import co.nimblehq.surveys.features.components.LoadingContent
 import co.nimblehq.surveys.features.error.showToast
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
+import co.nimblehq.surveys.features.survey.list.SurveyList
 import co.nimblehq.surveys.ui.theme.SurveysTheme
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 @Composable
@@ -59,6 +62,7 @@ fun HomeScreen(
 private fun HomeContent(
     uiState: HomeViewModel.UiState,
     onLogoutClick: () -> Unit = {},
+    onRetryClick: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -75,7 +79,7 @@ private fun HomeContent(
             )
         }
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .statusBarsPadding()
                 .fillMaxSize()
@@ -86,6 +90,13 @@ private fun HomeContent(
                     scope.launch { drawerState.open() }
                 },
             )
+
+            uiState.surveyPagingData?.let { pagingData ->
+                SurveyList(
+                    pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
+                    onRetryClick = onRetryClick,
+                )
+            }
         }
     }
 }

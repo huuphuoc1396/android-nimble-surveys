@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.usecases.EmptyParams
@@ -56,6 +57,7 @@ class HomeViewModel @Inject constructor(
                 },
             )
                 .flow
+                .cachedIn(viewModelScope)
                 .collect { pagingData ->
                     reduceAsync(viewModelScope) { uiState ->
                         uiState.copy(surveyPagingData = pagingData)
