@@ -48,14 +48,14 @@ val typography = Typography(
     subtitle1 = TextStyle(
         color = Color.White,
         fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
     ),
     subtitle2 = TextStyle(
         color = Color.White,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         lineHeight = 17.sp,
         letterSpacing = 0.1.sp
     ),

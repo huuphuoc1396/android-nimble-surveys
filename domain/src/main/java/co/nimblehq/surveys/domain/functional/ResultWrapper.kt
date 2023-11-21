@@ -3,6 +3,7 @@ package co.nimblehq.surveys.domain.functional
 import co.nimblehq.surveys.domain.errors.exceptions.CaughtException
 import co.nimblehq.surveys.domain.errors.exceptions.unknown.UnknownCaughtException
 import co.nimblehq.surveys.domain.errors.mappers.ErrorMapper
+import co.nimblehq.surveys.domain.extensions.default
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -18,7 +19,7 @@ suspend fun <R> safeSuspend(
     try {
         action().wrapSuccess()
     } catch (throwable: Throwable) {
-        val caughtException = errorMapper.map(throwable) ?: UnknownCaughtException(throwable)
+        val caughtException = errorMapper.map(throwable).default(UnknownCaughtException(throwable))
         caughtException.wrapFailure()
     }
 }
@@ -29,7 +30,7 @@ fun <R> Flow<R>.safeFlow(
 ): Flow<Result<R>> = map { data ->
     data.wrapSuccess()
 }.catch { throwable ->
-    val caughtException = errorMapper.map(throwable) ?: UnknownCaughtException(throwable)
+    val caughtException = errorMapper.map(throwable).default(UnknownCaughtException(throwable))
     emit(caughtException.wrapFailure())
 }.flowOn(dispatcher)
 

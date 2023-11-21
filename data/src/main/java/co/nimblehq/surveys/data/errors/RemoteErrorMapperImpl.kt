@@ -5,6 +5,7 @@ import co.nimblehq.surveys.data.services.responses.error.Error404Response
 import co.nimblehq.surveys.data.services.responses.error.ErrorsResponse
 import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
@@ -25,14 +26,14 @@ class RemoteErrorMapperImpl @Inject constructor() : RemoteErrorMapper {
                     val errorResponse = parseError404Response(throwable.response())
                     NetworkCaughtException.Server(
                         code = throwable.code(),
-                        serverMsg = errorResponse?.error.orEmpty()
+                        serverMsg = errorResponse?.error.defaultEmpty()
                     )
                 } else {
                     val errorResponse = parseErrorsResponse(throwable.response())
                     val error = errorResponse?.errors?.firstOrNull()
                     NetworkCaughtException.Server(
                         code = throwable.code(),
-                        serverMsg = error?.detail.orEmpty()
+                        serverMsg = error?.detail.defaultEmpty()
                     )
                 }
             }
@@ -46,7 +47,7 @@ class RemoteErrorMapperImpl @Inject constructor() : RemoteErrorMapper {
         return try {
             val moshi = MoshiBuilderProvider.moshiBuilder.build()
             val adapter = moshi.adapter(ErrorsResponse::class.java)
-            adapter.fromJson(jsonString.orEmpty())
+            adapter.fromJson(jsonString.defaultEmpty())
         } catch (exception: Exception) {
             Timber.e(exception)
             null
@@ -58,7 +59,7 @@ class RemoteErrorMapperImpl @Inject constructor() : RemoteErrorMapper {
         return try {
             val moshi = MoshiBuilderProvider.moshiBuilder.build()
             val adapter = moshi.adapter(Error404Response::class.java)
-            adapter.fromJson(jsonString.orEmpty())
+            adapter.fromJson(jsonString.defaultEmpty())
         } catch (exception: Exception) {
             Timber.e(exception)
             null

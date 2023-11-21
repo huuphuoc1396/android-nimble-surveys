@@ -5,6 +5,7 @@ import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.requests.login.LoginRequest
 import co.nimblehq.surveys.data.services.responses.user.toUserModel
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import co.nimblehq.surveys.domain.models.UserModel
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,8 +21,8 @@ class AuthRepositoryImpl @Inject constructor(
         val data = nonAuthApiService.login(LoginRequest(email, password)).data
         val isLoggedIn = data != null
         if (isLoggedIn) {
-            encryptedPrefsDatastore.setAccessToken(data?.attributes?.authToken.orEmpty())
-            encryptedPrefsDatastore.setRefreshToken(data?.attributes?.refreshToken.orEmpty())
+            encryptedPrefsDatastore.setAccessToken(data?.attributes?.authToken.defaultEmpty())
+            encryptedPrefsDatastore.setRefreshToken(data?.attributes?.refreshToken.defaultEmpty())
         }
         encryptedPrefsDatastore.setLoggedIn(isLoggedIn)
         return isLoggedIn

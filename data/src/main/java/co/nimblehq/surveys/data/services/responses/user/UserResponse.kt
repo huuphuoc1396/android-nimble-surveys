@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.data.services.responses.user
 
 
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import co.nimblehq.surveys.domain.models.UserModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -16,9 +17,9 @@ data class UserResponse(
 )
 
 fun UserResponse.toUserModel() = UserModel(
-    id = id.orEmpty(),
-    name = attributes?.name.orEmpty(),
-    email = attributes?.email.orEmpty(),
-    avatarUrl = attributes?.avatarUrl.orEmpty()
+    id = id.defaultEmpty(),
+    name = attributes?.name.defaultEmpty(),
+    email = attributes?.email.defaultEmpty(),
+    avatarUrl = attributes?.avatarUrl.defaultEmpty()
 
 )

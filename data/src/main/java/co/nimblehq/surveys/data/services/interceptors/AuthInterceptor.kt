@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.data.services.interceptors
 
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -18,6 +19,6 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun getAccessToken() = runBlocking {
-        encryptedPrefsDatastore.accessToken.firstOrNull().orEmpty()
+        encryptedPrefsDatastore.accessToken.firstOrNull().defaultEmpty()
     }
 }
