@@ -139,4 +139,7 @@ dependencies {
     implementation(Libs.Firebase.CRASHLYTICS)
 
     implementation(Libs.COIL_COMPOSE)
+
+    implementation(Libs.AndroidX.PAGGING_RUNTIME)
+    implementation(Libs.AndroidX.PAGGING_COMPOSE)
 }
