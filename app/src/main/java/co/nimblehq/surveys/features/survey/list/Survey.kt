@@ -39,7 +39,9 @@ fun Survey(
         )
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
-                modifier = Modifier.weight(1f).padding(top = 14.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 14.dp),
                 text = surveyModel.description,
                 style = MaterialTheme.typography.body1.copy(
                     color = Color.White.copy(alpha = 0.7f)
@@ -62,6 +64,7 @@ fun Survey(
                 )
             }
         }
+        Spacer(modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
@@ -76,6 +79,7 @@ fun SurveyPreview() {
                 title = "Working from home Check-In",
                 description = "We would like to know how you feel about our work from home...",
                 coverUrl = "",
+                totalRecords = 20,
             )
         )
     }

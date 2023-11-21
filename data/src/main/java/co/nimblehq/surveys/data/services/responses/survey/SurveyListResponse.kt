@@ -18,5 +18,9 @@ data class SurveyListResponse(
 fun SurveyListResponse.toSurveyPageModel() = SurveyPageModel(
     page = meta?.page.defaultZero(),
     totalPages = meta?.pages.defaultZero(),
-    surveyList = data?.map { data -> data.toSurveyModel() }.defaultEmpty(),
+    surveyList = data?.map { data ->
+        data.toSurveyModel(
+            totalRecords = meta?.records.defaultZero()
+        )
+    }.defaultEmpty(),
 )

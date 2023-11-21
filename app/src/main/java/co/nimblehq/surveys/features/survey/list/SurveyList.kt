@@ -3,16 +3,24 @@ package co.nimblehq.surveys.features.survey.list
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import co.nimblehq.surveys.domain.extensions.defaultZero
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
+import co.nimblehq.surveys.features.components.DotsIndicator
 import co.nimblehq.surveys.features.components.Loading
 import co.nimblehq.surveys.features.error.userReadableMessage
 
@@ -24,7 +32,10 @@ fun SurveyList(
     state: LazyListState = rememberLazyListState(),
 ) {
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
-    BoxWithConstraints {
+    val selectedIndex by remember { derivedStateOf { state.firstVisibleItemIndex } }
+    BoxWithConstraints(
+        contentAlignment = Alignment.BottomStart,
+    ) {
         LazyRow(
             modifier = modifier,
             state = state,
@@ -71,5 +82,12 @@ fun SurveyList(
                 }
             }
         }
+
+        val firstSurveyModel = pagingItems.itemSnapshotList.firstOrNull()
+        DotsIndicator(
+            modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 172.dp),
+            totalDots = firstSurveyModel?.totalRecords.defaultZero(),
+            selectedIndex = selectedIndex,
+        )
     }
 }
