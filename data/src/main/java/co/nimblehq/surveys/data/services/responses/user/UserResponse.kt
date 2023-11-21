@@ -9,7 +9,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserResponse(
     @Json(name = "attributes")
-    val attributes: UserAttributesResponse?,
+    val attributes: UserAttributes?,
     @Json(name = "id")
     val id: String?,
     @Json(name = "type")

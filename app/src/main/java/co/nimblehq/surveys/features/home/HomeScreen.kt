@@ -81,10 +81,10 @@ private fun HomeContent(
     ) {
         Box(
             modifier = Modifier
-                .statusBarsPadding()
                 .fillMaxSize()
         ) {
             HomeTopBar(
+                modifier = Modifier.statusBarsPadding(),
                 avatarUrl = uiState.userModel?.avatarUrl,
                 onAccountClick = {
                     scope.launch { drawerState.open() }
@@ -93,6 +93,7 @@ private fun HomeContent(
 
             uiState.surveyPagingData?.let { pagingData ->
                 SurveyList(
+                    modifier = Modifier.fillMaxSize(),
                     pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
                     onRetryClick = onRetryClick,
                 )

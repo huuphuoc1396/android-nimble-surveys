@@ -23,11 +23,11 @@ fun SurveyItem(
     surveyModel: SurveyModel,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomStart,
     ) {
         Image(
+            modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(surveyModel.coverUrl)

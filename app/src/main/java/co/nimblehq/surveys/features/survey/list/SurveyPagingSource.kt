@@ -3,6 +3,8 @@ package co.nimblehq.surveys.features.survey.list
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import co.nimblehq.surveys.domain.extensions.default
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
+import co.nimblehq.surveys.domain.extensions.defaultZero
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.usecases.survey.GetSurveyListUseCase
 
@@ -18,9 +20,9 @@ class SurveyPagingSource constructor(
         surveyPageResult.fold(
             onSuccess = { surveyPage ->
                 return LoadResult.Page(
-                    data = surveyPage.surveyList,
+                    data = surveyPage?.surveyList.defaultEmpty(),
                     prevKey = if (currentPage == 1) null else currentPage - 1,
-                    nextKey = if (currentPage > surveyPage.totalPages) null else currentPage + 1
+                    nextKey = if (currentPage >= surveyPage?.totalPages.defaultZero()) null else currentPage + 1
                 )
             },
             onFailure = { throwable ->
