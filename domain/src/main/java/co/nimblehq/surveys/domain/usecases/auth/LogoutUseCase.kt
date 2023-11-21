@@ -8,8 +8,9 @@ import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.usecases.EmptyParams
 import co.nimblehq.surveys.domain.usecases.SingleUseCase
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
-class LogoutUseCase constructor(
+class LogoutUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher,
     remoteErrorMapper: RemoteErrorMapper,

@@ -3,6 +3,7 @@ package co.nimblehq.surveys.data.services.interceptors
 import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.requests.refresh.token.RefreshTokenRequest
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -36,11 +37,13 @@ class TokenAuthenticator @Inject constructor(
             null
         }
         if (data != null) {
-            val newToken = data.attributes?.authToken.orEmpty()
-            encryptedPrefsDatastore.setAccessToken(data.attributes?.authToken.orEmpty())
-            encryptedPrefsDatastore.setRefreshToken(data.attributes?.refreshToken.orEmpty())
+            val tokenType = data.attributes?.tokenType.defaultEmpty()
+            val accessToken = data.attributes?.accessToken.defaultEmpty()
+            encryptedPrefsDatastore.setTokenType(tokenType)
+            encryptedPrefsDatastore.setAccessToken(accessToken)
+            encryptedPrefsDatastore.setRefreshToken(data.attributes?.refreshToken.defaultEmpty())
             encryptedPrefsDatastore.setLoggedIn(true)
-            return@runBlocking newToken
+            return@runBlocking "$tokenType $accessToken"
         }
         encryptedPrefsDatastore.setLoggedIn(false)
         return@runBlocking ""

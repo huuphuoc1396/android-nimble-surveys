@@ -137,4 +137,9 @@ dependencies {
     implementation(platform(Libs.Firebase.BOM))
     implementation(Libs.Firebase.ANALYTICS)
     implementation(Libs.Firebase.CRASHLYTICS)
+
+    implementation(Libs.COIL_COMPOSE)
+
+    implementation(Libs.AndroidX.PAGGING_RUNTIME)
+    implementation(Libs.AndroidX.PAGGING_COMPOSE)
 }

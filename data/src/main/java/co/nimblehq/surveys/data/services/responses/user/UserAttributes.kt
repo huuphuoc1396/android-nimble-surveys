@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserAttributesResponse(
+data class UserAttributes(
     @Json(name = "avatar_url")
     val avatarUrl: String?,
     @Json(name = "email")

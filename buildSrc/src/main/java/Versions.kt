@@ -13,6 +13,9 @@ object Versions {
     const val ACTIVITY_COMPOSE = "1.8.1"
     const val SECURITY_CRYPTO = "1.0.0"
 
+    const val PAGGING_RUNTIME = "3.3.0-alpha02"
+    const val PAGGING_COMPOSE = "1.0.0-alpha18"
+
     const val COMPOSE_BOM = "2023.03.00"
     const val NAV_COMPOSE = "2.7.5"
 
@@ -40,4 +43,6 @@ object Versions {
     const val FIREBASE_BOM = "32.6.0"
 
     const val SECURITY_DATASTORE = "1.0.0-beta01"
+
+    const val COIL: String = "2.5.0"
 }

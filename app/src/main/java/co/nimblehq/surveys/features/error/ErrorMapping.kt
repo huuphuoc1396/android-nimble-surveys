@@ -4,6 +4,7 @@ import android.content.Context
 import co.nimblehq.surveys.R
 import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
 import co.nimblehq.surveys.domain.errors.exceptions.unknown.UnknownCaughtException
+import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import co.nimblehq.surveys.extensions.showToast
 
 fun Throwable.userReadableMessage(context: Context): String {
@@ -16,7 +17,7 @@ fun Throwable.userReadableMessage(context: Context): String {
 
         is UnknownCaughtException -> context.getString(R.string.unknown_error)
 
-        else -> message.orEmpty()
+        else -> message.defaultEmpty()
     }
 }
 

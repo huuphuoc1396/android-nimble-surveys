@@ -1,4 +1,4 @@
-package co.nimblehq.surveys.domain.models
+package co.nimblehq.surveys.domain.models.user
 
 data class UserModel(
     val id: String,

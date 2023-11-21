@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "389023935816",
+    "project_id": "nimble-surveys",
+    "storage_bucket": "nimble-surveys.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389023935816:android:f5a10e91dac783baa8177d",
+        "android_client_info": {
+          "package_name": "co.nimblehq.surveys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_v07rwxAWrFpRfQ6H1dWh7Hw-gkF9WA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389023935816:android:782551febe257038a8177d",
+        "android_client_info": {
+          "package_name": "co.nimblehq.surveys.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_v07rwxAWrFpRfQ6H1dWh7Hw-gkF9WA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

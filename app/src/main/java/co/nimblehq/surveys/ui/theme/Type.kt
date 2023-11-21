@@ -29,14 +29,14 @@ val typography = Typography(
     ),
     h4 = TextStyle(
         color = Color.White,
-        fontSize = 30.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontSize = 34.sp,
+        fontWeight = FontWeight.Bold,
         lineHeight = 37.sp
     ),
     h5 = TextStyle(
         color = Color.White,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontSize = 28.sp,
+        fontWeight = FontWeight.Bold,
         lineHeight = 29.sp
     ),
     h6 = TextStyle(
@@ -48,14 +48,14 @@ val typography = Typography(
     subtitle1 = TextStyle(
         color = Color.White,
         fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
     ),
     subtitle2 = TextStyle(
         color = Color.White,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.Medium,
+        fontSize = 13.sp,
+        fontWeight = FontWeight.Bold,
         lineHeight = 17.sp,
         letterSpacing = 0.1.sp
     ),

@@ -6,4 +6,7 @@
     <string name="login">Login</string>
     <string name="unknown_error">Unknown error</string>
     <string name="no_connection">No internet connection</string>
+    <string name="today">Today</string>
+    <string name="logout">Logout</string>
+    <string name="retry">Retry</string>
 </resources>

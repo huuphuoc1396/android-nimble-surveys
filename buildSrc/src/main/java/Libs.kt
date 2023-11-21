@@ -19,6 +19,9 @@ object Libs {
 
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
+
+        const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGGING_RUNTIME}"
+        const val PAGGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGGING_COMPOSE}"
     }
 
     object Kotlin {
@@ -73,4 +76,6 @@ object Libs {
        const val SECURITY_DATASTORE = "io.github.osipxd:security-crypto-datastore:${Versions.SECURITY_DATASTORE}"
        const val SECURITY_DATASTORE_PREFERENCES = "io.github.osipxd:security-crypto-datastore-preferences:${Versions.SECURITY_DATASTORE}"
     }
+
+    const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
 }

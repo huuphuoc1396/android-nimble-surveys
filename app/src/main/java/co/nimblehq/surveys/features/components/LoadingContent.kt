@@ -1,8 +1,8 @@
 package co.nimblehq.surveys.features.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +35,8 @@ fun Loading(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+            .clickable { },
+        contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
             color = SandyBrown

@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.domain.repositories
 
-import co.nimblehq.surveys.domain.models.UserModel
+import co.nimblehq.surveys.domain.models.user.UserModel
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
