@@ -2,7 +2,7 @@ package co.nimblehq.surveys.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.surveys.domain.models.UserModel
+import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.usecases.EmptyParams
 import co.nimblehq.surveys.domain.usecases.auth.GetUserUseCase
 import co.nimblehq.surveys.domain.usecases.auth.LogoutUseCase

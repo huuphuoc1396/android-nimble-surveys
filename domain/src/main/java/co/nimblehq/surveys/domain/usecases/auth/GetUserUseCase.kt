@@ -4,7 +4,7 @@ import co.nimblehq.surveys.domain.di.annotations.IoDispatcher
 import co.nimblehq.surveys.domain.errors.exceptions.CaughtException
 import co.nimblehq.surveys.domain.errors.mappers.ErrorMapper
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
-import co.nimblehq.surveys.domain.models.UserModel
+import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.usecases.EmptyParams
 import co.nimblehq.surveys.domain.usecases.SingleUseCase

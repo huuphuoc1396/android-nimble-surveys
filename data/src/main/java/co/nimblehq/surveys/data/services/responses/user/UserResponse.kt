@@ -2,7 +2,7 @@ package co.nimblehq.surveys.data.services.responses.user
 
 
 import co.nimblehq.surveys.domain.extensions.defaultEmpty
-import co.nimblehq.surveys.domain.models.UserModel
+import co.nimblehq.surveys.domain.models.user.UserModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

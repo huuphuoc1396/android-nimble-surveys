@@ -57,6 +57,7 @@ fun HomeDrawerContent(
                     text = name.defaultEmpty(),
                     style = MaterialTheme.typography.h4
                 )
+                Spacer(modifier = Modifier.size(8.dp))
                 Avatar(modifier = Modifier.padding(top = 4.dp), avatarUrl = avatarUrl)
             }
             Divider(
@@ -82,7 +83,7 @@ fun HomeDrawerContent(
 fun HomeDrawerContentPreview() {
     SurveysTheme {
         HomeDrawerContent(
-            name = null,
+            name = "Alex",
             avatarUrl = null,
             onLogoutClick = {},
         )
