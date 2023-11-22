@@ -31,7 +31,6 @@ import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.features.survey.list.SurveyList
 import co.nimblehq.surveys.ui.theme.SurveysTheme
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
@@ -104,7 +103,7 @@ private fun HomeContent(
             uiState.surveyPagingData?.let { pagingData ->
                 SurveyList(
                     modifier = Modifier.fillMaxSize(),
-                    pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
+                    pagingItems = pagingData.collectAsLazyPagingItems(),
                     onTakeSurveyClick = onTakeSurveyClick,
                 )
             }

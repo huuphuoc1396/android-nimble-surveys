@@ -45,11 +45,12 @@ fun HomeDrawerContent(
         Column(
             Modifier
                 .statusBarsPadding()
-                .padding(horizontal = 20.dp)
         ) {
             Spacer(modifier = Modifier.size(36.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.Top,
             ) {
                 Text(
@@ -61,17 +62,25 @@ fun HomeDrawerContent(
                 Avatar(modifier = Modifier.padding(top = 4.dp), avatarUrl = avatarUrl)
             }
             Divider(
-                modifier = Modifier.padding(vertical = 20.dp),
+                modifier = Modifier.padding(20.dp),
                 color = Color.White.copy(alpha = 0.2f)
             )
 
-            TextButton(onClick = onLogoutClick, contentPadding = PaddingValues(0.dp)) {
+            TextButton(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp),
+                onClick = onLogoutClick,
+                contentPadding = PaddingValues(horizontal = 0.dp),
+            ) {
                 Text(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxWidth(),
                     text = stringResource(R.string.logout),
                     style = MaterialTheme.typography.body1.copy(
                         color = Color.White.copy(alpha = 0.5f),
                         fontSize = 20.sp,
-                    )
+                    ),
                 )
             }
         }
