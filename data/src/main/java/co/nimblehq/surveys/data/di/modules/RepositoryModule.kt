@@ -2,8 +2,10 @@ package co.nimblehq.surveys.data.di.modules
 
 import co.nimblehq.surveys.data.repositories.AuthRepositoryImpl
 import co.nimblehq.surveys.data.repositories.SurveyRepositoryImpl
+import co.nimblehq.surveys.data.repositories.UserRepositoryImpl
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.repositories.SurveyRepository
+import co.nimblehq.surveys.domain.repositories.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +23,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun provideSurveyRepository(impl: SurveyRepositoryImpl): SurveyRepository
+
+    @Binds
+    @Singleton
+    fun provideUserRepository(impl: UserRepositoryImpl): UserRepository
 }

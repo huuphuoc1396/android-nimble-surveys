@@ -6,6 +6,7 @@ import co.nimblehq.surveys.data.services.requests.ClientRequestFactory
 import co.nimblehq.surveys.data.services.requests.logout.LogoutRequest
 import co.nimblehq.surveys.data.services.responses.user.toUserModel
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
 import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.repositories.AuthRepository
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val clientRequestFactory: ClientRequestFactory,
     private val nonAuthApiService: NonAuthApiService,
-    private val authApiService: AuthApiService,
     private val encryptedPrefsDatastore: EncryptedPrefsDatastore,
+    private val encryptedUserDatastore: EncryptedUserDatastore,
 ) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Boolean {
@@ -42,9 +43,6 @@ class AuthRepositoryImpl @Inject constructor(
         val request = clientRequestFactory.createLogoutRequest(token)
         nonAuthApiService.logout(request)
         encryptedPrefsDatastore.clearAll()
-    }
-
-    override suspend fun getUser(): UserModel? {
-        return authApiService.getUser().data?.toUserModel()
+        encryptedUserDatastore.clearAll()
     }
 }

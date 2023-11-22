@@ -23,7 +23,7 @@ class EncryptedPrefsDatastoreImpl @Inject constructor(
 ) : EncryptedPrefsDatastore {
 
     companion object {
-        private const val FILE_NAME = "encrypted_datastore.preferences_pb"
+        private const val FILE_NAME = "encrypted_prefs.preferences_pb"
 
         private val KEY_LOGGED_IN = booleanPreferencesKey("logged_in")
         private val KEY_TOKEN_TYPE = stringPreferencesKey("token_type")

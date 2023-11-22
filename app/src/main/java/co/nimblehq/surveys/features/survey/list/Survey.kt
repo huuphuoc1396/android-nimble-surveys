@@ -41,7 +41,7 @@ fun Survey(
             Text(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(top = 14.dp),
+                    .padding(top = 16.dp),
                 text = surveyModel.description,
                 style = MaterialTheme.typography.body1.copy(
                     color = Color.White.copy(alpha = 0.7f)

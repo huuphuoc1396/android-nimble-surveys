@@ -1,6 +1,5 @@
 package co.nimblehq.surveys.data.repositories
 
-import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.requests.ClientRequestFactory
 import co.nimblehq.surveys.data.services.requests.login.LoginRequest
@@ -9,6 +8,7 @@ import co.nimblehq.surveys.data.services.responses.DataResponse
 import co.nimblehq.surveys.data.services.responses.login.Attributes
 import co.nimblehq.surveys.data.services.responses.login.LoginResponse
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
@@ -21,14 +21,14 @@ class AuthRepositoryImplTest {
 
     private val clientRequestFactory: ClientRequestFactory = mockk()
     private val nonAuthApiService: NonAuthApiService = mockk()
-    private val authApiService: AuthApiService = mockk()
     private val encryptedPrefsDatastore: EncryptedPrefsDatastore = mockk()
+    private val encryptedUserDatastore: EncryptedUserDatastore = mockk()
 
     private val repositoryImpl = AuthRepositoryImpl(
         clientRequestFactory = clientRequestFactory,
         nonAuthApiService = nonAuthApiService,
-        authApiService = authApiService,
         encryptedPrefsDatastore = encryptedPrefsDatastore,
+        encryptedUserDatastore = encryptedUserDatastore,
     )
 
     @Test
@@ -43,27 +43,24 @@ class AuthRepositoryImplTest {
             clientId = "",
             clientSecret = ""
         )
+        val loginResponse = LoginResponse(
+            attributes = Attributes(
+                accessToken = accessToken,
+                createdAt = null,
+                expiresIn = null,
+                refreshToken = refreshToken,
+                tokenType = tokenType,
+            ),
+            id = "1",
+            type = "password",
+        )
         every {
             clientRequestFactory.createLoginRequest(
                 email = "tester@mail.com",
                 password = "1234",
             )
         } returns loginRequest
-        coEvery {
-            nonAuthApiService.login(request = loginRequest)
-        } returns DataResponse(
-            LoginResponse(
-                attributes = Attributes(
-                    accessToken = accessToken,
-                    createdAt = null,
-                    expiresIn = null,
-                    refreshToken = refreshToken,
-                    tokenType = tokenType,
-                ),
-                id = "1",
-                type = "password",
-            )
-        )
+        coEvery { nonAuthApiService.login(loginRequest) } returns DataResponse(loginResponse)
         coEvery { encryptedPrefsDatastore.setTokenType(tokenType) } returns Unit
         coEvery { encryptedPrefsDatastore.setAccessToken(accessToken) } returns Unit
         coEvery { encryptedPrefsDatastore.setRefreshToken(refreshToken) } returns Unit
@@ -129,6 +126,7 @@ class AuthRepositoryImplTest {
         coEvery { nonAuthApiService.logout(request = logoutRequest) } returns Unit
         coEvery { encryptedPrefsDatastore.accessToken } returns flowOf(accessToken)
         coEvery { encryptedPrefsDatastore.clearAll() } returns Unit
+        coEvery { encryptedUserDatastore.clearAll() } returns Unit
         repositoryImpl.logout() shouldBe Unit
     }
 

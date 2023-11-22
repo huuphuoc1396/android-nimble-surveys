@@ -14,4 +14,6 @@ object Plugins {
 
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
+
+    const val PROTOBUF = "com.google.protobuf"
 }

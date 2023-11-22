@@ -1,7 +1,10 @@
+import com.google.protobuf.gradle.id
+
 plugins {
     id(Plugins.ANDROID_LIB)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
+    id(Plugins.PROTOBUF)
 }
 
 android {
@@ -90,4 +93,27 @@ dependencies {
 
     implementation(Libs.Datastore.SECURITY_DATASTORE)
     implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
+    implementation(Libs.Protobuf.JAVALITE)
+}
+
+protobuf {
+    protoc {
+        artifact = "${Libs.Protobuf.PROTOC}:osx-x86_64"
+    }
+
+    plugins {
+        id("javalite") {
+            artifact = "${Libs.Protobuf.JAVALITE}:osx-x86_64"
+        }
+    }
+
+    generateProtoTasks {
+        all().forEach {
+            it.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
