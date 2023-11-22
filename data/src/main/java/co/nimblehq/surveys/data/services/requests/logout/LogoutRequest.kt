@@ -1,7 +1,6 @@
 package co.nimblehq.surveys.data.services.requests.logout
 
 
-import co.nimblehq.surveys.data.services.requests.ClientRequest
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -9,4 +8,8 @@ import com.squareup.moshi.JsonClass
 data class LogoutRequest(
     @Json(name = "token")
     val token: String,
-) : ClientRequest()
+    @Json(name = "client_id")
+    val clientId: String,
+    @Json(name = "client_secret")
+    val clientSecret: String,
+)

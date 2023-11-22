@@ -3,6 +3,8 @@ package co.nimblehq.surveys.features
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import co.nimblehq.surveys.features.navigation.AppNavHost
@@ -10,6 +12,8 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFoundationApi
+@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

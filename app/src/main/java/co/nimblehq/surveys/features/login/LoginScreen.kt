@@ -21,6 +21,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
@@ -48,6 +49,7 @@ import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
 
+@ExperimentalComposeUiApi
 @Composable
 fun LoginScreen(
     navController: NavHostController = rememberNavController(),

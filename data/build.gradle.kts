@@ -82,6 +82,9 @@ dependencies {
     releaseImplementation(Libs.Chucker.LIB_NO_OP)
 
     testImplementation(Libs.JUNIT)
+    testImplementation(Libs.MOCKK)
+    testImplementation(Libs.KOTEST)
+    testImplementation(Libs.Kotlin.COROUTINES_TEST)
 
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
 

@@ -37,4 +37,4 @@ fun <R> Flow<R>.safeFlow(
 
 fun <T> T.wrapSuccess() = Result.success(this)
 
-fun <T> CaughtException.wrapFailure() = Result.failure<T>(this)
+fun <T> Throwable.wrapFailure() = Result.failure<T>(this)

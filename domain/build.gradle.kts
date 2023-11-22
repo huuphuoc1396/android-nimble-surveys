@@ -14,4 +14,7 @@ dependencies {
     implementation(Libs.JAVAX_INJECT)
 
     testImplementation(Libs.JUNIT)
+    testImplementation(Libs.MOCKK)
+    testImplementation(Libs.KOTEST)
+    testImplementation(Libs.Kotlin.COROUTINES_TEST)
 }

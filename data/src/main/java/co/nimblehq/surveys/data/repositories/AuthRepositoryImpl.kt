@@ -2,7 +2,7 @@ package co.nimblehq.surveys.data.repositories
 
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.NonAuthApiService
-import co.nimblehq.surveys.data.services.requests.login.LoginRequest
+import co.nimblehq.surveys.data.services.requests.ClientRequestFactory
 import co.nimblehq.surveys.data.services.requests.logout.LogoutRequest
 import co.nimblehq.surveys.data.services.responses.user.toUserModel
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
@@ -14,13 +14,15 @@ import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
+    private val clientRequestFactory: ClientRequestFactory,
     private val nonAuthApiService: NonAuthApiService,
     private val authApiService: AuthApiService,
     private val encryptedPrefsDatastore: EncryptedPrefsDatastore,
 ) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Boolean {
-        val data = nonAuthApiService.login(LoginRequest(email, password)).data
+        val request = clientRequestFactory.createLoginRequest(email, password)
+        val data = nonAuthApiService.login(request).data
         val isLoggedIn = data != null
         if (isLoggedIn) {
             encryptedPrefsDatastore.setTokenType(data?.attributes?.tokenType.defaultEmpty())
@@ -37,7 +39,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         val token = encryptedPrefsDatastore.accessToken.firstOrNull().defaultEmpty()
-        val request = LogoutRequest(token)
+        val request = clientRequestFactory.createLogoutRequest(token)
         nonAuthApiService.logout(request)
         encryptedPrefsDatastore.clearAll()
     }

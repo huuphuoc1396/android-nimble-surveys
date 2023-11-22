@@ -1,7 +1,7 @@
 package co.nimblehq.surveys.data.services.interceptors
 
 import co.nimblehq.surveys.data.services.NonAuthApiService
-import co.nimblehq.surveys.data.services.requests.refresh.token.RefreshTokenRequest
+import co.nimblehq.surveys.data.services.requests.ClientRequestFactory
 import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
 import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import kotlinx.coroutines.flow.firstOrNull
@@ -14,6 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
+    private val clientRequestFactory: ClientRequestFactory,
     private val nonAuthApiService: NonAuthApiService,
     private val encryptedPrefsDatastore: EncryptedPrefsDatastore,
 ) : Authenticator {
@@ -30,8 +31,8 @@ class TokenAuthenticator @Inject constructor(
             .refreshToken
             .firstOrNull() ?: return@runBlocking ""
         val data = try {
-            val refreshTokenRequest = RefreshTokenRequest(refreshToken = refreshToken)
-            nonAuthApiService.refreshToken(refreshTokenRequest).data
+            val request = clientRequestFactory.createRefreshTokenRequest(refreshToken)
+            nonAuthApiService.refreshToken(request).data
         } catch (e: Exception) {
             Timber.e(e)
             null

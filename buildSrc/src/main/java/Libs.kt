@@ -17,6 +17,7 @@ object Libs {
         const val COMPOSE_MATERIAL = "androidx.compose.material:material"
         const val NAV_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAV_COMPOSE}"
 
+        const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
 
@@ -27,11 +28,10 @@ object Libs {
     object Kotlin {
         const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
         const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
+        const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"
     }
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-
-    const val JUNIT = "junit:junit:${Versions.JUNIT}"
 
     const val JAVAX_INJECT = "javax.inject:javax.inject:${Versions.JAVAX_INJECT}"
 
@@ -78,4 +78,9 @@ object Libs {
     }
 
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
+
+    const val JUNIT = "junit:junit:${Versions.JUNIT}"
+    const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
+    const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
+    const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
 }

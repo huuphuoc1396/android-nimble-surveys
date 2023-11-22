@@ -111,6 +111,8 @@ dependencies {
     implementation(Libs.AndroidX.COMPOSE_UI_GRAPHICS)
     implementation(Libs.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
     implementation(Libs.AndroidX.COMPOSE_MATERIAL)
+    debugImplementation(Libs.AndroidX.COMPOSE_UI_TOOLING)
+    debugImplementation(Libs.AndroidX.COMPOSE_UI_TEST_MANIFEST)
 
     implementation(Libs.Accompanist.INSETS)
     implementation(Libs.Accompanist.PAGER)
@@ -121,25 +123,26 @@ dependencies {
     implementation(Libs.Hilt.NAV_COMPOSE)
     kapt(Libs.Hilt.COMPILER)
 
-    implementation(Libs.TIMBER)
+    implementation(Libs.COIL_COMPOSE)
 
-    debugImplementation(Libs.AndroidX.COMPOSE_UI_TOOLING)
-    debugImplementation(Libs.AndroidX.COMPOSE_UI_TEST_MANIFEST)
-
-    testImplementation(Libs.JUNIT)
-
-    androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
-    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)
-
-    androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
-    androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
+    implementation(Libs.AndroidX.PAGGING_RUNTIME)
+    implementation(Libs.AndroidX.PAGGING_COMPOSE)
 
     implementation(platform(Libs.Firebase.BOM))
     implementation(Libs.Firebase.ANALYTICS)
     implementation(Libs.Firebase.CRASHLYTICS)
 
-    implementation(Libs.COIL_COMPOSE)
+    implementation(Libs.TIMBER)
 
-    implementation(Libs.AndroidX.PAGGING_RUNTIME)
-    implementation(Libs.AndroidX.PAGGING_COMPOSE)
+    testImplementation(Libs.JUNIT)
+    testImplementation(Libs.MOCKK)
+    testImplementation(Libs.KOTEST)
+    testImplementation(Libs.Kotlin.COROUTINES_TEST)
+    testImplementation(Libs.AndroidX.CORE_TESTING)
+    testImplementation(Libs.TURBINE)
+
+    androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
+    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)
+    androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
+    androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
 }

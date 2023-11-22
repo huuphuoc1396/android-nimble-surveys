@@ -12,6 +12,7 @@ object Versions {
     const val LIFECYCLE_RUNTIME_KTX = "2.6.2"
     const val ACTIVITY_COMPOSE = "1.8.1"
     const val SECURITY_CRYPTO = "1.0.0"
+    const val CORE_TESTING = "2.2.0"
 
     const val PAGGING_RUNTIME = "3.3.0-alpha02"
     const val PAGGING_COMPOSE = "1.0.0-alpha18"
@@ -45,4 +46,10 @@ object Versions {
     const val SECURITY_DATASTORE = "1.0.0-beta01"
 
     const val COIL: String = "2.5.0"
+
+    const val MOCKK: String = "1.13.8"
+
+    const val KOTEST: String = "5.8.0"
+
+    const val TURBINE = "1.0.0"
 }

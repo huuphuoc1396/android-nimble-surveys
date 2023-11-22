@@ -24,7 +24,7 @@ import co.nimblehq.surveys.features.components.DotsIndicator
 import co.nimblehq.surveys.features.components.Loading
 import co.nimblehq.surveys.features.error.userReadableMessage
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 @Composable
 fun SurveyList(
     modifier: Modifier = Modifier,
