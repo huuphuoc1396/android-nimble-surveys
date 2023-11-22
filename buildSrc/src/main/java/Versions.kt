@@ -45,4 +45,8 @@ object Versions {
     const val SECURITY_DATASTORE = "1.0.0-beta01"
 
     const val COIL: String = "2.5.0"
+
+    const val MOCKK: String = "1.13.8"
+
+    const val KOTEST: String = "5.8.0"
 }

@@ -27,11 +27,10 @@ object Libs {
     object Kotlin {
         const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
         const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
+        const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"
     }
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-
-    const val JUNIT = "junit:junit:${Versions.JUNIT}"
 
     const val JAVAX_INJECT = "javax.inject:javax.inject:${Versions.JAVAX_INJECT}"
 
@@ -78,4 +77,8 @@ object Libs {
     }
 
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
+
+    const val JUNIT = "junit:junit:${Versions.JUNIT}"
+    const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
+    const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
 }
