@@ -1,5 +1,6 @@
 package co.nimblehq.surveys.features.navigation
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -46,6 +47,7 @@ fun AppNavHost(
 
         composable(destination = AppDestination.SurveyDetail) { backStackEntry ->
             SurveyDetailScreen(
+                id = AppDestination.SurveyDetail.getId(backStackEntry),
                 navController = navController,
             )
         }
@@ -55,7 +57,7 @@ fun AppNavHost(
 private fun NavGraphBuilder.composable(
     destination: AppDestination,
     deepLinks: List<NavDeepLink> = emptyList(),
-    content: @Composable (NavBackStackEntry) -> Unit
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = destination.route,

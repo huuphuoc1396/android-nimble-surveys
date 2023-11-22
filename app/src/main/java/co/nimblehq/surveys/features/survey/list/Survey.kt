@@ -28,6 +28,7 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 fun Survey(
     modifier: Modifier = Modifier,
     surveyModel: SurveyModel,
+    onTakeSurveyClick: (String) -> Unit,
 ) {
     Column(modifier) {
         Text(
@@ -55,7 +56,7 @@ fun Survey(
                     .size(56.dp, 56.dp)
                     .padding(top = 2.dp)
                     .background(Color.White, CircleShape),
-                onClick = { /*TODO*/ },
+                onClick = { onTakeSurveyClick(surveyModel.id) },
             ) {
                 Image(
                     modifier = Modifier.size(28.dp, 30.dp),
@@ -80,7 +81,8 @@ fun SurveyPreview() {
                 description = "We would like to know how you feel about our work from home...",
                 coverUrl = "",
                 totalRecords = 20,
-            )
+            ),
+            onTakeSurveyClick = {},
         )
     }
 }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -31,16 +30,17 @@ import co.nimblehq.surveys.features.error.userReadableMessage
 fun SurveyList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<SurveyModel>,
-    state: LazyListState = rememberLazyListState(),
+    onTakeSurveyClick: (String) -> Unit,
 ) {
-    val flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
-    val selectedIndex by remember { derivedStateOf { state.firstVisibleItemIndex } }
+    val listState = rememberLazyListState()
+    val flingBehavior = rememberSnapFlingBehavior(listState)
+    val selectedIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     BoxWithConstraints(
         contentAlignment = Alignment.BottomStart,
     ) {
         LazyRow(
             modifier = modifier,
-            state = state,
+            state = listState,
             flingBehavior = flingBehavior,
         ) {
             items(pagingItems.itemCount) { index ->
@@ -48,6 +48,7 @@ fun SurveyList(
                     SurveyItem(
                         Modifier.size(maxWidth, maxHeight),
                         surveyModel = surveyModel,
+                        onTakeSurveyClick = onTakeSurveyClick,
                     )
                 }
             }

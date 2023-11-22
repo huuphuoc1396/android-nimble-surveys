@@ -20,6 +20,7 @@ import co.nimblehq.surveys.features.survey.list.SurveyPagingSource
 import co.nimblehq.surveys.state.UiStateDelegate
 import co.nimblehq.surveys.state.UiStateDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,11 +33,12 @@ class HomeViewModel @Inject constructor(
 
     data class UiState(
         val userModel: UserModel? = null,
-        val surveyPagingData: PagingData<SurveyModel>? = null,
+        val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
     )
 
     sealed interface Event {
         data object GoToLogin : Event
+        data class GoToSurveyDetail(val id: String) : Event
     }
 
     init {
@@ -46,7 +48,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getSurveyList() {
         launch {
-            Pager(
+            val pagingData = Pager(
                 config = PagingConfig(
                     pageSize = SurveyPageConfig.PAGE_SIZE,
                     prefetchDistance = SurveyPageConfig.PAGE_SIZE / 2
@@ -57,11 +59,9 @@ class HomeViewModel @Inject constructor(
             )
                 .flow
                 .cachedIn(viewModelScope)
-                .collect { pagingData ->
-                    reduceAsync(viewModelScope) { uiState ->
-                        uiState.copy(surveyPagingData = pagingData)
-                    }
-                }
+            reduceAsync(viewModelScope) { uiState ->
+                uiState.copy(surveyPagingData = pagingData)
+            }
         }
     }
 
@@ -83,6 +83,12 @@ class HomeViewModel @Inject constructor(
             logoutUseCase(EmptyParams)
                 .onFailure { error -> sendError(error) }
             sendEvent(Event.GoToLogin)
+        }
+    }
+
+    fun onTakeSurveyClick(id: String) {
+        launch {
+            sendEvent(Event.GoToSurveyDetail(id))
         }
     }
 }
