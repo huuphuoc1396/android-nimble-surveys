@@ -82,7 +82,9 @@ class HomeViewModel @Inject constructor(
         launch(loading = this) {
             logoutUseCase(EmptyParams)
                 .onFailure { error -> sendError(error) }
-            sendEvent(Event.GoToLogin)
+                .onSuccess {
+                    sendEvent(Event.GoToLogin)
+                }
         }
     }
 
