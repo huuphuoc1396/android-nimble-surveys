@@ -139,7 +139,7 @@ dependencies {
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
     testImplementation(Libs.AndroidX.CORE_TESTING)
-    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation(Libs.TURBINE)
 
     androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
     androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)

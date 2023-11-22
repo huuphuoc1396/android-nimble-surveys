@@ -82,4 +82,5 @@ object Libs {
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
     const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
+    const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
 }

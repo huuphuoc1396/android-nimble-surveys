@@ -1,6 +1,8 @@
 package co.nimblehq.surveys.features.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
@@ -15,6 +17,8 @@ import co.nimblehq.surveys.features.login.LoginScreen
 import co.nimblehq.surveys.features.splash.SplashScreen
 import co.nimblehq.surveys.features.survey.detail.SurveyDetailScreen
 
+@ExperimentalFoundationApi
+@ExperimentalComposeUiApi
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),

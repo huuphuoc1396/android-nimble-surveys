@@ -50,4 +50,6 @@ object Versions {
     const val MOCKK: String = "1.13.8"
 
     const val KOTEST: String = "5.8.0"
+
+    const val TURBINE = "1.0.0"
 }
