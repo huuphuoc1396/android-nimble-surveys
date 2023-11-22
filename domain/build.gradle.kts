@@ -11,11 +11,10 @@ java {
 dependencies {
 
     implementation(Libs.Kotlin.COROUTINES_CORE)
-    testImplementation(Libs.Kotlin.COROUTINES_TEST)
-
     implementation(Libs.JAVAX_INJECT)
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
+    testImplementation(Libs.Kotlin.COROUTINES_TEST)
 }

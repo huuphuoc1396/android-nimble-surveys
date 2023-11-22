@@ -20,7 +20,7 @@ std::string getData(int x) {
 }
 
 extern "C" jstring
-Java_co_nimblehq_surveys_data_services_requests_ClientRequest_getApiKey(
+Java_co_nimblehq_surveys_data_services_providers_ApiServiceProvider_getApiKey(
         JNIEnv *env,
         jclass,
         jint id

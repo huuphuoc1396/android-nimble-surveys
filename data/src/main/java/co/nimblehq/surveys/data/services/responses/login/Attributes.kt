@@ -1,11 +1,11 @@
-package co.nimblehq.surveys.data.services.responses.auth
+package co.nimblehq.surveys.data.services.responses.login
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class AuthAttributesResponse(
+data class Attributes(
     @Json(name = "access_token")
     val accessToken: String?,
     @Json(name = "created_at")
