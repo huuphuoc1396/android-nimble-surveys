@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.features.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +49,10 @@ fun HomeScreen(
                     popUpTo(AppDestination.Home.route) { inclusive = true }
                 }
             }
+
+            is HomeViewModel.Event.GoToSurveyDetail -> {
+                navController.navigate(AppDestination.SurveyDetail.createRoute(id = event.id))
+            }
         }
     }
 
@@ -58,7 +64,11 @@ fun HomeScreen(
     val isLoading by viewModel.collectLoadingWithLifecycle()
     LoadingContent(isLoading) {
         val uiState by viewModel.collectUiStateWithLifecycle()
-        HomeContent(uiState, onLogoutClick = viewModel::onLogoutClick)
+        HomeContent(
+            uiState,
+            onLogoutClick = viewModel::onLogoutClick,
+            onTakeSurveyClick = viewModel::onTakeSurveyClick,
+        )
     }
 }
 
@@ -66,11 +76,18 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     uiState: HomeViewModel.UiState,
+    modifier: Modifier = Modifier,
     onLogoutClick: () -> Unit = {},
+    onTakeSurveyClick: (String) -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    scope: CoroutineScope = rememberCoroutineScope(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     HomeDrawer(
+        modifier = modifier.pointerInput(Unit) {
+            detectTapGestures {
+                coroutineScope.launch { drawerState.close() }
+            }
+        },
         drawerState = drawerState,
         drawerContent = {
             HomeDrawerContent(
@@ -78,7 +95,7 @@ private fun HomeContent(
                 avatarUrl = uiState.userModel?.avatarUrl,
                 onLogoutClick = {
                     onLogoutClick()
-                    scope.launch { drawerState.close() }
+                    coroutineScope.launch { drawerState.close() }
                 }
             )
         }
@@ -88,6 +105,7 @@ private fun HomeContent(
                 SurveyList(
                     modifier = Modifier.fillMaxSize(),
                     pagingItems = flowOf(pagingData).collectAsLazyPagingItems(),
+                    onTakeSurveyClick = onTakeSurveyClick,
                 )
             }
 
@@ -95,7 +113,7 @@ private fun HomeContent(
                 modifier = Modifier.statusBarsPadding(),
                 avatarUrl = uiState.userModel?.avatarUrl,
                 onAccountClick = {
-                    scope.launch { drawerState.open() }
+                    coroutineScope.launch { drawerState.open() }
                 },
             )
         }

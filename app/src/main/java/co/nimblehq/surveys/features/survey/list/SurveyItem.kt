@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 fun SurveyItem(
     modifier: Modifier = Modifier,
     surveyModel: SurveyModel,
+    onTakeSurveyClick: (String) -> Unit,
 ) {
     Box(
         modifier.fillMaxHeight(),
@@ -46,6 +47,7 @@ fun SurveyItem(
         Survey(
             modifier = Modifier.padding(20.dp),
             surveyModel = surveyModel,
+            onTakeSurveyClick = onTakeSurveyClick,
         )
     }
 }
@@ -61,7 +63,8 @@ fun SurveyItemPreview() {
                 description = "We would like to know how you feel about our work from home...",
                 coverUrl = "",
                 totalRecords = 20,
-            )
+            ),
+            onTakeSurveyClick = {},
         )
     }
 }

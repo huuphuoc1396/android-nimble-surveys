@@ -32,6 +32,7 @@ fun SurveyList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<SurveyModel>,
     state: LazyListState = rememberLazyListState(),
+    onTakeSurveyClick: (String) -> Unit,
 ) {
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
     val selectedIndex by remember { derivedStateOf { state.firstVisibleItemIndex } }
@@ -48,6 +49,7 @@ fun SurveyList(
                     SurveyItem(
                         Modifier.size(maxWidth, maxHeight),
                         surveyModel = surveyModel,
+                        onTakeSurveyClick = onTakeSurveyClick,
                     )
                 }
             }

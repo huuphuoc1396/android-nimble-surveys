@@ -37,6 +37,7 @@ class HomeViewModel @Inject constructor(
 
     sealed interface Event {
         data object GoToLogin : Event
+        data class GoToSurveyDetail(val id: String) : Event
     }
 
     init {
@@ -83,6 +84,12 @@ class HomeViewModel @Inject constructor(
             logoutUseCase(EmptyParams)
                 .onFailure { error -> sendError(error) }
             sendEvent(Event.GoToLogin)
+        }
+    }
+
+    fun onTakeSurveyClick(id: String) {
+        launch {
+            sendEvent(Event.GoToSurveyDetail(id))
         }
     }
 }
