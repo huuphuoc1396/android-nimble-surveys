@@ -13,8 +13,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class GetSurveyListUseCaseTest {
 
     private val surveyRepository = mockk<SurveyRepository>()

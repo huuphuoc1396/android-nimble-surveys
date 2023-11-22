@@ -1,12 +1,10 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.usecases.EmptyParams
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -14,7 +12,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class GetLoggedInUseCaseTest {
 
     private val authRepository = mockk<AuthRepository>()
