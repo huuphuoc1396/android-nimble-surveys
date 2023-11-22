@@ -17,6 +17,7 @@ object Libs {
         const val COMPOSE_MATERIAL = "androidx.compose.material:material"
         const val NAV_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAV_COMPOSE}"
 
+        const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
 

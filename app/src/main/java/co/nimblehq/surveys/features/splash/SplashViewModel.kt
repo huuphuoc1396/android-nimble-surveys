@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
         checkLoggedIn()
     }
 
-    private fun checkLoggedIn() {
+    fun checkLoggedIn() {
         launch {
             delay(SPLASH_DELAY)
             getLoggedInUseCase(EmptyParams).collect { isLoggedInResult ->
