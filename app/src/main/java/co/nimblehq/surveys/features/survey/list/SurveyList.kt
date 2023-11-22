@@ -2,7 +2,9 @@ package co.nimblehq.surveys.features.survey.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
@@ -84,10 +86,12 @@ fun SurveyList(
         }
 
         val firstSurveyModel = pagingItems.itemSnapshotList.firstOrNull()
-        DotsIndicator(
-            modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 172.dp),
-            totalDots = firstSurveyModel?.totalRecords.defaultZero(),
-            selectedIndex = selectedIndex,
-        )
+        Box(modifier = Modifier.navigationBarsPadding()) {
+            DotsIndicator(
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 152.dp),
+                totalDots = firstSurveyModel?.totalRecords.defaultZero(),
+                selectedIndex = selectedIndex,
+            )
+        }
     }
 }

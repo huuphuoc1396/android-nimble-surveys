@@ -7,4 +7,6 @@ interface EncryptedUserDatastore {
     suspend fun saveUser(userModel: UserModel)
 
     fun getUser(): Flow<UserModel>
+
+    suspend fun clearAll()
 }

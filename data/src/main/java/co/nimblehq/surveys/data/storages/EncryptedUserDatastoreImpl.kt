@@ -53,6 +53,12 @@ class EncryptedUserDatastoreImpl @Inject constructor(
         return dataStore.data.map { userData -> userData.toUserModel() }
     }
 
+    override suspend fun clearAll() {
+        dataStore.updateData { userData ->
+            userData.toBuilder().clear().build()
+        }
+    }
+
     private fun UserData.toUserModel(): UserModel = UserModel(
         id = id,
         name = name,

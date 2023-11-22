@@ -20,7 +20,6 @@ import co.nimblehq.surveys.features.survey.list.SurveyPagingSource
 import co.nimblehq.surveys.state.UiStateDelegate
 import co.nimblehq.surveys.state.UiStateDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,7 +45,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getSurveyList() {
-        viewModelScope.launch {
+        launch {
             Pager(
                 config = PagingConfig(
                     pageSize = SurveyPageConfig.PAGE_SIZE,
@@ -67,12 +66,14 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getUser() {
-        launch(loading = this) {
-            val userModel = getUserUseCase(EmptyParams)
-                .onFailure { error -> sendError(error) }
-                .getOrNull()
-            reduceAsync(viewModelScope) { uiState ->
-                uiState.copy(userModel = userModel)
+        launch {
+            getUserUseCase(EmptyParams).collect { userResult ->
+                val userModel = userResult
+                    .onFailure { error -> sendError(error) }
+                    .getOrNull()
+                reduceAsync(viewModelScope) { uiState ->
+                    uiState.copy(userModel = userModel)
+                }
             }
         }
     }
