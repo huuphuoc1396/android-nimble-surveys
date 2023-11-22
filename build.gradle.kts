@@ -10,4 +10,6 @@ plugins {
 
     id(Plugins.GOOGLE_SERVICES) version Versions.GOOGLE_SERVICES apply false
     id(Plugins.FIREBASE_CRASHLYTICS) version Versions.FIREBASE_CRASHLYTICS apply false
+
+    id(Plugins.PROTOBUF) version Versions.PROTOBUF apply false
 }

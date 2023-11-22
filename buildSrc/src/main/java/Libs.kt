@@ -83,4 +83,9 @@ object Libs {
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
     const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
     const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
+
+    object Protobuf {
+        const val PROTOC = "com.google.protobuf:protoc:${Versions.PROTOC}"
+        const val JAVALITE = "com.google.protobuf:protobuf-javalite:${Versions.PROTOBUF_JAVALITE}"
+    }
 }

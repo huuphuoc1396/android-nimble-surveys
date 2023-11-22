@@ -52,4 +52,8 @@ object Versions {
     const val KOTEST: String = "5.8.0"
 
     const val TURBINE = "1.0.0"
+
+    const val PROTOBUF = "0.9.4"
+    const val PROTOC = "3.9.2"
+    const val PROTOBUF_JAVALITE = "3.23.0"
 }
