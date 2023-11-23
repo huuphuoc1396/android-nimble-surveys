@@ -79,10 +79,8 @@ dependencies {
 
     implementation(Libs.TIMBER)
 
+    implementation(Libs.CHUCKER)
     implementation(Libs.LOGGING_INTERCEPTOR)
-
-    debugImplementation(Libs.Chucker.LIB)
-    releaseImplementation(Libs.Chucker.LIB_NO_OP)
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.MOCKK)

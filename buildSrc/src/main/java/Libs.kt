@@ -52,10 +52,7 @@ object Libs {
         const val RETROFIT_MOSHI = "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
     }
 
-    object Chucker {
-        const val LIB = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
-        const val LIB_NO_OP = "com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER}"
-    }
+    const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
 
     const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
 
