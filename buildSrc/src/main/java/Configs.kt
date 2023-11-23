@@ -3,7 +3,7 @@ object Configs {
     const val APP_ID = "co.nimblehq.surveys"
     const val NAMSPACE = "co.nimblehq.surveys"
 
-    const val VERSION_CODE = 2
+    const val VERSION_CODE = 3
     const val VERSION_NAME = "1.0.0"
 
     const val COMPLIE_SDK = 34

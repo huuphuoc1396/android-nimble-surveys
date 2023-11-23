@@ -39,6 +39,7 @@ android {
             isMinifyEnabled = Builds.Release.isMinifyEnabled
             isShrinkResources = Builds.Release.isShrinkResources
             signingConfig = signingConfigs[Builds.Debug.name]
+            isDebuggable = Builds.Release.isDebuggable
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
 
@@ -46,6 +47,7 @@ android {
             isMinifyEnabled = Builds.Debug.isMinifyEnabled
             isShrinkResources = Builds.Debug.isShrinkResources
             signingConfig = signingConfigs[Builds.Debug.name]
+            isDebuggable = Builds.Debug.isDebuggable
             proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
         }
     }
