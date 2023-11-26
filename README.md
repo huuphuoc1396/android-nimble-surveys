@@ -28,11 +28,11 @@ An application allows users to browse a list of surveys.
 - Storages: Datastore.
 - JSON parser: Moshi.
 - Paging: Paging 3.
-- Image Loader: Coil.
+- Image loading: Coil.
 - Unit Testing: Mockk, Kotest, JUnit.
-- Logger: Timber, Chucker, and OkHttp logging interceptor.
-- Analytics: Firebase Crashlytics.
-- Security: Encrypted Datastore, ProGuard.
+- Logger: Timber, Chucker, OkHttp logging interceptor.
+- Crashlytics: Firebase Crashlytics.
+- Security: Encrypted Datastore, ProGuard, protect API keys with CMake
 - CI/CD: Bitrise.io auto-build when a push event was triggered.
 
 ## Need to improve
@@ -48,10 +48,10 @@ An application allows users to browse a list of surveys.
 - Integrate code analytics and unit test running into the CI process when a PR event is triggered.
 
 ## Thank you
-I would like to thank some other GitHub resources that I have used in this project.
-- Android Nimble Template: https://github.com/nimblehq/android-templates
+Thanks to GitHub repositories used in this project.
+- Nimble Android Template: https://github.com/nimblehq/android-templates
 - Encrypted Datastore: https://github.com/osipxd/encrypted-datastore
-- Paging compose sample: https://github.com/mohammadjoumani/paging_movie_app_jetpack_compose
+- Paging Compose sample: https://github.com/mohammadjoumani/paging_movie_app_jetpack_compose
 - Android UI State Delegate: https://github.com/Ilinich/Android-UIState-Delegate
 
-_In a short time, maybe there will be some issues or bugs in the project. So, I would be happy if you review this project, and hope to receive your feedback to improve it better._
+_In a short time, maybe there will be some issues or bugs in the project. So, I would be happy if you review this project, and hope to receive your feedbacks to improve it better._
