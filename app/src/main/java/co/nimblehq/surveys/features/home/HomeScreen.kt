@@ -1,5 +1,8 @@
 package co.nimblehq.surveys.features.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -19,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import co.nimblehq.surveys.extensions.collectErrorEffect
 import co.nimblehq.surveys.extensions.collectEventEffect
@@ -101,20 +105,29 @@ private fun HomeContent(
     ) {
         Box(Modifier.fillMaxSize()) {
             uiState.surveyPagingData?.let { pagingData ->
+                val pagingItems = pagingData.collectAsLazyPagingItems()
                 SurveyList(
                     modifier = Modifier.fillMaxSize(),
-                    pagingItems = pagingData.collectAsLazyPagingItems(),
+                    pagingItems = pagingItems,
                     onTakeSurveyClick = onTakeSurveyClick,
                 )
-            }
 
-            HomeTopBar(
-                modifier = Modifier.statusBarsPadding(),
-                avatarUrl = uiState.userModel?.avatarUrl,
-                onAccountClick = {
-                    coroutineScope.launch { drawerState.open() }
-                },
-            )
+                HomeTopBar(
+                    modifier = Modifier.statusBarsPadding(),
+                    avatarUrl = uiState.userModel?.avatarUrl,
+                    onAccountClick = {
+                        coroutineScope.launch { drawerState.open() }
+                    },
+                )
+
+                AnimatedVisibility(
+                    visible = pagingItems.loadState.refresh is LoadState.Loading,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    HomeShimmerLoading()
+                }
+            }
         }
     }
 }
