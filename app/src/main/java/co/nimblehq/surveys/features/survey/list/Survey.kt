@@ -2,10 +2,12 @@ package co.nimblehq.surveys.features.survey.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,7 +32,10 @@ fun Survey(
     surveyModel: SurveyModel,
     onTakeSurveyClick: (String) -> Unit,
 ) {
-    Column(modifier) {
+    Column(
+        modifier.height(146.dp),
+        verticalArrangement = Arrangement.Top
+    ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = surveyModel.title,
@@ -47,7 +52,7 @@ fun Survey(
                 style = MaterialTheme.typography.body1.copy(
                     color = Color.White.copy(alpha = 0.7f)
                 ),
-                maxLines = 2,
+                minLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.size(20.dp))
