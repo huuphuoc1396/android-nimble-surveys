@@ -143,6 +143,7 @@ dependencies {
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
     testImplementation(Libs.AndroidX.CORE_TESTING)
     testImplementation(Libs.TURBINE)
+    testImplementation(Libs.AndroidX.PAGGING_TEST)
 
     androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
     androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)

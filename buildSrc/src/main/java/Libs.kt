@@ -23,6 +23,7 @@ object Libs {
 
         const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGGING_RUNTIME}"
         const val PAGGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGGING_COMPOSE}"
+        const val PAGGING_TEST = "androidx.paging:paging-testing:${Versions.PAGGING_RUNTIME}"
     }
 
     object Kotlin {
