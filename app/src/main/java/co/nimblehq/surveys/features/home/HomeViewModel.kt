@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
             val pagingData = Pager(
                 config = PagingConfig(
                     pageSize = SurveyPageConfig.PAGE_SIZE,
-                    prefetchDistance = SurveyPageConfig.PAGE_SIZE / 2
+                    prefetchDistance = 1,
                 ),
                 pagingSourceFactory = {
                     SurveyPagingSource(getSurveyListUseCase)

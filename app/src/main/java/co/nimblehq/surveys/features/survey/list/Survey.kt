@@ -33,8 +33,10 @@ fun Survey(
     onTakeSurveyClick: (String) -> Unit,
 ) {
     Column(
-        modifier.height(146.dp),
-        verticalArrangement = Arrangement.Top
+        modifier = modifier
+            .height(152.dp)
+            .navigationBarsPadding(),
+        verticalArrangement = Arrangement.Bottom,
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -52,7 +54,7 @@ fun Survey(
                 style = MaterialTheme.typography.body1.copy(
                     color = Color.White.copy(alpha = 0.7f)
                 ),
-                minLines = 2,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.size(20.dp))
@@ -71,7 +73,6 @@ fun Survey(
             }
         }
         Spacer(modifier = Modifier.size(20.dp))
-        Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
 
@@ -85,7 +86,6 @@ fun SurveyPreview() {
                 title = "Working from home Check-In",
                 description = "We would like to know how you feel about our work from home...",
                 coverUrl = "",
-                totalRecords = 20,
             ),
             onTakeSurveyClick = {},
         )

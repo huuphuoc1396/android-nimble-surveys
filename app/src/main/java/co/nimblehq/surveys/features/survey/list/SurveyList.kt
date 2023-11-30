@@ -90,11 +90,10 @@ fun SurveyList(
             }
         }
 
-        val firstSurveyModel = pagingItems.itemSnapshotList.firstOrNull()
         Box(modifier = Modifier.navigationBarsPadding()) {
             DotsIndicator(
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 172.dp),
-                totalDots = firstSurveyModel?.totalRecords.defaultZero(),
+                totalDots = pagingItems.itemSnapshotList.size,
                 selectedIndex = selectedIndex,
             )
         }
