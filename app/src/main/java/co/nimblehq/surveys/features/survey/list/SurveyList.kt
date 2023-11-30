@@ -54,9 +54,7 @@ fun SurveyList(
             }
 
             when {
-                pagingItems.loadState.refresh is LoadState.Loading -> {
-                    item { Loading(Modifier.size(maxWidth, maxHeight)) }
-                }
+                pagingItems.loadState.refresh is LoadState.Loading -> {}
 
                 pagingItems.loadState.refresh is LoadState.Error -> {
                     val error = (pagingItems.loadState.refresh as LoadState.Error).error
