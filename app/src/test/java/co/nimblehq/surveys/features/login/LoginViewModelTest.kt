@@ -24,6 +24,24 @@ class LoginViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `When email and password valid, it enables login button`() = runTest {
+        loginViewModel.onEmailChanged("tester@mail.com")
+        loginViewModel.onPasswordChanged("12345678")
+        loginViewModel.uiStateFlow.test {
+            expectMostRecentItem().isLoginEnabled shouldBe true
+        }
+    }
+
+    @Test
+    fun `When email and password invalid, it disables login button`() = runTest {
+        loginViewModel.onEmailChanged("")
+        loginViewModel.onPasswordChanged("")
+        loginViewModel.uiStateFlow.test {
+            expectMostRecentItem().isLoginEnabled shouldBe false
+        }
+    }
+
+    @Test
     fun `When email changed, it updates email in the UiState`() = runTest {
         loginViewModel.onEmailChanged("tester@mail.com")
         loginViewModel.uiStateFlow.test {

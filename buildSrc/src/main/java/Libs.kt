@@ -23,6 +23,7 @@ object Libs {
 
         const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGGING_RUNTIME}"
         const val PAGGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGGING_COMPOSE}"
+        const val PAGGING_TEST = "androidx.paging:paging-testing:${Versions.PAGGING_RUNTIME}"
     }
 
     object Kotlin {
@@ -78,6 +79,7 @@ object Libs {
 
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
+    const val MOCKK_ANDROID = "io.mockk:mockk-android:${Versions.MOCKK}"
     const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
     const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
 

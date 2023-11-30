@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
         getSurveyList()
     }
 
-    private fun getSurveyList() {
+    fun getSurveyList() {
         launch {
             val pagingData = Pager(
                 config = PagingConfig(
@@ -59,19 +59,19 @@ class HomeViewModel @Inject constructor(
             )
                 .flow
                 .cachedIn(viewModelScope)
-            reduceAsync(viewModelScope) { uiState ->
+            reduce { uiState ->
                 uiState.copy(surveyPagingData = pagingData)
             }
         }
     }
 
-    private fun getUser() {
+    fun getUser() {
         launch {
             getUserUseCase(EmptyParams).collect { userResult ->
                 val userModel = userResult
                     .onFailure { error -> sendError(error) }
                     .getOrNull()
-                reduceAsync(viewModelScope) { uiState ->
+                reduce { uiState ->
                     uiState.copy(userModel = userModel)
                 }
             }
