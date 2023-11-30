@@ -107,7 +107,6 @@ private fun HomeContent(
             uiState.surveyPagingData?.let { pagingData ->
                 val pagingItems = pagingData.collectAsLazyPagingItems()
                 SurveyList(
-                    modifier = Modifier.fillMaxSize(),
                     pagingItems = pagingItems,
                     onTakeSurveyClick = onTakeSurveyClick,
                 )
