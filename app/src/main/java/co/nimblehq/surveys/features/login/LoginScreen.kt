@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -48,6 +49,12 @@ import co.nimblehq.surveys.features.error.showToast
 import co.nimblehq.surveys.features.navigation.AppDestination
 import co.nimblehq.surveys.features.navigation.navigate
 import co.nimblehq.surveys.ui.theme.SurveysTheme
+
+object LoginTestTag {
+    const val TAG_EDIT_EMAIL = "edit_email"
+    const val TAG_EDIT_PASSWORD = "edit_password"
+    const val TAG_BUTTON_LOGIN = "button_login"
+}
 
 @ExperimentalComposeUiApi
 @Composable
@@ -119,6 +126,7 @@ private fun LoginContent(
             )
             Spacer(modifier = Modifier.size(109.dp))
             CustomTextField(
+                modifier = Modifier.testTag(LoginTestTag.TAG_EDIT_EMAIL),
                 hint = stringResource(R.string.email),
                 value = uiState.email,
                 onValueChange = onEmailChanged,
@@ -132,6 +140,7 @@ private fun LoginContent(
                 contentAlignment = Alignment.CenterEnd,
             ) {
                 CustomTextField(
+                    modifier = Modifier.testTag(LoginTestTag.TAG_EDIT_PASSWORD),
                     hint = stringResource(R.string.password),
                     value = uiState.password,
                     onValueChange = onPasswordChanged,
@@ -158,6 +167,7 @@ private fun LoginContent(
             Spacer(modifier = Modifier.size(20.dp))
             Button(
                 modifier = Modifier
+                    .testTag(LoginTestTag.TAG_BUTTON_LOGIN)
                     .fillMaxWidth()
                     .height(50.dp),
                 onClick = onLoginClick,

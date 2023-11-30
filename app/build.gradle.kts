@@ -91,6 +91,10 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -149,4 +153,5 @@ dependencies {
     androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
+    androidTestImplementation(Libs.MOCKK_ANDROID)
 }
