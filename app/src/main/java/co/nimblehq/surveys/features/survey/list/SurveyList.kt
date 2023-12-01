@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -22,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import co.nimblehq.surveys.domain.extensions.defaultZero
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.features.components.DotsIndicator
 import co.nimblehq.surveys.features.components.Loading
@@ -34,8 +34,8 @@ fun SurveyList(
     modifier: Modifier = Modifier,
     pagingItems: LazyPagingItems<SurveyModel>,
     onTakeSurveyClick: (String) -> Unit,
+    listState: LazyListState = rememberLazyListState(),
 ) {
-    val listState = rememberLazyListState()
     val flingBehavior = rememberSnapFlingBehavior(listState)
     val selectedIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     BoxWithConstraints(

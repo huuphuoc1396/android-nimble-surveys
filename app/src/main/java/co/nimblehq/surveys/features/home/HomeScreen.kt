@@ -8,14 +8,23 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +46,7 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
@@ -75,6 +85,7 @@ fun HomeScreen(
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 private fun HomeContent(
@@ -105,14 +116,29 @@ private fun HomeContent(
     ) {
         Box(Modifier.fillMaxSize()) {
             uiState.surveyPagingData?.let { pagingData ->
+                val listState = rememberLazyListState()
                 val pagingItems = pagingData.collectAsLazyPagingItems()
                 SurveyList(
                     pagingItems = pagingItems,
                     onTakeSurveyClick = onTakeSurveyClick,
+                    listState = listState,
                 )
 
+                val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
+                val pullRefreshState = rememberPullRefreshState(
+                    refreshing = isRefreshing,
+                    onRefresh = {
+                        coroutineScope.launch {
+                            listState.scrollToItem(0)
+                            pagingItems.refresh()
+                        }
+                    },
+                )
                 HomeTopBar(
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .pullRefresh(pullRefreshState)
+                        .verticalScroll(rememberScrollState()),
                     avatarUrl = uiState.userModel?.avatarUrl,
                     onAccountClick = {
                         coroutineScope.launch { drawerState.open() }
@@ -120,18 +146,26 @@ private fun HomeContent(
                 )
 
                 AnimatedVisibility(
-                    visible = pagingItems.loadState.refresh is LoadState.Loading,
+                    visible = isRefreshing,
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ) {
                     HomeShimmerLoading()
                 }
+
+                PullRefreshIndicator(
+                    refreshing = isRefreshing,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    contentColor = Color.DarkGray
+                )
             }
         }
     }
 }
 
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview
 @Composable
