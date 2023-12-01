@@ -82,8 +82,8 @@ fun LoginScreen(
     }
 
     val isLoading by viewModel.collectLoadingWithLifecycle()
-    val uiState by viewModel.collectUiStateWithLifecycle()
     LoadingContent(isLoading) {
+        val uiState by viewModel.collectUiStateWithLifecycle()
         LoginContent(
             uiState = uiState,
             onEmailChanged = viewModel::onEmailChanged,

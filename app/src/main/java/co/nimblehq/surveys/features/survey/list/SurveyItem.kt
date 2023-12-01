@@ -62,7 +62,6 @@ fun SurveyItemPreview() {
                 title = "Working from home Check-In",
                 description = "We would like to know how you feel about our work from home...",
                 coverUrl = "",
-                totalRecords = 20,
             ),
             onTakeSurveyClick = {},
         )

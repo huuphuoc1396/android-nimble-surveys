@@ -16,10 +16,9 @@ data class Data(
     val type: String?
 )
 
-fun Data.toSurveyModel(totalRecords: Int) = SurveyModel(
+fun Data.toSurveyModel() = SurveyModel(
     id = id.defaultEmpty(),
     title = attributes?.title.defaultEmpty(),
     description = attributes?.description.defaultEmpty(),
-    coverUrl = attributes?.coverImageUrl.defaultEmpty(),
-    totalRecords = totalRecords,
+    coverUrl = attributes?.coverImageUrl?.let { "${it}l" }.defaultEmpty(),
 )

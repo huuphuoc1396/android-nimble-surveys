@@ -5,5 +5,4 @@ data class SurveyModel(
     val title: String,
     val description: String,
     val coverUrl: String,
-    val totalRecords: Int,
 )

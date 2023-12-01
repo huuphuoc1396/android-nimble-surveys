@@ -30,8 +30,8 @@ class SurveyPagingSource constructor(
     }
 
 
-    override fun getRefreshKey(state: PagingState<Int, SurveyModel>): Int? {
-        return state.anchorPosition
+    override fun getRefreshKey(state: PagingState<Int, SurveyModel>): Int {
+        return 1
     }
 
 }
