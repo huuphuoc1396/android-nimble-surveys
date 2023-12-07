@@ -2,6 +2,7 @@ package co.nimblehq.surveys.features.navigation
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavBackStackEntry
@@ -18,6 +19,7 @@ import co.nimblehq.surveys.features.login.LoginScreen
 import co.nimblehq.surveys.features.splash.SplashScreen
 import co.nimblehq.surveys.features.survey.detail.SurveyDetailScreen
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
