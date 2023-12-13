@@ -27,7 +27,6 @@ class SurveyPagingSourceTest {
                 title = "Survey title $index",
                 description = "Survey description $index",
                 coverUrl = "https://nimbel.hq/cover/1",
-                totalRecords = 10,
             )
         }
         coEvery {
@@ -54,7 +53,6 @@ class SurveyPagingSourceTest {
                 title = "Survey title $index",
                 description = "Survey description $index",
                 coverUrl = "https://nimbel.hq/cover/1",
-                totalRecords = 15,
             )
         }
         val surveyList2 = List(5) { index ->
@@ -63,7 +61,6 @@ class SurveyPagingSourceTest {
                 title = "Survey title $index",
                 description = "Survey description $index",
                 coverUrl = "https://nimbel.hq/cover/1",
-                totalRecords = 15,
             )
         }
         coEvery {
