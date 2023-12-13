@@ -53,8 +53,7 @@ class SurveyRepositoryImplTest {
                     id = "1",
                     title = "Survey",
                     description = "This is survey description",
-                    coverUrl = "https://nimbel.hq/cover/1",
-                    totalRecords = 200
+                    coverUrl = "https://nimbel.hq/cover/1l",
                 )
             ),
             page = 1,
