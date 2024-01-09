@@ -38,10 +38,8 @@ An application allows users to browse a list of surveys.
 ## Need to improve
 - The requirement request to support Android 5.0 (API 21) and Up. But I'm using `security-crypto-ktx`, which uses min SDK 23. I need more time to research and find the solution. 
 - Implement animation when navigating from the Splash screen to the Login screen.
-- Implement shimmer animation in the Home screen when loading the survey list.
 - Indicator list (bullets) isn't auto-scrolling when there are a lot of bullets to reach out of the width screen.
-- Implement HomeViewModel and SurveyList paging unit testing.
-- Not yet implemented navigate to the Login screen in case the refresh token expires as well.
+- Not yet implemented navigate to the Login screen in case the refresh token also expires.
 - Apply Robolectric to test encrypted datastore and Compose components.
 - Apply DetectKt and Ktlint to format and analyze code.
 - Apply Kover to measure the coverage for tests.
@@ -54,4 +52,4 @@ Thanks to GitHub repositories used in this project.
 - Paging Compose sample: https://github.com/mohammadjoumani/paging_movie_app_jetpack_compose
 - Android UI State Delegate: https://github.com/Ilinich/Android-UIState-Delegate
 
-_In a short time, maybe there will be some issues or bugs in the project. So, I would be happy if you review this project, and hope to receive your feedbacks to improve it better._
+_In a short time, maybe there will be some issues or bugs in the project. So, I would be happy if you review this project, and hope to receive your feedback to improve it better._
