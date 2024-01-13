@@ -2,7 +2,7 @@ package co.nimblehq.surveys.data.repositories
 
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.responses.user.toUserModel
-import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedUserDatastore
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow

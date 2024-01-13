@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.data.errors
 
-import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
+import co.nimblehq.surveys.domain.models.errors.ApiError
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -32,12 +32,12 @@ class RemoteErrorMapperImplTest {
 
     @Test
     fun `When throwable is UnknownHostException`() {
-        remoteErrorMapperImpl.map(UnknownHostException()) shouldBe NetworkCaughtException.NoConnection
+        remoteErrorMapperImpl.map(UnknownHostException()) shouldBe ApiError.NoConnection
     }
 
     @Test
     fun `When throwable is InterruptedIOException`() {
-        remoteErrorMapperImpl.map(InterruptedIOException()) shouldBe NetworkCaughtException.NoConnection
+        remoteErrorMapperImpl.map(InterruptedIOException()) shouldBe ApiError.NoConnection
     }
 
     @Test
@@ -54,7 +54,7 @@ class RemoteErrorMapperImplTest {
                 "error": "Not found"
             }""".trimIndent()
         )
-        remoteErrorMapperImpl.map(mockHttpException) shouldBe NetworkCaughtException.Server(
+        remoteErrorMapperImpl.map(mockHttpException) shouldBe ApiError.Server(
             code = 404,
             serverMsg = "Not found",
         )
@@ -74,7 +74,7 @@ class RemoteErrorMapperImplTest {
                 ]
             }""".trimIndent()
         )
-        remoteErrorMapperImpl.map(mockHttpException) shouldBe NetworkCaughtException.Server(
+        remoteErrorMapperImpl.map(mockHttpException) shouldBe ApiError.Server(
             code = 403,
             serverMsg = "Client authentication failed due to unknown client",
         )

@@ -4,7 +4,7 @@ import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.responses.DataResponse
 import co.nimblehq.surveys.data.services.responses.user.Attributes
 import co.nimblehq.surveys.data.services.responses.user.UserResponse
-import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedUserDatastore
 import co.nimblehq.surveys.domain.models.user.UserModel
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery

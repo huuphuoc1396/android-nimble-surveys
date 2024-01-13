@@ -1,14 +1,11 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
-import co.nimblehq.surveys.domain.functional.wrapFailure
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.repositories.UserRepository
 import co.nimblehq.surveys.domain.usecases.EmptyParams
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf

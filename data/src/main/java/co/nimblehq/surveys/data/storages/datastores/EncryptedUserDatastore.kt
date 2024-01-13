@@ -1,4 +1,4 @@
-package co.nimblehq.surveys.data.storages
+package co.nimblehq.surveys.data.storages.datastores
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
@@ -8,8 +8,7 @@ import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
-import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
-import co.nimblehq.surveys.data.storages.datastore.UserData
+import co.nimblehq.surveys.data.storages.datastores.UserData
 import co.nimblehq.surveys.domain.models.user.UserModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.osipxd.security.crypto.createEncrypted
@@ -19,6 +18,14 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
+
+interface EncryptedUserDatastore {
+    suspend fun saveUser(userModel: UserModel)
+
+    fun getUser(): Flow<UserModel>
+
+    suspend fun clearAll()
+}
 
 @Singleton
 class EncryptedUserDatastoreImpl @Inject constructor(

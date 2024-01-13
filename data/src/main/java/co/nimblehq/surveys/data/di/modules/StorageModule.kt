@@ -1,9 +1,9 @@
 package co.nimblehq.surveys.data.di.modules
 
-import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
-import co.nimblehq.surveys.data.storages.EncryptedPrefsDatastoreImpl
-import co.nimblehq.surveys.data.storages.EncryptedUserDatastoreImpl
-import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedPrefsDatastoreImpl
+import co.nimblehq.surveys.data.storages.datastores.EncryptedUserDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedUserDatastoreImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

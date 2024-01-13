@@ -9,4 +9,5 @@
     <string name="today">Today</string>
     <string name="logout">Logout</string>
     <string name="retry">Retry</string>
+    <string name="unauthorized_error">Your login session has expired! Please login again.</string>
 </resources>

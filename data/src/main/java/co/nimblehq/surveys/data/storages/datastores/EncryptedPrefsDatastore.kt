@@ -1,4 +1,4 @@
-package co.nimblehq.surveys.data.storages
+package co.nimblehq.surveys.data.storages.datastores
 
 import android.content.Context
 import androidx.datastore.dataStoreFile
@@ -7,15 +7,33 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
-import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
-import co.nimblehq.surveys.data.storages.datastore.clearAll
-import co.nimblehq.surveys.data.storages.datastore.get
-import co.nimblehq.surveys.data.storages.datastore.set
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.osipxd.security.crypto.createEncrypted
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+
+interface EncryptedPrefsDatastore {
+
+    val isLoggedIn: Flow<Boolean>
+
+    suspend fun setLoggedIn(isLoggedIn: Boolean)
+
+    val tokenType: Flow<String>
+
+    suspend fun setTokenType(tokenType: String)
+
+
+    val accessToken: Flow<String>
+
+    suspend fun setAccessToken(accessToken: String)
+
+    val refreshToken: Flow<String>
+
+    suspend fun setRefreshToken(refreshToken: String)
+
+    suspend fun clearAll()
+}
 
 @Singleton
 class EncryptedPrefsDatastoreImpl @Inject constructor(

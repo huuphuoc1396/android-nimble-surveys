@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
+import co.nimblehq.surveys.domain.models.errors.ApiError
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.repositories.AuthRepository
 import co.nimblehq.surveys.domain.repositories.UserRepository
@@ -45,7 +45,7 @@ class LoginUseCaseTest {
             )
         } throws error
 
-        val serverError = NetworkCaughtException.Server(401, "")
+        val serverError = ApiError.Server(401, "")
         every { remoteErrorMapper.map(error) } returns serverError
 
         val params = LoginUseCase.Params(email = "tester@mail.com", password = "1234")

@@ -1,6 +1,6 @@
 package co.nimblehq.surveys.domain.usecases.survey
 
-import co.nimblehq.surveys.domain.errors.exceptions.network.NetworkCaughtException
+import co.nimblehq.surveys.domain.models.errors.ApiError
 import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
 import co.nimblehq.surveys.domain.repositories.SurveyRepository
@@ -42,7 +42,7 @@ class GetSurveyListUseCaseTest {
         val error = Exception()
         coEvery { surveyRepository.getSurveyList(1, 10) } throws error
 
-        val serverError = NetworkCaughtException.Server(401, "")
+        val serverError = ApiError.Server(401, "")
         every { remoteErrorMapper.map(error) } returns serverError
 
         val params = GetSurveyListUseCase.Params(1, 10)
