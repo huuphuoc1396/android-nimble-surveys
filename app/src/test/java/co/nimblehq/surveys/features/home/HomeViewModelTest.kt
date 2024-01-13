@@ -39,7 +39,7 @@ class HomeViewModelTest : ViewModelTest() {
 
     override fun setUp() {
         super.setUp()
-        coEvery { getUserUseCase(EmptyParams) } returns flowOf(userModel.wrapSuccess())
+        coEvery { getUserUseCase(Unit) } returns flowOf(userModel.wrapSuccess())
         coEvery {
             val params = GetSurveyListUseCase.Params(1, 20)
             getSurveyListUseCase(params)
@@ -61,7 +61,7 @@ class HomeViewModelTest : ViewModelTest() {
 
     @Test
     fun `When get user is success, it updates UserModel in the UiState`() = runTest {
-        coEvery { getUserUseCase(EmptyParams) } returns flowOf(userModel.wrapSuccess())
+        coEvery { getUserUseCase(Unit) } returns flowOf(userModel.wrapSuccess())
         homeViewModel.getUser()
         homeViewModel.uiStateFlow.test {
             expectMostRecentItem().userModel shouldBe userModel
@@ -71,7 +71,7 @@ class HomeViewModelTest : ViewModelTest() {
     @Test
     fun `When get user is error, it emits an error`() = runTest {
         val error = Throwable()
-        coEvery { getUserUseCase(EmptyParams) } returns flowOf(error.wrapFailure())
+        coEvery { getUserUseCase(Unit) } returns flowOf(error.wrapFailure())
         homeViewModel.getUser()
         homeViewModel.error.test {
             expectMostRecentItem() shouldBe error
