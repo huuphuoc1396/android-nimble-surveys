@@ -1,12 +1,9 @@
 package co.nimblehq.surveys.domain.usecases.survey
 
-import co.nimblehq.surveys.domain.models.errors.ApiError
-import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
 import co.nimblehq.surveys.domain.repositories.SurveyRepository
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -17,11 +14,9 @@ import org.junit.Test
 class GetSurveyListUseCaseTest {
 
     private val surveyRepository = mockk<SurveyRepository>()
-    private val remoteErrorMapper = mockk<RemoteErrorMapper>()
     private val getSurveyListUseCase = GetSurveyListUseCase(
         surveyRepository = surveyRepository,
         dispatcher = UnconfinedTestDispatcher(),
-        remoteErrorMapper = remoteErrorMapper
     )
 
     @Test
@@ -38,15 +33,12 @@ class GetSurveyListUseCaseTest {
     }
 
     @Test
-    fun `When get survey list is fail, it throw Server error`() = runTest {
+    fun `When get survey list is fail, it throw error`() = runTest {
         val error = Exception()
         coEvery { surveyRepository.getSurveyList(1, 10) } throws error
 
-        val serverError = ApiError.Server(401, "")
-        every { remoteErrorMapper.map(error) } returns serverError
-
         val params = GetSurveyListUseCase.Params(1, 10)
         val result = getSurveyListUseCase(params)
-        result.exceptionOrNull() shouldBe serverError
+        result.exceptionOrNull() shouldBe error
     }
 }

@@ -1,8 +1,6 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.repositories.AuthRepository
-import co.nimblehq.surveys.domain.usecases.EmptyParams
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -16,17 +14,15 @@ import org.junit.Test
 class GetLoggedInUseCaseTest {
 
     private val authRepository = mockk<AuthRepository>()
-    private val remoteErrorMapper = mockk<RemoteErrorMapper>()
     private val getLoggedInUseCase = GetLoggedInUseCase(
         authRepository = authRepository,
         dispatcher = UnconfinedTestDispatcher(),
-        remoteErrorMapper = remoteErrorMapper
     )
 
     @Test
     fun `When user logged in, it emits true`() = runTest {
         coEvery { authRepository.isLoggedIn() } returns flowOf(true)
-        getLoggedInUseCase(EmptyParams).collect { result ->
+        getLoggedInUseCase(Unit).collect { result ->
             result.getOrNull() shouldBe true
         }
     }
@@ -34,7 +30,7 @@ class GetLoggedInUseCaseTest {
     @Test
     fun `When user didn't log in, it emits false`() = runTest {
         coEvery { authRepository.isLoggedIn() } returns flowOf(false)
-        getLoggedInUseCase(EmptyParams).collect { result ->
+        getLoggedInUseCase(Unit).collect { result ->
             result.getOrNull() shouldBe false
         }
     }

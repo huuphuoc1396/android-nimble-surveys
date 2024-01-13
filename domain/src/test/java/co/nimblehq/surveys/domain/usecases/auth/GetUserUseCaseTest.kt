@@ -1,9 +1,7 @@
 package co.nimblehq.surveys.domain.usecases.auth
 
-import co.nimblehq.surveys.domain.errors.mappers.remote.RemoteErrorMapper
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.repositories.UserRepository
-import co.nimblehq.surveys.domain.usecases.EmptyParams
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -17,11 +15,9 @@ import org.junit.Test
 class GetUserUseCaseTest {
 
     private val userRepository = mockk<UserRepository>()
-    private val remoteErrorMapper = mockk<RemoteErrorMapper>()
     private val getUserUseCase = GetUserUseCase(
         userRepository = userRepository,
         dispatcher = UnconfinedTestDispatcher(),
-        remoteErrorMapper = remoteErrorMapper
     )
 
     @Test
@@ -33,7 +29,7 @@ class GetUserUseCaseTest {
             avatarUrl = "https://nimble.hq/avatar/1"
         )
         coEvery { userRepository.getUser() } returns flowOf(userModel)
-        getUserUseCase(EmptyParams).collect { result ->
+        getUserUseCase(Unit).collect { result ->
             result.getOrNull() shouldBe userModel
         }
     }
