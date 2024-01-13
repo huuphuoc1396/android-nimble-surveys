@@ -1,4 +1,4 @@
-package co.nimblehq.surveys.data.storages.datastore
+package co.nimblehq.surveys.data.storages.datastores
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
 
     fun getUser() {
         launch {
-            getUserUseCase(EmptyParams).collect { userResult ->
+            getUserUseCase(Unit).collect { userResult ->
                 val userModel = userResult
                     .onFailure { error -> sendError(error) }
                     .getOrNull()

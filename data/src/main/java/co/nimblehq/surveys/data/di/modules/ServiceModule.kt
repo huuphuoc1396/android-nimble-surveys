@@ -6,6 +6,7 @@ import co.nimblehq.surveys.data.di.annotations.NonAuthClient
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.providers.ApiServiceProvider
+import co.nimblehq.surveys.data.services.providers.CallAdapterFactoryProvider
 import co.nimblehq.surveys.data.services.providers.ConverterFactoryProvider
 import co.nimblehq.surveys.data.services.providers.RetrofitProvider
 import com.squareup.moshi.Moshi
@@ -14,6 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 
@@ -30,13 +32,23 @@ class ServiceModule {
     ): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
+    fun provideMappingApiErrorCallAdapterFactory(): CallAdapter.Factory =
+        CallAdapterFactoryProvider.getMappingApiErrorCallAdapterFactory()
+
+    @Provides
     @NonAuthClient
     fun provideNonAuthRetrofit(
         baseUrl: String,
         @NonAuthClient okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
+        callAdapterFactory: CallAdapter.Factory,
     ): Retrofit = RetrofitProvider
-        .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
+        .getRetrofitBuilder(
+            baseUrl = baseUrl,
+            okHttpClient = okHttpClient,
+            converterFactory = converterFactory,
+            callAdapterFactory = callAdapterFactory,
+        )
         .build()
 
     @Provides
@@ -50,8 +62,14 @@ class ServiceModule {
         baseUrl: String,
         @AuthClient okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
+        callAdapterFactory: CallAdapter.Factory,
     ): Retrofit = RetrofitProvider
-        .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
+        .getRetrofitBuilder(
+            baseUrl = baseUrl,
+            okHttpClient = okHttpClient,
+            converterFactory = converterFactory,
+            callAdapterFactory = callAdapterFactory,
+        )
         .build()
 
     @Provides

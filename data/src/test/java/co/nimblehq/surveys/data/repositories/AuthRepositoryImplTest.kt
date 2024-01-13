@@ -7,8 +7,8 @@ import co.nimblehq.surveys.data.services.requests.logout.LogoutRequest
 import co.nimblehq.surveys.data.services.responses.DataResponse
 import co.nimblehq.surveys.data.services.responses.login.Attributes
 import co.nimblehq.surveys.data.services.responses.login.LoginResponse
-import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
-import co.nimblehq.surveys.data.storages.datastore.EncryptedUserDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedUserDatastore
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every

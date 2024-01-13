@@ -2,7 +2,7 @@ package co.nimblehq.surveys.data.services.interceptors
 
 import co.nimblehq.surveys.data.services.NonAuthApiService
 import co.nimblehq.surveys.data.services.requests.ClientRequestFactory
-import co.nimblehq.surveys.data.storages.datastore.EncryptedPrefsDatastore
+import co.nimblehq.surveys.data.storages.datastores.EncryptedPrefsDatastore
 import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
