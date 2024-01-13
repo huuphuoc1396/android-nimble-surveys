@@ -36,7 +36,7 @@ class SplashViewModel @Inject constructor(
     fun checkLoggedIn() {
         launch {
             delay(SPLASH_DELAY)
-            getLoggedInUseCase(EmptyParams).collect { isLoggedInResult ->
+            getLoggedInUseCase(Unit).collect { isLoggedInResult ->
                 val isLoggedIn = isLoggedInResult
                     .onFailure { error -> sendError(error) }
                     .getOrNull()
