@@ -7,8 +7,12 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
+import co.nimblehq.surveys.domain.di.annotations.DatastoreScope
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.osipxd.security.crypto.createEncrypted
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,7 +41,8 @@ interface EncryptedPrefsDatastore {
 
 @Singleton
 class EncryptedPrefsDatastoreImpl @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    @DatastoreScope coroutineScope: CoroutineScope,
 ) : EncryptedPrefsDatastore {
 
     companion object {
@@ -49,7 +54,9 @@ class EncryptedPrefsDatastoreImpl @Inject constructor(
         private val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
 
-    private val dataStore = PreferenceDataStoreFactory.createEncrypted {
+    private val dataStore = PreferenceDataStoreFactory.createEncrypted(
+        scope = coroutineScope,
+    ) {
         EncryptedFile.Builder(
             context.dataStoreFile(FILE_NAME),
             context,

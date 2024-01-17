@@ -13,9 +13,10 @@ object Versions {
     const val ACTIVITY_COMPOSE = "1.8.1"
     const val SECURITY_CRYPTO = "1.0.0"
     const val CORE_TESTING = "2.2.0"
+    const val TEST_CORE_KTX = "1.5.0"
 
-    const val PAGGING_RUNTIME = "3.3.0-alpha02"
-    const val PAGGING_COMPOSE = "1.0.0-alpha18"
+    const val PAGING_RUNTIME = "3.3.0-alpha02"
+    const val PAGING_COMPOSE = "1.0.0-alpha18"
 
     const val COMPOSE_BOM = "2023.03.00"
     const val NAV_COMPOSE = "2.7.5"
