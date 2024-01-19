@@ -1,7 +1,9 @@
 package co.nimblehq.surveys.di.modules
 
 import co.nimblehq.surveys.domain.di.annotations.ApplicationScope
+import co.nimblehq.surveys.domain.di.annotations.DatastoreScope
 import co.nimblehq.surveys.domain.di.annotations.DefaultDispatcher
+import co.nimblehq.surveys.domain.di.annotations.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +23,11 @@ class AppModule {
     fun providesApplicationScope(
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher)
+
+
+    @DatastoreScope
+    @Singleton
+    @Provides
+    fun provideDatastoreScope(@IoDispatcher dispatcher: CoroutineDispatcher) =
+        CoroutineScope(dispatcher + SupervisorJob())
 }

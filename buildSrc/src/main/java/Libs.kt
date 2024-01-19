@@ -20,10 +20,11 @@ object Libs {
         const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
+        const val TEST_CORE_KTX ="androidx.test:core-ktx:${Versions.TEST_CORE_KTX}"
 
-        const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGGING_RUNTIME}"
-        const val PAGGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGGING_COMPOSE}"
-        const val PAGGING_TEST = "androidx.paging:paging-testing:${Versions.PAGGING_RUNTIME}"
+        const val PAGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGING_RUNTIME}"
+        const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
+        const val PAGING_TEST = "androidx.paging:paging-testing:${Versions.PAGING_RUNTIME}"
     }
 
     object Kotlin {

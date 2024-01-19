@@ -56,6 +56,10 @@ android {
             path = File("cpp/CMakeLists.txt")
         }
     }
+
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -87,7 +91,13 @@ dependencies {
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
 
+    androidTestImplementation(Libs.KOTEST)
+    androidTestImplementation(Libs.TURBINE)
+    androidTestImplementation(Libs.MOCKK_ANDROID)
+    androidTestImplementation(Libs.Kotlin.COROUTINES_TEST)
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
+    androidTestImplementation(Libs.AndroidX.TEST_CORE_KTX)
+    androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
 
     implementation(Libs.Datastore.SECURITY_DATASTORE)
     implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
