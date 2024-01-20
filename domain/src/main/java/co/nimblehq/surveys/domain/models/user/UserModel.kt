@@ -6,3 +6,5 @@ data class UserModel(
     val email: String,
     val avatarUrl: String,
 )
+
+val emptyUser = UserModel(id = "", name = "", email = "", avatarUrl = "")
