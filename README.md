@@ -40,7 +40,6 @@ An application allows users to browse a list of surveys.
 - Implement animation when navigating from the Splash screen to the Login screen.
 - Indicator list (bullets) isn't auto-scrolling when there are a lot of bullets to reach out of the width screen.
 - Not yet implemented navigate to the Login screen in case the refresh token also expires.
-- Apply Robolectric to test encrypted datastore and Compose components.
 - Apply DetectKt and Ktlint to format and analyze code.
 - Apply Kover to measure the coverage for tests.
 - Integrate code analytics and unit test running into the CI process when a PR event is triggered.
