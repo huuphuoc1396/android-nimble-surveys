@@ -160,7 +160,7 @@ dependencies {
 koverReport {
     filters {
         excludes {
-            packages("dagger.hilt.internal.aggregatedroot.codegen","hilt_aggregated_deps")
+            packages(Excludes.excludesPackages)
         }
     }
     verify {
