@@ -102,6 +102,11 @@ dependencies {
     implementation(Libs.Datastore.SECURITY_DATASTORE)
     implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
     implementation(Libs.Protobuf.JAVALITE)
+
+    implementation(Libs.AndroidX.ROOM_CORE)
+    kapt(Libs.AndroidX.ROOM_COMPILER)
+    implementation(Libs.AndroidX.ROOM_PAGING)
+    implementation(Libs.AndroidX.ROOM_RUNTIME)
 }
 
 protobuf {
