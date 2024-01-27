@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import co.nimblehq.surveys.domain.models.user.UserModel
-import co.nimblehq.surveys.domain.models.user.emptyUser
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -36,7 +35,7 @@ class EncryptedUserDatastoreImplTest {
     fun clearAll() = testScope.runTest {
         encryptedUserDatastoreImpl.clearAll()
         encryptedUserDatastoreImpl.getUser().test {
-            expectMostRecentItem() shouldBe emptyUser
+            expectMostRecentItem() shouldBe UserModel(id = "", name = "", email = "", avatarUrl = "")
         }
     }
 }

@@ -131,6 +131,7 @@ koverReport {
     filters {
         excludes {
             // Add class or package names to exclude from coverage report
+            packages(Excludes.excludesPackages)
         }
     }
     verify {
