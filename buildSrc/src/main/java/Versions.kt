@@ -59,4 +59,6 @@ object Versions {
     const val PROTOBUF_JAVALITE = "3.23.0"
 
     const val KOVER = "0.7.5"
+
+    const val JUNIT5 = "5.10.1"
 }

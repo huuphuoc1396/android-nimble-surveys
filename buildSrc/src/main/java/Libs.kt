@@ -2,9 +2,12 @@ object Libs {
 
     object AndroidX {
         const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
-        const val LIFECYCLE_RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME_KTX}"
-        const val LIFECYCLE_RUNTIME_COMPOSE = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.LIFECYCLE_RUNTIME_KTX}"
-        const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
+        const val LIFECYCLE_RUNTIME_KTX =
+            "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME_KTX}"
+        const val LIFECYCLE_RUNTIME_COMPOSE =
+            "androidx.lifecycle:lifecycle-runtime-compose:${Versions.LIFECYCLE_RUNTIME_KTX}"
+        const val ACTIVITY_COMPOSE =
+            "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
         const val SECURITY_CRYPTO = "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}"
 
         const val COMPOSE_BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
@@ -19,8 +22,9 @@ object Libs {
 
         const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
         const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
-        const val TEST_ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
-        const val TEST_CORE_KTX ="androidx.test:core-ktx:${Versions.TEST_CORE_KTX}"
+        const val TEST_ESPRESSO_CORE =
+            "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
+        const val TEST_CORE_KTX = "androidx.test:core-ktx:${Versions.TEST_CORE_KTX}"
 
         const val PAGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGING_RUNTIME}"
         const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
@@ -28,9 +32,12 @@ object Libs {
     }
 
     object Kotlin {
-        const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
-        const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
-        const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"
+        const val COROUTINES_CORE =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
+        const val COROUTINES_ANDROID =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
+        const val COROUTINES_TEST =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"
     }
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
@@ -56,13 +63,16 @@ object Libs {
 
     const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
 
-    const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
+    const val LOGGING_INTERCEPTOR =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
 
     object Accompanist {
         const val INSETS = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"
         const val PAGER = "com.google.accompanist:accompanist-pager:${Versions.ACCOMPANIST}"
-        const val SWIPE_REFRESH = "com.google.accompanist:accompanist-swiperefresh:${Versions.ACCOMPANIST}"
-        const val SYSTEM_UI = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
+        const val SWIPE_REFRESH =
+            "com.google.accompanist:accompanist-swiperefresh:${Versions.ACCOMPANIST}"
+        const val SYSTEM_UI =
+            "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
     }
 
     object Firebase {
@@ -71,9 +81,11 @@ object Libs {
         const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics"
     }
 
-    object Datastore{
-       const val SECURITY_DATASTORE = "io.github.osipxd:security-crypto-datastore:${Versions.SECURITY_DATASTORE}"
-       const val SECURITY_DATASTORE_PREFERENCES = "io.github.osipxd:security-crypto-datastore-preferences:${Versions.SECURITY_DATASTORE}"
+    object Datastore {
+        const val SECURITY_DATASTORE =
+            "io.github.osipxd:security-crypto-datastore:${Versions.SECURITY_DATASTORE}"
+        const val SECURITY_DATASTORE_PREFERENCES =
+            "io.github.osipxd:security-crypto-datastore-preferences:${Versions.SECURITY_DATASTORE}"
     }
 
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
@@ -87,5 +99,10 @@ object Libs {
     object Protobuf {
         const val PROTOC = "com.google.protobuf:protoc:${Versions.PROTOC}"
         const val JAVALITE = "com.google.protobuf:protobuf-javalite:${Versions.PROTOBUF_JAVALITE}"
+    }
+
+    object JUnit5 {
+        const val BOM = "org.junit:junit-bom:${Versions.JUNIT5}"
+        const val JUPITER = "org.junit.jupiter:junit-jupiter"
     }
 }
