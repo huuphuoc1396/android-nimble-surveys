@@ -12,4 +12,5 @@ plugins {
     id(Plugins.FIREBASE_CRASHLYTICS) version Versions.FIREBASE_CRASHLYTICS apply false
 
     id(Plugins.PROTOBUF) version Versions.PROTOBUF apply false
+    id(Plugins.KOVER) version Versions.KOVER apply false
 }
