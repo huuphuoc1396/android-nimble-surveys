@@ -11,8 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
-
+import org.junit.jupiter.api.Test
 @ExperimentalCoroutinesApi
 class SplashViewModelTest : ViewModelTest() {
 

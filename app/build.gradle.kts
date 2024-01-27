@@ -7,6 +7,7 @@ plugins {
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
     id(Plugins.KOVER)
+    id(Plugins.ANDROID_JUNIT5)
 }
 
 android {
@@ -73,6 +74,10 @@ android {
             "-Xcontext-receivers",
             "-Xstring-concat=inline",
         )
+    }
+
+    testOptions {
+        unitTests.all { it.useJUnitPlatform() }
     }
 
     buildFeatures {
@@ -142,7 +147,8 @@ dependencies {
 
     implementation(Libs.TIMBER)
 
-    testImplementation(Libs.JUNIT)
+    testImplementation(platform(Libs.JUnit5.BOM))
+    testImplementation(Libs.JUnit5.JUPITER)
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
