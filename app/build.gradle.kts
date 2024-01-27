@@ -157,7 +157,7 @@ dependencies {
     testImplementation(Libs.AndroidX.PAGING_TEST)
 
     androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
-    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)
+    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT5)
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
     androidTestImplementation(Libs.MOCKK_ANDROID)
