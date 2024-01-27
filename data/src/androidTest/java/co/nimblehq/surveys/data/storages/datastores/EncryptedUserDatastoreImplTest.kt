@@ -7,8 +7,7 @@ import co.nimblehq.surveys.domain.models.user.UserModel
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
-
+import org.junit.jupiter.api.Test
 class EncryptedUserDatastoreImplTest {
     private val testScope = TestScope()
     private val context = ApplicationProvider.getApplicationContext<Context>()

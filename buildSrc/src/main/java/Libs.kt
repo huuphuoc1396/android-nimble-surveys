@@ -21,7 +21,7 @@ object Libs {
         const val NAV_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAV_COMPOSE}"
 
         const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
-        const val TEST_JUNIT = "androidx.test.ext:junit:${Versions.TEST_JUNIT}"
+        const val TEST_JUNIT = "org.junit.jupiter:junit-jupiter-api:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE =
             "androidx.test.espresso:espresso-core:${Versions.TEST_ESPRESSO_CORE}"
         const val TEST_CORE_KTX = "androidx.test:core-ktx:${Versions.TEST_CORE_KTX}"

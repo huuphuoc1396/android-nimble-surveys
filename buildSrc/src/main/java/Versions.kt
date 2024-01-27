@@ -21,7 +21,7 @@ object Versions {
     const val COMPOSE_BOM = "2023.03.00"
     const val NAV_COMPOSE = "2.7.5"
 
-    const val TEST_JUNIT = "1.1.5"
+    const val TEST_JUNIT = "5.10.0"
     const val TEST_ESPRESSO_CORE = "3.5.1"
 
     const val COROUTINES = "1.7.3"
@@ -61,4 +61,5 @@ object Versions {
     const val KOVER = "0.7.5"
 
     const val JUNIT5 = "5.10.1"
+    const val ANDROID_JUNIT5_VERSION = "1.10.0.0"
 }
