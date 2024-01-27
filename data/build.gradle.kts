@@ -5,6 +5,7 @@ plugins {
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.PROTOBUF)
+    id(Plugins.KOVER)
 }
 
 android {
@@ -122,6 +123,19 @@ protobuf {
                     option("lite")
                 }
             }
+        }
+    }
+}
+
+koverReport {
+    filters {
+        excludes {
+            // Add class or package names to exclude from coverage report
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
         }
     }
 }
