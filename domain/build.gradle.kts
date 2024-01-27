@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.JAVA_LIB)
     id(Plugins.KOTLIN_JVM)
+    id(Plugins.KOVER)
 }
 
 java {
@@ -17,4 +18,17 @@ dependencies {
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
+}
+
+koverReport {
+    filters {
+        excludes {
+            // Add class or package names to exclude from coverage report
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
+        }
+    }
 }
