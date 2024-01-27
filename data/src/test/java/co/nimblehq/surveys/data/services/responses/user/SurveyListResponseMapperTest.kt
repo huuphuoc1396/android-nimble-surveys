@@ -8,7 +8,7 @@ import co.nimblehq.surveys.data.services.responses.survey.toSurveyPageModel
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
 import io.kotest.matchers.shouldBe
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class SurveyListResponseMapperTest {
 

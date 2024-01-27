@@ -6,7 +6,7 @@ import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class EncryptedPrefsDatastoreImplTest {
 

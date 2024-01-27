@@ -2,10 +2,9 @@ package co.nimblehq.surveys.data.services.responses.user
 
 import co.nimblehq.surveys.domain.models.user.UserModel
 import io.kotest.matchers.shouldBe
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class UserResponseMapperTest {
-
     @Test
     fun `map UserResponse to UserModel`() {
         val userResponse = UserResponse(
