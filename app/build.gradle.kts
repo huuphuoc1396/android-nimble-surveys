@@ -6,6 +6,7 @@ plugins {
     id(Plugins.HILT_ANDROID)
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
+    id(Plugins.KOVER)
 }
 
 android {
@@ -154,4 +155,20 @@ dependencies {
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
     androidTestImplementation(Libs.MOCKK_ANDROID)
+}
+
+koverReport {
+    filters {
+        excludes {
+            packages("dagger.hilt.internal.aggregatedroot.codegen","hilt_aggregated_deps")
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
+            bound {
+                minValue = 80 // Minimum coverage percentage
+            }
+        }
+    }
 }
