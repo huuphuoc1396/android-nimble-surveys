@@ -20,7 +20,7 @@ fun LoadingContent(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         content()
         if (isLoading) {
@@ -33,13 +33,14 @@ fun LoadingContent(
 @Composable
 fun Loading(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .clickable { },
+        modifier =
+            modifier
+                .fillMaxSize()
+                .clickable { },
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
-            color = SandyBrown
+            color = SandyBrown,
         )
     }
 }

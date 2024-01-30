@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface AuthApiService {
-
     @GET("/api/v1/me")
     suspend fun getUser(): DataResponse<UserResponse>
 
@@ -16,5 +15,4 @@ interface AuthApiService {
         @Query("page[number]") page: Int,
         @Query("page[size]") size: Int,
     ): SurveyListResponse
-
 }

@@ -40,47 +40,51 @@ fun HomeDrawerContent(
         modifier
             .width(240.dp)
             .fillMaxHeight()
-            .background(EerieBlack)
+            .background(EerieBlack),
     ) {
         Column(
             Modifier
-                .statusBarsPadding()
+                .statusBarsPadding(),
         ) {
             Spacer(modifier = Modifier.size(36.dp))
             Row(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth(),
                 verticalAlignment = Alignment.Top,
             ) {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = name.defaultEmpty(),
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.h4,
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 Avatar(modifier = Modifier.padding(top = 4.dp), avatarUrl = avatarUrl)
             }
             Divider(
                 modifier = Modifier.padding(20.dp),
-                color = Color.White.copy(alpha = 0.2f)
+                color = Color.White.copy(alpha = 0.2f),
             )
 
             TextButton(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 12.dp),
                 onClick = onLogoutClick,
                 contentPadding = PaddingValues(horizontal = 0.dp),
             ) {
                 Text(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 8.dp)
+                            .fillMaxWidth(),
                     text = stringResource(R.string.logout),
-                    style = MaterialTheme.typography.body1.copy(
-                        color = Color.White.copy(alpha = 0.5f),
-                        fontSize = 20.sp,
-                    ),
+                    style =
+                        MaterialTheme.typography.body1.copy(
+                            color = Color.White.copy(alpha = 0.5f),
+                            fontSize = 20.sp,
+                        ),
                 )
             }
         }

@@ -17,7 +17,6 @@ import kotlinx.coroutines.sync.withLock
  * UiState - must be Data class, immutable
  */
 interface UiStateDelegate<UiState, Event> {
-
     /**
      * Declarative description of the UI based on the current state.
      */
@@ -41,9 +40,7 @@ interface UiStateDelegate<UiState, Event> {
      *
      * @param transform  - function to transform UI state.
      */
-    suspend fun UiStateDelegate<UiState, Event>.reduce(
-        transform: (uiState: UiState) -> UiState,
-    )
+    suspend fun UiStateDelegate<UiState, Event>.reduce(transform: (uiState: UiState) -> UiState)
 
     /**
      * Changing the state without blocking the coroutine.
@@ -75,7 +72,6 @@ class UiStateDelegateImpl<UiState, Event>(
     singleLiveEventCapacity: Int = Channel.BUFFERED,
     private val mutexState: Mutex = Mutex(),
 ) : UiStateDelegate<UiState, Event> {
-
     /**
      * The source of truth that drives our app.
      */
@@ -102,9 +98,7 @@ class UiStateDelegateImpl<UiState, Event>(
     override val error: Flow<Throwable>
         get() = _errorChannel.receiveAsFlow()
 
-    override suspend fun UiStateDelegate<UiState, Event>.reduce(
-        transform: (uiState: UiState) -> UiState,
-    ) {
+    override suspend fun UiStateDelegate<UiState, Event>.reduce(transform: (uiState: UiState) -> UiState) {
         mutexState.withLock {
             _uiState.emit(transform(uiState))
         }

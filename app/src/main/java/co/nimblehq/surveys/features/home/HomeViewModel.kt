@@ -24,73 +24,78 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val getSurveyListUseCase: GetSurveyListUseCase
-) : ViewModel(),
-    UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
+class HomeViewModel
+    @Inject
+    constructor(
+        private val getUserUseCase: GetUserUseCase,
+        private val logoutUseCase: LogoutUseCase,
+        private val getSurveyListUseCase: GetSurveyListUseCase,
+    ) : ViewModel(),
+        UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
+        data class UiState(
+            val userModel: UserModel? = null,
+            val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
+        )
 
-    data class UiState(
-        val userModel: UserModel? = null,
-        val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
-    )
+        sealed interface Event {
+            data object GoToLogin : Event
 
-    sealed interface Event {
-        data object GoToLogin : Event
-        data class GoToSurveyDetail(val id: String) : Event
-    }
-
-    init {
-        getUser()
-        getSurveyList()
-    }
-
-    fun getSurveyList() {
-        launch {
-            val pagingData = Pager(
-                config = PagingConfig(
-                    pageSize = SurveyPageConfig.PAGE_SIZE,
-                    prefetchDistance = 1,
-                ),
-                pagingSourceFactory = {
-                    SurveyPagingSource(getSurveyListUseCase)
-                },
-            )
-                .flow
-                .cachedIn(viewModelScope)
-            reduce { uiState ->
-                uiState.copy(surveyPagingData = pagingData)
-            }
+            data class GoToSurveyDetail(val id: String) : Event
         }
-    }
 
-    fun getUser() {
-        launch {
-            getUserUseCase(Unit).collect { userResult ->
-                val userModel = userResult
-                    .onFailure { error -> sendError(error) }
-                    .getOrNull()
+        init {
+            getUser()
+            getSurveyList()
+        }
+
+        fun getSurveyList() {
+            launch {
+                val pagingData =
+                    Pager(
+                        config =
+                            PagingConfig(
+                                pageSize = SurveyPageConfig.PAGE_SIZE,
+                                prefetchDistance = 1,
+                            ),
+                        pagingSourceFactory = {
+                            SurveyPagingSource(getSurveyListUseCase)
+                        },
+                    )
+                        .flow
+                        .cachedIn(viewModelScope)
                 reduce { uiState ->
-                    uiState.copy(userModel = userModel)
+                    uiState.copy(surveyPagingData = pagingData)
                 }
             }
         }
-    }
 
-    fun onLogoutClick() {
-        launch(loading = this) {
-            logoutUseCase(EmptyParams)
-                .onFailure { error -> sendError(error) }
-                .onSuccess {
-                    sendEvent(Event.GoToLogin)
+        fun getUser() {
+            launch {
+                getUserUseCase(Unit).collect { userResult ->
+                    val userModel =
+                        userResult
+                            .onFailure { error -> sendError(error) }
+                            .getOrNull()
+                    reduce { uiState ->
+                        uiState.copy(userModel = userModel)
+                    }
                 }
+            }
         }
-    }
 
-    fun onTakeSurveyClick(id: String) {
-        launch {
-            sendEvent(Event.GoToSurveyDetail(id))
+        fun onLogoutClick() {
+            launch(loading = this) {
+                logoutUseCase(EmptyParams)
+                    .onFailure { error -> sendError(error) }
+                    .onSuccess {
+                        sendEvent(Event.GoToLogin)
+                    }
+            }
+        }
+
+        fun onTakeSurveyClick(id: String) {
+            launch {
+                sendEvent(Event.GoToSurveyDetail(id))
+            }
         }
     }
-}

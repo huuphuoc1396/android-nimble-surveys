@@ -5,7 +5,6 @@ import co.nimblehq.surveys.data.services.NonAuthApiService
 import retrofit2.Retrofit
 
 object ApiServiceProvider {
-
     init {
         System.loadLibrary("native-lib")
     }

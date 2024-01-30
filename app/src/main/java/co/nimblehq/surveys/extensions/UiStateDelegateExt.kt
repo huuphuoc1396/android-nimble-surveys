@@ -11,18 +11,16 @@ import co.nimblehq.surveys.state.UiStateDelegate
 import kotlinx.coroutines.flow.FlowCollector
 
 @Composable
-fun <R> UiStateDelegate<R, *>.collectUiStateWithLifecycle(
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-) = this.uiStateFlow.collectAsStateWithLifecycle(
-    minActiveState = minActiveState,
-)
+fun <R> UiStateDelegate<R, *>.collectUiStateWithLifecycle(minActiveState: Lifecycle.State = Lifecycle.State.STARTED) =
+    this.uiStateFlow.collectAsStateWithLifecycle(
+        minActiveState = minActiveState,
+    )
 
 @Composable
-fun <R> UiStateDelegate<R, *>.collectLoadingWithLifecycle(
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-) = this.isLoading.collectAsStateWithLifecycle(
-    minActiveState = minActiveState,
-)
+fun <R> UiStateDelegate<R, *>.collectLoadingWithLifecycle(minActiveState: Lifecycle.State = Lifecycle.State.STARTED) =
+    this.isLoading.collectAsStateWithLifecycle(
+        minActiveState = minActiveState,
+    )
 
 @Composable
 fun <State, Event> UiStateDelegate<State, Event>.collectEventEffect(

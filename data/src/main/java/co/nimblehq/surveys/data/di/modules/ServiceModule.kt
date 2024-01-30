@@ -22,18 +22,14 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 class ServiceModule {
-
     @Provides
     fun provideBaseApiUrl() = BuildConfig.BASE_API_URL
 
     @Provides
-    fun provideMoshiConverterFactory(
-        moshi: Moshi
-    ): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
+    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
-    fun provideMappingApiErrorCallAdapterFactory(): CallAdapter.Factory =
-        CallAdapterFactoryProvider.getMappingApiErrorCallAdapterFactory()
+    fun provideMappingApiErrorCallAdapterFactory(): CallAdapter.Factory = CallAdapterFactoryProvider.getMappingApiErrorCallAdapterFactory()
 
     @Provides
     @NonAuthClient
@@ -42,18 +38,19 @@ class ServiceModule {
         @NonAuthClient okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
         callAdapterFactory: CallAdapter.Factory,
-    ): Retrofit = RetrofitProvider
-        .getRetrofitBuilder(
-            baseUrl = baseUrl,
-            okHttpClient = okHttpClient,
-            converterFactory = converterFactory,
-            callAdapterFactory = callAdapterFactory,
-        )
-        .build()
+    ): Retrofit =
+        RetrofitProvider
+            .getRetrofitBuilder(
+                baseUrl = baseUrl,
+                okHttpClient = okHttpClient,
+                converterFactory = converterFactory,
+                callAdapterFactory = callAdapterFactory,
+            )
+            .build()
 
     @Provides
     fun provideNonAuthApiService(
-        @NonAuthClient retrofit: Retrofit
+        @NonAuthClient retrofit: Retrofit,
     ): NonAuthApiService = ApiServiceProvider.getNonAuthApiService(retrofit)
 
     @Provides
@@ -63,17 +60,18 @@ class ServiceModule {
         @AuthClient okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
         callAdapterFactory: CallAdapter.Factory,
-    ): Retrofit = RetrofitProvider
-        .getRetrofitBuilder(
-            baseUrl = baseUrl,
-            okHttpClient = okHttpClient,
-            converterFactory = converterFactory,
-            callAdapterFactory = callAdapterFactory,
-        )
-        .build()
+    ): Retrofit =
+        RetrofitProvider
+            .getRetrofitBuilder(
+                baseUrl = baseUrl,
+                okHttpClient = okHttpClient,
+                converterFactory = converterFactory,
+                callAdapterFactory = callAdapterFactory,
+            )
+            .build()
 
     @Provides
     fun provideAuthApiService(
-        @AuthClient retrofit: Retrofit
+        @AuthClient retrofit: Retrofit,
     ): AuthApiService = ApiServiceProvider.getAuthApiService(retrofit)
 }

@@ -8,20 +8,21 @@ import co.nimblehq.surveys.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
-    private val authApiService: AuthApiService,
-    private val encryptedUserDatastore: EncryptedUserDatastore,
-) : UserRepository {
+class UserRepositoryImpl
+    @Inject
+    constructor(
+        private val authApiService: AuthApiService,
+        private val encryptedUserDatastore: EncryptedUserDatastore,
+    ) : UserRepository {
+        override suspend fun fetchUser() {
+            val userResponse = authApiService.getUser().data
+            val userModel = userResponse?.toUserModel()
+            if (userModel != null) {
+                encryptedUserDatastore.saveUser(userModel)
+            }
+        }
 
-    override suspend fun fetchUser() {
-        val userResponse = authApiService.getUser().data
-        val userModel = userResponse?.toUserModel()
-        if (userModel != null) {
-            encryptedUserDatastore.saveUser(userModel)
+        override fun getUser(): Flow<UserModel> {
+            return encryptedUserDatastore.getUser()
         }
     }
-
-    override fun getUser(): Flow<UserModel> {
-        return encryptedUserDatastore.getUser()
-    }
-}

@@ -63,4 +63,6 @@ object Versions {
     const val JUNIT5 = "5.10.1"
     const val ANDROID_JUNIT5_VERSION = "1.10.0.0"
     const val COMPOSE_JUNIT5 = "1.4.0"
+
+    const val KTLINT = "12.1.0"
 }

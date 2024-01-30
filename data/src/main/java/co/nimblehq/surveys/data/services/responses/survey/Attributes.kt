@@ -1,6 +1,5 @@
 package co.nimblehq.surveys.data.services.responses.survey
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -25,5 +24,5 @@ data class Attributes(
     @Json(name = "thank_email_below_threshold")
     val thankEmailBelowThreshold: String?,
     @Json(name = "title")
-    val title: String?
+    val title: String?,
 )

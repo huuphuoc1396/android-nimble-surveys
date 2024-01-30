@@ -11,24 +11,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.surveys.R
 
-private val themeColors = lightColors(
-    primary = Color.White
-)
+private val themeColors =
+    lightColors(
+        primary = Color.White,
+    )
 
 @Composable
 fun SurveysTheme(content: @Composable () -> Unit) {
     Box(
-        modifier = Modifier.paint(
-            painter = painterResource(id = R.drawable.bg_window),
-            contentScale = ContentScale.Crop,
-        )
+        modifier =
+            Modifier.paint(
+                painter = painterResource(id = R.drawable.bg_window),
+                contentScale = ContentScale.Crop,
+            ),
     ) {
         MaterialTheme(
             colors = themeColors,
             typography = typography,
             shapes = shapes,
-            content = content
+            content = content,
         )
     }
 }
-

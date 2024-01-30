@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+
 @ExperimentalCoroutinesApi
 class SplashViewModelTest : ViewModelTest() {
-
     private val getLoggedInUseCase: GetLoggedInUseCase = mockk()
     private lateinit var viewModel: SplashViewModel
 
@@ -24,22 +24,24 @@ class SplashViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `When user have logged in, it waits Splash delay then go to Home`() = runTest {
-        coEvery { getLoggedInUseCase(Unit) } returns flowOf(true.wrapSuccess())
-        viewModel.checkLoggedIn()
-        viewModel.singleEvents.test {
-            advanceUntilIdle()
-            expectMostRecentItem() shouldBe SplashViewModel.Event.GoToHome
+    fun `When user have logged in, it waits Splash delay then go to Home`() =
+        runTest {
+            coEvery { getLoggedInUseCase(Unit) } returns flowOf(true.wrapSuccess())
+            viewModel.checkLoggedIn()
+            viewModel.singleEvents.test {
+                advanceUntilIdle()
+                expectMostRecentItem() shouldBe SplashViewModel.Event.GoToHome
+            }
         }
-    }
 
     @Test
-    fun `When user haven't logged in yet, it waits Splash delay then go to Login`() = runTest {
-        coEvery { getLoggedInUseCase(Unit) } returns flowOf(false.wrapSuccess())
-        viewModel.checkLoggedIn()
-        viewModel.singleEvents.test {
-            advanceUntilIdle()
-            expectMostRecentItem() shouldBe SplashViewModel.Event.GoToLogin
+    fun `When user haven't logged in yet, it waits Splash delay then go to Login`() =
+        runTest {
+            coEvery { getLoggedInUseCase(Unit) } returns flowOf(false.wrapSuccess())
+            viewModel.checkLoggedIn()
+            viewModel.singleEvents.test {
+                advanceUntilIdle()
+                expectMostRecentItem() shouldBe SplashViewModel.Event.GoToLogin
+            }
         }
-    }
 }

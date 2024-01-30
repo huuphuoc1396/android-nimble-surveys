@@ -22,19 +22,22 @@ fun Avatar(
     onAccountClick: () -> Unit = {},
 ) {
     Image(
-        painter = avatarUrl?.let {
-            rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(avatarUrl)
-                    .placeholder(R.drawable.ic_place_holder_account)
-                    .build()
-            )
-        } ?: painterResource(id = R.drawable.ic_place_holder_account),
+        painter =
+            avatarUrl?.let {
+                rememberAsyncImagePainter(
+                    model =
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(avatarUrl)
+                            .placeholder(R.drawable.ic_place_holder_account)
+                            .build(),
+                )
+            } ?: painterResource(id = R.drawable.ic_place_holder_account),
         contentDescription = null,
         contentScale = ContentScale.Crop,
-        modifier = modifier
-            .size(36.dp)
-            .clip(CircleShape)
-            .clickable(onClick = onAccountClick),
+        modifier =
+            modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .clickable(onClick = onAccountClick),
     )
 }

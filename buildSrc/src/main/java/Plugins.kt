@@ -20,4 +20,6 @@ object Plugins {
     const val KOVER = "org.jetbrains.kotlinx.kover"
 
     const val ANDROID_JUNIT5 = "de.mannodermaus.android-junit5"
+
+    const val KTLINT = "org.jlleitschuh.gradle.ktlint"
 }
