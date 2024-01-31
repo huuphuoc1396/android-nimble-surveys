@@ -12,26 +12,28 @@ import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class GetLoggedInUseCaseTest {
-
     private val authRepository = mockk<AuthRepository>()
-    private val getLoggedInUseCase = GetLoggedInUseCase(
-        authRepository = authRepository,
-        dispatcher = UnconfinedTestDispatcher(),
-    )
+    private val getLoggedInUseCase =
+        GetLoggedInUseCase(
+            authRepository = authRepository,
+            dispatcher = UnconfinedTestDispatcher(),
+        )
 
     @Test
-    fun `When user logged in, it emits true`() = runTest {
-        coEvery { authRepository.isLoggedIn() } returns flowOf(true)
-        getLoggedInUseCase(Unit).collect { result ->
-            result.getOrNull() shouldBe true
+    fun `When user logged in, it emits true`() =
+        runTest {
+            coEvery { authRepository.isLoggedIn() } returns flowOf(true)
+            getLoggedInUseCase(Unit).collect { result ->
+                result.getOrNull() shouldBe true
+            }
         }
-    }
 
     @Test
-    fun `When user didn't log in, it emits false`() = runTest {
-        coEvery { authRepository.isLoggedIn() } returns flowOf(false)
-        getLoggedInUseCase(Unit).collect { result ->
-            result.getOrNull() shouldBe false
+    fun `When user didn't log in, it emits false`() =
+        runTest {
+            coEvery { authRepository.isLoggedIn() } returns flowOf(false)
+            getLoggedInUseCase(Unit).collect { result ->
+                result.getOrNull() shouldBe false
+            }
         }
-    }
 }

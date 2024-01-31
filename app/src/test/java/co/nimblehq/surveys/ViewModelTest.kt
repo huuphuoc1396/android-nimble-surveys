@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach
 
 @ExperimentalCoroutinesApi
 abstract class ViewModelTest {
-
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 
     @BeforeEach
@@ -23,5 +22,4 @@ abstract class ViewModelTest {
     open fun teardown() {
         Dispatchers.resetMain()
     }
-
 }

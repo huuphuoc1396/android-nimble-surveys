@@ -1,6 +1,5 @@
 package co.nimblehq.surveys.data.services.responses.login
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -15,5 +14,5 @@ data class Attributes(
     @Json(name = "refresh_token")
     val refreshToken: String?,
     @Json(name = "token_type")
-    val tokenType: String?
+    val tokenType: String?,
 )

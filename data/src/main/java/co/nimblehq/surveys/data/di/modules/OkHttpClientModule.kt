@@ -18,7 +18,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 @Module
 @InstallIn(SingletonComponent::class)
 class OkHttpClientModule {
-
     @Provides
     @NonAuthClient
     fun provideNonAuthOkHttpClient(
@@ -49,15 +48,12 @@ class OkHttpClientModule {
 
     @Provides
     fun provideChuckerInterceptor(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): ChuckerInterceptor = OkHttpClientProvider.getChuckerInterceptor(context)
 
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        OkHttpClientProvider.getHttpLoggingInterceptor()
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = OkHttpClientProvider.getHttpLoggingInterceptor()
 
     @Provides
-    fun provideHeaderInterceptor(): HeaderInterceptor =
-        OkHttpClientProvider.getHeaderInterceptor()
-
+    fun provideHeaderInterceptor(): HeaderInterceptor = OkHttpClientProvider.getHeaderInterceptor()
 }

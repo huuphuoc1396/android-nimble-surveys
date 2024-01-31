@@ -7,12 +7,13 @@ import co.nimblehq.surveys.domain.usecases.SingleUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class LogoutUseCase @Inject constructor(
-    private val authRepository: AuthRepository,
-    @IoDispatcher dispatcher: CoroutineDispatcher,
-) : SingleUseCase<EmptyParams, Unit>(dispatcher) {
-
-    override suspend fun execute(params: EmptyParams) {
-        return authRepository.logout()
+class LogoutUseCase
+    @Inject
+    constructor(
+        private val authRepository: AuthRepository,
+        @IoDispatcher dispatcher: CoroutineDispatcher,
+    ) : SingleUseCase<EmptyParams, Unit>(dispatcher) {
+        override suspend fun execute(params: EmptyParams) {
+            return authRepository.logout()
+        }
     }
-}

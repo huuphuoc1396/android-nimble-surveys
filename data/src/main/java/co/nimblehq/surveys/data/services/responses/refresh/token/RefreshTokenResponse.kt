@@ -1,6 +1,5 @@
 package co.nimblehq.surveys.data.services.responses.refresh.token
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -11,5 +10,5 @@ data class RefreshTokenResponse(
     @Json(name = "id")
     val id: String?,
     @Json(name = "type")
-    val type: String?
+    val type: String?,
 )

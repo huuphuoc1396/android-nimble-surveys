@@ -28,26 +28,28 @@ fun DotsIndicator(
     dotSize: Dp = 8.dp,
 ) {
     LazyRow(
-        modifier = modifier
-            .wrapContentWidth()
-            .wrapContentHeight(),
+        modifier =
+            modifier
+                .wrapContentWidth()
+                .wrapContentHeight(),
         userScrollEnabled = false,
     ) {
-
         items(totalDots) { index ->
             if (index == selectedIndex) {
                 Box(
-                    modifier = Modifier
-                        .size(dotSize)
-                        .clip(CircleShape)
-                        .background(selectedColor)
+                    modifier =
+                        Modifier
+                            .size(dotSize)
+                            .clip(CircleShape)
+                            .background(selectedColor),
                 )
             } else {
                 Box(
-                    modifier = Modifier
-                        .size(dotSize)
-                        .clip(CircleShape)
-                        .background(unSelectedColor)
+                    modifier =
+                        Modifier
+                            .size(dotSize)
+                            .clip(CircleShape)
+                            .background(unSelectedColor),
                 )
             }
 

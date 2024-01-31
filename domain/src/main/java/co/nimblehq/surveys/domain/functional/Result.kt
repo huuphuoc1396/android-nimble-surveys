@@ -10,22 +10,21 @@ import kotlinx.coroutines.withContext
 suspend fun <R> safeSuspend(
     dispatcher: CoroutineDispatcher,
     action: suspend () -> R,
-): Result<R> = withContext(dispatcher) {
-    try {
-        action().wrapSuccess()
-    } catch (throwable: Throwable) {
-        throwable.wrapFailure()
+): Result<R> =
+    withContext(dispatcher) {
+        try {
+            action().wrapSuccess()
+        } catch (throwable: Throwable) {
+            throwable.wrapFailure()
+        }
     }
-}
 
-fun <R> Flow<R>.safeFlow(
-    dispatcher: CoroutineDispatcher,
-): Flow<Result<R>> = map { data ->
-    data.wrapSuccess()
-}.catch { throwable ->
-    emit(throwable.wrapFailure())
-}.flowOn(dispatcher)
-
+fun <R> Flow<R>.safeFlow(dispatcher: CoroutineDispatcher): Flow<Result<R>> =
+    map { data ->
+        data.wrapSuccess()
+    }.catch { throwable ->
+        emit(throwable.wrapFailure())
+    }.flowOn(dispatcher)
 
 fun <T> T.wrapSuccess() = Result.success(this)
 
