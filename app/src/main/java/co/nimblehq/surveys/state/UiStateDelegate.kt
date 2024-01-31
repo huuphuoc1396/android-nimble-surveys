@@ -93,10 +93,10 @@ class UiStateDelegateImpl<UiState, Event>(
     override val isLoading: StateFlow<Boolean>
         get() = _isLoading
 
-    private val _errorChannel = Channel<Throwable>(singleLiveEventCapacity)
+    private val _error = Channel<Throwable>(singleLiveEventCapacity)
 
     override val error: Flow<Throwable>
-        get() = _errorChannel.receiveAsFlow()
+        get() = _error.receiveAsFlow()
 
     override suspend fun UiStateDelegate<UiState, Event>.reduce(transform: (uiState: UiState) -> UiState) {
         mutexState.withLock {
@@ -126,6 +126,6 @@ class UiStateDelegateImpl<UiState, Event>(
     }
 
     override suspend fun sendError(error: Throwable) {
-        _errorChannel.send(error)
+        _error.send(error)
     }
 }
