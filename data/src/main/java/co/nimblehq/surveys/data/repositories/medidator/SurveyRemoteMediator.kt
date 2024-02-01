@@ -49,7 +49,8 @@ class SurveyRemoteMediator @Inject constructor(
                 size = PAGE_SIZE,
             ).toSurveyPageModel()
             val surveyList = surveyPageResult.surveyList
-            val endOfPaginationReached = surveyList.isEmpty()
+            val totalPages = surveyPageResult.totalPages
+            val endOfPaginationReached = surveyList.isEmpty() || currentPage >= totalPages
             val needToDeleteDatabase = loadType == LoadType.REFRESH
 
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
@@ -63,7 +64,7 @@ class SurveyRemoteMediator @Inject constructor(
                 needToDelete = needToDeleteDatabase,
                 surveys = surveyList.toSurveyEntities(),
             )
-            return MediatorResult.Success(endOfPaginationReached = surveyList.isEmpty())
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (throwable: Throwable) {
             return MediatorResult.Error(throwable)
         }

@@ -10,7 +10,7 @@ object DatabaseProvider {
     private const val SURVEY_DB_NAME = "nimble_survey.db"
 
     fun createSurveyDatabase(context: Context): SurveyDatabases {
-        val passPhrase: ByteArray = SQLiteDatabase.getBytes("nimble_survey".toCharArray())
+        val passPhrase: ByteArray = SQLiteDatabase.getBytes(NativeLibProvider.sqliteEncryptedKey.toCharArray())
         val factory = SupportFactory(passPhrase)
         return Room.databaseBuilder(context, SurveyDatabases::class.java, SURVEY_DB_NAME)
             .openHelperFactory(factory)
