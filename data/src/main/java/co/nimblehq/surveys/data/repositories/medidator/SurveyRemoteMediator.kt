@@ -1,19 +1,20 @@
-package co.nimblehq.surveys.data.medidator
+package co.nimblehq.surveys.data.repositories.medidator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import co.nimblehq.surveys.data.SurveyPagingConfigs.CACHE_TIME_OUT_HOUR
-import co.nimblehq.surveys.data.SurveyPagingConfigs.SURVEY_LIST_PAGE_SIZE
 import co.nimblehq.surveys.data.mapper.toSurveyEntities
 import co.nimblehq.surveys.data.mapper.toSurveyKeyEntities
+import co.nimblehq.surveys.data.repositories.constants.SurveyPagingConfigs.CACHE_TIME_OUT_HOUR
+import co.nimblehq.surveys.data.repositories.constants.SurveyPagingConfigs.PAGE_SIZE
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.responses.survey.toSurveyPageModel
 import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
 import co.nimblehq.surveys.data.storages.database.dao.SurveyKeyDao
 import co.nimblehq.surveys.data.storages.database.entity.SurveyEntity
 import co.nimblehq.surveys.data.storages.database.entity.SurveyKeyEntity
+import co.nimblehq.surveys.domain.extensions.defaultZero
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -36,14 +37,16 @@ class SurveyRemoteMediator @Inject constructor(
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                val nextKey = remoteKeys?.nextPage ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                val nextKey = remoteKeys?.nextPage ?: return MediatorResult.Success(
+                    endOfPaginationReached = remoteKeys != null,
+                )
                 nextKey
             }
         }
         try {
             val surveyPageResult = apiService.getSurveyList(
-                    page = currentPage,
-                    size = SURVEY_LIST_PAGE_SIZE
+                page = currentPage,
+                size = PAGE_SIZE,
             ).toSurveyPageModel()
             val surveyList = surveyPageResult.surveyList
             val endOfPaginationReached = surveyList.isEmpty()
@@ -54,7 +57,7 @@ class SurveyRemoteMediator @Inject constructor(
 
             surveyKeyDao.insertAndDeleteSurveyKey(
                 needToDelete = needToDeleteDatabase,
-                surveyKeys =  surveyKeys,
+                surveyKeys = surveyKeys,
             )
             surveyDao.insertAndDeleteSurvey(
                 needToDelete = needToDeleteDatabase,
@@ -68,10 +71,10 @@ class SurveyRemoteMediator @Inject constructor(
 
     override suspend fun initialize(): InitializeAction {
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(CACHE_TIME_OUT_HOUR, TimeUnit.HOURS)
-
-        return if (System.currentTimeMillis() - (surveyKeyDao.getCreationTime()
-                ?: 0) < cacheTimeout
-        ) {
+        val currentTimeMillis = System.currentTimeMillis()
+        val creationTime = surveyKeyDao.getCreationTime().defaultZero()
+        val shouldRefresh = currentTimeMillis - creationTime < cacheTimeout
+        return if (shouldRefresh) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
             InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -87,10 +90,12 @@ class SurveyRemoteMediator @Inject constructor(
     }
 
     private fun getRemoteKeyForLastItem(state: PagingState<Int, SurveyEntity>): SurveyKeyEntity? {
-        return state.pages.lastOrNull {
-            it.data.isNotEmpty()
-        }?.data?.lastOrNull()?.let { survey ->
-            surveyKeyDao.getSurveyKey(survey.surveyId)
-        }
+        return state.pages
+            .lastOrNull { page ->
+                page.data.isNotEmpty()
+            }?.data?.lastOrNull()
+            ?.let { survey ->
+                surveyKeyDao.getSurveyKey(survey.surveyId)
+            }
     }
 }

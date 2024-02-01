@@ -13,8 +13,8 @@ fun SurveyModel.toEntity() = SurveyEntity(
     coverUrl = this.coverUrl.defaultEmpty(),
 )
 
-fun List<SurveyModel>.toSurveyEntities() = this.map {
-    it.toEntity()
+fun List<SurveyModel>.toSurveyEntities() = this.map { surveyModel ->
+    surveyModel.toEntity()
 }
 
 fun SurveyEntity.toSurveyModel() = SurveyModel(
@@ -29,6 +29,6 @@ fun SurveyModel.toSurveyKeyEntity(nextPage: Int?) = SurveyKeyEntity(
     nextPage = nextPage,
 )
 
-fun List<SurveyModel>.toSurveyKeyEntities(nextPage: Int?) = this.map {
-    it.toSurveyKeyEntity(nextPage)
+fun List<SurveyModel>.toSurveyKeyEntities(nextPage: Int?) = this.map { surveyModel ->
+    surveyModel.toSurveyKeyEntity(nextPage)
 }
