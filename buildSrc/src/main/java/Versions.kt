@@ -59,4 +59,6 @@ object Versions {
     const val PROTOBUF_JAVALITE = "3.23.0"
 
     const val ROOM = "2.6.1"
+    const val SQL_CIPHER = "4.5.3"
+    const val SQL_CORE = "2.4.0"
 }

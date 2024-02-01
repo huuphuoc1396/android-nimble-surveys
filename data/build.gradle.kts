@@ -107,6 +107,9 @@ dependencies {
     kapt(Libs.AndroidX.ROOM_COMPILER)
     implementation(Libs.AndroidX.ROOM_PAGING)
     implementation(Libs.AndroidX.ROOM_RUNTIME)
+
+    implementation(Libs.AndroidX.SQL_CIPHER)
+    implementation(Libs.AndroidX.SQL_CORE)
 }
 
 protobuf {

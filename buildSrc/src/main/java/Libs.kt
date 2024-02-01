@@ -25,11 +25,15 @@ object Libs {
         const val PAGING_RUNTIME = "androidx.paging:paging-runtime:${Versions.PAGING_RUNTIME}"
         const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
         const val PAGING_TEST = "androidx.paging:paging-testing:${Versions.PAGING_RUNTIME}"
+        const val PAGING_COMMON = "androidx.paging:paging-common-ktx:${Versions.PAGING_RUNTIME}"
 
         const val ROOM_CORE = "androidx.room:room-ktx:${Versions.ROOM}"
         const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
         const val ROOM_PAGING = "androidx.room:room-paging:${Versions.ROOM}"
         const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
+
+        const val SQL_CIPHER = "net.zetetic:android-database-sqlcipher:${Versions.SQL_CIPHER}"
+        const val SQL_CORE = "androidx.sqlite:sqlite:${Versions.SQL_CORE}"
     }
 
     object Kotlin {

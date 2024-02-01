@@ -11,4 +11,6 @@ data class SurveyKeyEntity(
     val surveyId: String,
     @ColumnInfo("nexPage")
     val nexPage: Int?,
+    @ColumnInfo(name = "createdAt")
+    val createdAt: Long = System.currentTimeMillis()
 )

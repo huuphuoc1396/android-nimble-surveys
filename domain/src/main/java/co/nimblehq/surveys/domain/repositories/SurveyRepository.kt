@@ -1,8 +1,9 @@
 package co.nimblehq.surveys.domain.repositories
 
-import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
+import androidx.paging.PagingData
+import co.nimblehq.surveys.domain.models.survey.SurveyModel
+import kotlinx.coroutines.flow.Flow
 
 interface SurveyRepository {
-
-    suspend fun getSurveyList(page: Int, size: Int): SurveyPageModel
+    suspend fun getSurveyList(): Flow<PagingData<SurveyModel>>
 }

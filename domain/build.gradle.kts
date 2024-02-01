@@ -12,6 +12,7 @@ dependencies {
 
     implementation(Libs.Kotlin.COROUTINES_CORE)
     implementation(Libs.JAVAX_INJECT)
+    implementation(Libs.AndroidX.PAGING_COMMON)
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.MOCKK)

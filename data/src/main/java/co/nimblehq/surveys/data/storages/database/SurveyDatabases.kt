@@ -5,9 +5,10 @@ import androidx.room.RoomDatabase
 import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
 import co.nimblehq.surveys.data.storages.database.dao.SurveyKeyDao
 import co.nimblehq.surveys.data.storages.database.entity.SurveyEntity
+import co.nimblehq.surveys.data.storages.database.entity.SurveyKeyEntity
 
 @Database(
-    entities = [SurveyEntity::class, SurveyKeyDao::class],
+    entities = [SurveyEntity::class, SurveyKeyEntity::class],
     version = 1,
     exportSchema = false
 )

@@ -154,4 +154,8 @@ dependencies {
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
     androidTestImplementation(Libs.MOCKK_ANDROID)
+
+    implementation(Libs.AndroidX.ROOM_CORE)
+    kapt(Libs.AndroidX.ROOM_COMPILER)
+    implementation(Libs.AndroidX.ROOM_RUNTIME)
 }

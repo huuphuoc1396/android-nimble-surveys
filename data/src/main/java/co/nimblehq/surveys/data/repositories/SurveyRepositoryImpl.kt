@@ -1,16 +1,40 @@
 package co.nimblehq.surveys.data.repositories
 
-import co.nimblehq.surveys.data.services.AuthApiService
-import co.nimblehq.surveys.data.services.responses.survey.toSurveyPageModel
-import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import co.nimblehq.surveys.data.Constants
+import co.nimblehq.surveys.data.mapper.toSurveyModel
+import co.nimblehq.surveys.data.medidator.SurveyRemoteMediator
+import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
+import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.repositories.SurveyRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SurveyRepositoryImpl @Inject constructor(
-    private val authApiService: AuthApiService,
+    private val remoteMediator: SurveyRemoteMediator,
+    private val surveyDao: SurveyDao,
 ) : SurveyRepository {
-    override suspend fun getSurveyList(page: Int, size: Int): SurveyPageModel {
-        val surveyListResponse = authApiService.getSurveyList(page, size)
-        return surveyListResponse.toSurveyPageModel()
+    @OptIn(ExperimentalPagingApi::class)
+    override suspend fun getSurveyList(): Flow<PagingData<SurveyModel>> {
+        val pagingData = Pager(
+            config = PagingConfig(
+                pageSize = Constants.SURVEY_LIST_PAGE_SIZE,
+                prefetchDistance = 1,
+            ),
+            remoteMediator = remoteMediator,
+            pagingSourceFactory = {
+                surveyDao.getSurveys()
+            },
+        ).flow.map {
+            it.map { surveyEntity ->
+                surveyEntity.toSurveyModel()
+            }
+        }
+        return pagingData
     }
 }

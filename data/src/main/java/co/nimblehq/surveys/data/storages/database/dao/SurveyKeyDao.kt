@@ -16,4 +16,7 @@ interface SurveyKeyDao {
 
     @Query("DELETE FROM survey_keys")
     suspend fun deleteSurveyKeys()
+
+    @Query("Select createdAt From survey_keys Order By createdAt DESC LIMIT 1")
+    suspend fun getCreationTime(): Long?
 }
