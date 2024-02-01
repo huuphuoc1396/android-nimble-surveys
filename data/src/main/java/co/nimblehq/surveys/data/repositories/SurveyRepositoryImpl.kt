@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import co.nimblehq.surveys.data.Constants
+import co.nimblehq.surveys.data.SurveyPagingConfigs
 import co.nimblehq.surveys.data.mapper.toSurveyModel
 import co.nimblehq.surveys.data.medidator.SurveyRemoteMediator
 import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
@@ -23,15 +23,15 @@ class SurveyRepositoryImpl @Inject constructor(
     override suspend fun getSurveyList(): Flow<PagingData<SurveyModel>> {
         val pagingData = Pager(
             config = PagingConfig(
-                pageSize = Constants.SURVEY_LIST_PAGE_SIZE,
-                prefetchDistance = 1,
+                pageSize = SurveyPagingConfigs.SURVEY_LIST_PAGE_SIZE,
+                prefetchDistance = SurveyPagingConfigs.PREFECT_DISTANCE,
             ),
             remoteMediator = remoteMediator,
             pagingSourceFactory = {
                 surveyDao.getSurveys()
             },
-        ).flow.map {
-            it.map { surveyEntity ->
+        ).flow.map { surveyPagingData ->
+            surveyPagingData.map { surveyEntity ->
                 surveyEntity.toSurveyModel()
             }
         }

@@ -3,6 +3,7 @@ package co.nimblehq.surveys.data.di.modules
 import android.content.Context
 import androidx.room.Room
 import co.nimblehq.surveys.data.storages.database.SurveyDatabases
+import co.nimblehq.surveys.data.storages.providers.DatabaseProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,15 +18,8 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): SurveyDatabases {
-        val passPhrase: ByteArray = SQLiteDatabase.getBytes("nimble_survey".toCharArray())
-        val factory = SupportFactory(passPhrase)
-        return Room.databaseBuilder(context, SurveyDatabases::class.java, "app.db")
-            .openHelperFactory(factory)
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
-            .build()
-    }
+    fun provideAppDatabase(@ApplicationContext context: Context) =
+        DatabaseProvider.getDatabase(context)
 
     @Provides
     @Singleton

@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import co.nimblehq.surveys.data.storages.database.entity.SurveyEntity
 
 @Dao
@@ -17,4 +18,12 @@ interface SurveyDao {
 
     @Query("DELETE FROM surveys")
     suspend fun deleteSurveys()
+
+    @Transaction
+    suspend fun insertAndDeleteSurvey(needToDelete: Boolean, surveys: List<SurveyEntity>) {
+        if (needToDelete) {
+            deleteSurveys()
+        }
+        insertAll(surveys)
+    }
 }

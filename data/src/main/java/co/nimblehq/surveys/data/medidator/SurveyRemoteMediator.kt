@@ -4,13 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
-import co.nimblehq.surveys.data.Constants.CACHE_TIME_OUT_HOUR
-import co.nimblehq.surveys.data.Constants.SURVEY_LIST_PAGE_SIZE
+import co.nimblehq.surveys.data.SurveyPagingConfigs.CACHE_TIME_OUT_HOUR
+import co.nimblehq.surveys.data.SurveyPagingConfigs.SURVEY_LIST_PAGE_SIZE
 import co.nimblehq.surveys.data.mapper.toSurveyEntities
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.responses.survey.toSurveyPageModel
-import co.nimblehq.surveys.data.storages.database.SurveyDatabases
 import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
 import co.nimblehq.surveys.data.storages.database.dao.SurveyKeyDao
 import co.nimblehq.surveys.data.storages.database.entity.SurveyEntity
@@ -23,7 +21,6 @@ class SurveyRemoteMediator @Inject constructor(
     private val apiService: AuthApiService,
     private val surveyDao: SurveyDao,
     private val surveyKeyDao: SurveyKeyDao,
-    private val surveyDatabases: SurveyDatabases,
 ) : RemoteMediator<Int, SurveyEntity>() {
     override suspend fun load(
         loadType: LoadType,
@@ -48,23 +45,24 @@ class SurveyRemoteMediator @Inject constructor(
                 apiService.getSurveyList(currentPage, SURVEY_LIST_PAGE_SIZE).toSurveyPageModel()
             val surveyList = surveyPageResult.surveyList
             val endOfPaginationReached = surveyList.isEmpty()
+            val needToDeleteDatabase = loadType == LoadType.REFRESH
 
-            surveyDatabases.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    surveyKeyDao.deleteSurveyKeys()
-                    surveyDao.deleteSurveys()
-                }
-                val nextPage = if (endOfPaginationReached) null else currentPage + 1
-                val surveyKeys = surveyList.map { survey ->
-                    SurveyKeyEntity(
-                        surveyId = survey.id,
-                        nexPage = nextPage
-                    )
-                }
-
-                surveyKeyDao.insert(surveyKeys)
-                surveyDao.insertAll(surveyList.toSurveyEntities())
+            val nextPage = if (endOfPaginationReached) null else currentPage + 1
+            val surveyKeys = surveyList.map { survey ->
+                SurveyKeyEntity(
+                    surveyId = survey.id,
+                    nexPage = nextPage
+                )
             }
+
+            surveyKeyDao.insertAndDeleteSurveyKey(
+                needToDelete = needToDeleteDatabase,
+                surveyKeys =  surveyKeys,
+            )
+            surveyDao.insertAndDeleteSurvey(
+                needToDelete = needToDeleteDatabase,
+                surveys = surveyList.toSurveyEntities(),
+            )
             return MediatorResult.Success(endOfPaginationReached = surveyList.isEmpty())
         } catch (throwable: Throwable) {
             return MediatorResult.Error(throwable)

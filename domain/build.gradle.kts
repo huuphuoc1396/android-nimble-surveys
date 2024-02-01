@@ -13,7 +13,7 @@ dependencies {
 
     implementation(Libs.Kotlin.COROUTINES_CORE)
     implementation(Libs.JAVAX_INJECT)
-    implementation(Libs.AndroidX.PAGING_COMMON)
+    implementation(Libs.Paging.PAGING_COMMON)
 
     testImplementation(platform(Libs.JUnit5.BOM))
     testImplementation(Libs.JUnit5.JUPITER)
