@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import co.nimblehq.surveys.ViewModelTest
 import co.nimblehq.surveys.domain.functional.wrapFailure
 import co.nimblehq.surveys.domain.functional.wrapSuccess
-import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.models.survey.SurveyPageModel
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.usecases.EmptyParams
@@ -12,23 +11,19 @@ import co.nimblehq.surveys.domain.usecases.auth.GetUserUseCase
 import co.nimblehq.surveys.domain.usecases.auth.LogoutUseCase
 import co.nimblehq.surveys.domain.usecases.survey.GetSurveyListUseCase
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNot
 import io.kotest.matchers.shouldNotBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class HomeViewModelTest : ViewModelTest() {
-
     private val getUserUseCase: GetUserUseCase = mockk()
     private val logoutUseCase: LogoutUseCase = mockk()
     private val getSurveyListUseCase: GetSurveyListUseCase = mockk()
-
     private lateinit var homeViewModel: HomeViewModel
     private val userModel = UserModel(
         id = "1",
@@ -52,12 +47,13 @@ class HomeViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `When call get survey list, it creates a paging data and updates to the UiState `() = runTest {
-        homeViewModel.getSurveyList()
-        homeViewModel.uiStateFlow.test {
-            expectMostRecentItem().surveyPagingData shouldNotBe null
+    fun `When call get survey list, it creates a paging data and updates to the UiState `() =
+        runTest {
+            homeViewModel.getSurveyList()
+            homeViewModel.uiStateFlow.test {
+                expectMostRecentItem().surveyPagingData shouldNotBe null
+            }
         }
-    }
 
     @Test
     fun `When get user is success, it updates UserModel in the UiState`() = runTest {

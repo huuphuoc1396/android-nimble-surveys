@@ -6,20 +6,20 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 
 @ExperimentalCoroutinesApi
 abstract class ViewModelTest {
 
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 
-    @Before
+    @BeforeEach
     open fun setUp() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     open fun teardown() {
         Dispatchers.resetMain()
     }

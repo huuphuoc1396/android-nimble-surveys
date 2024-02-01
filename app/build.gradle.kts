@@ -6,6 +6,8 @@ plugins {
     id(Plugins.HILT_ANDROID)
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
+    id(Plugins.KOVER)
+    id(Plugins.ANDROID_JUNIT5)
 }
 
 android {
@@ -72,6 +74,10 @@ android {
             "-Xcontext-receivers",
             "-Xstring-concat=inline",
         )
+    }
+
+    testOptions {
+        unitTests.all { it.useJUnitPlatform() }
     }
 
     buildFeatures {
@@ -141,7 +147,8 @@ dependencies {
 
     implementation(Libs.TIMBER)
 
-    testImplementation(Libs.JUNIT)
+    testImplementation(platform(Libs.JUnit5.BOM))
+    testImplementation(Libs.JUnit5.JUPITER)
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
@@ -150,7 +157,7 @@ dependencies {
     testImplementation(Libs.AndroidX.PAGING_TEST)
 
     androidTestImplementation(platform(Libs.AndroidX.COMPOSE_BOM))
-    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT4)
+    androidTestImplementation(Libs.AndroidX.COMPOSE_UI_TEST_JUNIT5)
     androidTestImplementation(Libs.AndroidX.TEST_JUNIT)
     androidTestImplementation(Libs.AndroidX.TEST_ESPRESSO_CORE)
     androidTestImplementation(Libs.MOCKK_ANDROID)
@@ -158,4 +165,20 @@ dependencies {
     implementation(Libs.AndroidX.ROOM_CORE)
     kapt(Libs.AndroidX.ROOM_COMPILER)
     implementation(Libs.AndroidX.ROOM_RUNTIME)
+}
+
+koverReport {
+    filters {
+        excludes {
+            packages(Excludes.excludesPackages)
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
+            bound {
+                minValue = 80 // Minimum coverage percentage
+            }
+        }
+    }
 }

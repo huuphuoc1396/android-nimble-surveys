@@ -5,6 +5,8 @@ plugins {
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.PROTOBUF)
+    id(Plugins.KOVER)
+    id(Plugins.ANDROID_JUNIT5)
 }
 
 android {
@@ -51,6 +53,10 @@ android {
         )
     }
 
+    testOptions {
+        unitTests.all { it.useJUnitPlatform() }
+    }
+
     externalNativeBuild {
         cmake {
             path = File("cpp/CMakeLists.txt")
@@ -86,7 +92,8 @@ dependencies {
     implementation(Libs.CHUCKER)
     implementation(Libs.LOGGING_INTERCEPTOR)
 
-    testImplementation(Libs.JUNIT)
+    testImplementation(platform(Libs.JUnit5.BOM))
+    testImplementation(Libs.JUnit5.JUPITER)
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
@@ -130,6 +137,20 @@ protobuf {
                     option("lite")
                 }
             }
+        }
+    }
+}
+
+koverReport {
+    filters {
+        excludes {
+            // Add class or package names to exclude from coverage report
+            packages(Excludes.excludesPackages)
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
         }
     }
 }

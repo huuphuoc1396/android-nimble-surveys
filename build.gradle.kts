@@ -12,4 +12,6 @@ plugins {
     id(Plugins.FIREBASE_CRASHLYTICS) version Versions.FIREBASE_CRASHLYTICS apply false
 
     id(Plugins.PROTOBUF) version Versions.PROTOBUF apply false
+    id(Plugins.KOVER) version Versions.KOVER apply false
+    id(Plugins.ANDROID_JUNIT5) version Versions.ANDROID_JUNIT5_VERSION apply false
 }

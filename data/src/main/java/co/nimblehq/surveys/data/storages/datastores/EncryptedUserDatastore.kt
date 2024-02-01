@@ -9,9 +9,11 @@ import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
 import co.nimblehq.surveys.data.storages.datastores.UserData
+import co.nimblehq.surveys.domain.di.annotations.DatastoreScope
 import co.nimblehq.surveys.domain.models.user.UserModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.osipxd.security.crypto.createEncrypted
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.io.InputStream
@@ -29,14 +31,15 @@ interface EncryptedUserDatastore {
 
 @Singleton
 class EncryptedUserDatastoreImpl @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    @DatastoreScope coroutineScope: CoroutineScope,
 ) : EncryptedUserDatastore {
 
     companion object {
         private const val FILE_NAME = "encrypted_user_data"
     }
 
-    private val dataStore = DataStoreFactory.createEncrypted(UserPreferencesSerializer) {
+    private val dataStore = DataStoreFactory.createEncrypted(UserPreferencesSerializer, scope = coroutineScope) {
         EncryptedFile.Builder(
             context.dataStoreFile(FILE_NAME),
             context,

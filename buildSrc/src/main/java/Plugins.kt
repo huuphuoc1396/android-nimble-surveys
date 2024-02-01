@@ -16,4 +16,8 @@ object Plugins {
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
 
     const val PROTOBUF = "com.google.protobuf"
+
+    const val KOVER = "org.jetbrains.kotlinx.kover"
+
+    const val ANDROID_JUNIT5 = "de.mannodermaus.android-junit5"
 }
