@@ -1,11 +1,7 @@
 package co.nimblehq.surveys.features.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 import co.nimblehq.surveys.domain.models.user.UserModel
 import co.nimblehq.surveys.domain.usecases.EmptyParams
@@ -15,8 +11,6 @@ import co.nimblehq.surveys.domain.usecases.survey.GetSurveyListUseCase
 import co.nimblehq.surveys.extensions.launch
 import co.nimblehq.surveys.features.home.HomeViewModel.Event
 import co.nimblehq.surveys.features.home.HomeViewModel.UiState
-import co.nimblehq.surveys.features.survey.list.SurveyPageConfig
-import co.nimblehq.surveys.features.survey.list.SurveyPagingSource
 import co.nimblehq.surveys.state.UiStateDelegate
 import co.nimblehq.surveys.state.UiStateDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +21,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val logoutUseCase: LogoutUseCase,
-    private val getSurveyListUseCase: GetSurveyListUseCase
+    private val getSurveyListUseCase: GetSurveyListUseCase,
 ) : ViewModel(),
     UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
-
     data class UiState(
         val userModel: UserModel? = null,
         val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
@@ -48,19 +41,10 @@ class HomeViewModel @Inject constructor(
 
     fun getSurveyList() {
         launch {
-            val pagingData = Pager(
-                config = PagingConfig(
-                    pageSize = SurveyPageConfig.PAGE_SIZE,
-                    prefetchDistance = 1,
-                ),
-                pagingSourceFactory = {
-                    SurveyPagingSource(getSurveyListUseCase)
-                },
-            )
-                .flow
-                .cachedIn(viewModelScope)
-            reduce { uiState ->
-                uiState.copy(surveyPagingData = pagingData)
+            getSurveyListUseCase.invoke(EmptyParams).onSuccess {
+                reduce { uiState ->
+                    uiState.copy(surveyPagingData = it)
+                }
             }
         }
     }

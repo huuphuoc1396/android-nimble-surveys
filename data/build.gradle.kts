@@ -109,6 +109,14 @@ dependencies {
     implementation(Libs.Datastore.SECURITY_DATASTORE)
     implementation(Libs.Datastore.SECURITY_DATASTORE_PREFERENCES)
     implementation(Libs.Protobuf.JAVALITE)
+
+    implementation(Libs.Room.ROOM_CORE)
+    kapt(Libs.Room.ROOM_COMPILER)
+    implementation(Libs.Room.ROOM_PAGING)
+    implementation(Libs.Room.ROOM_RUNTIME)
+
+    implementation(Libs.Sql.SQL_CIPHER)
+    implementation(Libs.Sql.SQL_CORE)
 }
 
 protobuf {
