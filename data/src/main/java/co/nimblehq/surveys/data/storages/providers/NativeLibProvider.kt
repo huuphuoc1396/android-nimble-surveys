@@ -7,17 +7,14 @@ object NativeLibProvider {
     }
 
     @JvmStatic
-    external fun getApiKey(id: Int): String
-
-    @JvmStatic
-    external fun getEncryptedKey(id: Int): String
+    external fun getSecretKey(id: Int): String
 
     val clientId: String
-        get() = getApiKey(1)
+        get() = getSecretKey(1)
 
     val clientSecret: String
-        get() = getApiKey(2)
+        get() = getSecretKey(2)
 
     val sqliteEncryptedKey: String
-        get() = getEncryptedKey(3)
+        get() = getSecretKey(3)
 }
