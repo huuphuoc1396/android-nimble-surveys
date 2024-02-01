@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.data.mapper
 
 import co.nimblehq.surveys.data.storages.database.entity.SurveyEntity
+import co.nimblehq.surveys.data.storages.database.entity.SurveyKeyEntity
 import co.nimblehq.surveys.domain.extensions.defaultEmpty
 import co.nimblehq.surveys.domain.models.survey.SurveyModel
 
@@ -23,3 +24,11 @@ fun SurveyEntity.toSurveyModel() = SurveyModel(
     coverUrl = this.coverUrl.defaultEmpty(),
 )
 
+fun SurveyModel.toSurveyKeyEntity(nextPage: Int?) = SurveyKeyEntity(
+    surveyId = this.id.defaultEmpty(),
+    nextPage = nextPage,
+)
+
+fun List<SurveyModel>.toSurveyKeyEntities(nextPage: Int?) = this.map {
+    it.toSurveyKeyEntity(nextPage)
+}

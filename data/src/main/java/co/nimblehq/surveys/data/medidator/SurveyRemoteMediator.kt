@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import co.nimblehq.surveys.data.SurveyPagingConfigs.CACHE_TIME_OUT_HOUR
 import co.nimblehq.surveys.data.SurveyPagingConfigs.SURVEY_LIST_PAGE_SIZE
 import co.nimblehq.surveys.data.mapper.toSurveyEntities
+import co.nimblehq.surveys.data.mapper.toSurveyKeyEntities
 import co.nimblehq.surveys.data.services.AuthApiService
 import co.nimblehq.surveys.data.services.responses.survey.toSurveyPageModel
 import co.nimblehq.surveys.data.storages.database.dao.SurveyDao
@@ -29,31 +30,27 @@ class SurveyRemoteMediator @Inject constructor(
         val currentPage = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nexPage?.minus(1) ?: 1
+                remoteKeys?.nextPage?.minus(1) ?: 1
             }
 
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                val nextKey = remoteKeys?.nexPage
+                val nextKey = remoteKeys?.nextPage ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
-                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
             }
         }
         try {
-            val surveyPageResult =
-                apiService.getSurveyList(currentPage, SURVEY_LIST_PAGE_SIZE).toSurveyPageModel()
+            val surveyPageResult = apiService.getSurveyList(
+                    page = currentPage,
+                    size = SURVEY_LIST_PAGE_SIZE
+            ).toSurveyPageModel()
             val surveyList = surveyPageResult.surveyList
             val endOfPaginationReached = surveyList.isEmpty()
             val needToDeleteDatabase = loadType == LoadType.REFRESH
 
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
-            val surveyKeys = surveyList.map { survey ->
-                SurveyKeyEntity(
-                    surveyId = survey.id,
-                    nexPage = nextPage
-                )
-            }
+            val surveyKeys = surveyList.toSurveyKeyEntities(nextPage)
 
             surveyKeyDao.insertAndDeleteSurveyKey(
                 needToDelete = needToDeleteDatabase,
