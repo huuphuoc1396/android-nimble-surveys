@@ -10,18 +10,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetSurveyListUseCase
-    @Inject
-    constructor(
-        private val surveyRepository: SurveyRepository,
-        @IoDispatcher dispatcher: CoroutineDispatcher,
-    ) : SingleUseCase<EmptyParams, Flow<PagingData<SurveyModel>>>(dispatcher) {
-        data class Params(
-            val page: Int,
-            val size: Int,
-        )
+class GetSurveyListUseCase @Inject constructor(
+    private val surveyRepository: SurveyRepository,
+    @IoDispatcher dispatcher: CoroutineDispatcher,
+) : SingleUseCase<EmptyParams, Flow<PagingData<SurveyModel>>>(dispatcher) {
+    data class Params(
+        val page: Int,
+        val size: Int,
+    )
 
-        override suspend fun execute(params: EmptyParams): Flow<PagingData<SurveyModel>> {
-            return surveyRepository.getSurveyList()
-        }
+    override suspend fun execute(params: EmptyParams): Flow<PagingData<SurveyModel>> {
+        return surveyRepository.getSurveyList()
     }
+}

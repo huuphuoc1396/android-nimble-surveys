@@ -7,6 +7,7 @@ data class ErrorsResponse(
     @Json(name = "errors")
     val errors: List<Error>?,
 ) {
+
     @JsonClass(generateAdapter = true)
     data class Error(
         @Json(name = "code")
@@ -14,6 +15,6 @@ data class ErrorsResponse(
         @Json(name = "detail")
         val detail: String?,
         @Json(name = "source")
-        val source: String?,
+        val source: String?
     )
 }

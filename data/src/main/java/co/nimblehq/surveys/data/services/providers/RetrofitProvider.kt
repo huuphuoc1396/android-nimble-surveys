@@ -6,6 +6,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 
 object RetrofitProvider {
+
     fun getRetrofitBuilder(
         baseUrl: String,
         okHttpClient: OkHttpClient,

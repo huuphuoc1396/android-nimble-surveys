@@ -20,15 +20,14 @@ fun SurveyDetailScreen(
     navController: NavHostController = rememberNavController(),
 ) {
     Column(
-        modifier =
-            Modifier
-                .statusBarsPadding()
-                .fillMaxSize(),
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxSize()
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = "Survey Detail",
-            style = MaterialTheme.typography.h3,
+            style = MaterialTheme.typography.h3
         )
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),

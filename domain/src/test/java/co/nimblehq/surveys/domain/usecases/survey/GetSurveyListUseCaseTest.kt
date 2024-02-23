@@ -12,36 +12,33 @@ import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class GetSurveyListUseCaseTest {
+
     private val surveyRepository = mockk<SurveyRepository>()
-    private val getSurveyListUseCase =
-        GetSurveyListUseCase(
-            surveyRepository = surveyRepository,
-            dispatcher = UnconfinedTestDispatcher(),
+    private val getSurveyListUseCase = GetSurveyListUseCase(
+        surveyRepository = surveyRepository,
+        dispatcher = UnconfinedTestDispatcher(),
+    )
+
+    @Test
+    fun `When get survey list is successful, it returns SurveyPageModel`() = runTest {
+        val surveyPageModel = SurveyPageModel(
+            surveyList = listOf(),
+            page = 1,
+            totalPages = 1,
         )
+        coEvery { surveyRepository.getSurveyList(1, 10) } returns surveyPageModel
+        val params = GetSurveyListUseCase.Params(1, 10)
+        val result = getSurveyListUseCase(params)
+        result.getOrNull() shouldBe surveyPageModel
+    }
 
     @Test
-    fun `When get survey list is successful, it returns SurveyPageModel`() =
-        runTest {
-            val surveyPageModel =
-                SurveyPageModel(
-                    surveyList = listOf(),
-                    page = 1,
-                    totalPages = 1,
-                )
-            coEvery { surveyRepository.getSurveyList(1, 10) } returns surveyPageModel
-            val params = GetSurveyListUseCase.Params(1, 10)
-            val result = getSurveyListUseCase(params)
-            result.getOrNull() shouldBe surveyPageModel
-        }
+    fun `When get survey list is fail, it throw error`() = runTest {
+        val error = Exception()
+        coEvery { surveyRepository.getSurveyList(1, 10) } throws error
 
-    @Test
-    fun `When get survey list is fail, it throw error`() =
-        runTest {
-            val error = Exception()
-            coEvery { surveyRepository.getSurveyList(1, 10) } throws error
-
-            val params = GetSurveyListUseCase.Params(1, 10)
-            val result = getSurveyListUseCase(params)
-            result.exceptionOrNull() shouldBe error
-        }
+        val params = GetSurveyListUseCase.Params(1, 10)
+        val result = getSurveyListUseCase(params)
+        result.exceptionOrNull() shouldBe error
+    }
 }

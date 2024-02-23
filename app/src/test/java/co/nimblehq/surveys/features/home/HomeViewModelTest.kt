@@ -25,13 +25,12 @@ class HomeViewModelTest : ViewModelTest() {
     private val logoutUseCase: LogoutUseCase = mockk()
     private val getSurveyListUseCase: GetSurveyListUseCase = mockk()
     private lateinit var homeViewModel: HomeViewModel
-    private val userModel =
-        UserModel(
-            id = "1",
-            name = "Tester",
-            email = "tester@mail.com",
-            avatarUrl = "https://nimble.hq/avatar/1",
-        )
+    private val userModel = UserModel(
+        id = "1",
+        name = "Tester",
+        email = "tester@mail.com",
+        avatarUrl = "https://nimble.hq/avatar/1",
+    )
 
     override fun setUp() {
         super.setUp()
@@ -40,12 +39,11 @@ class HomeViewModelTest : ViewModelTest() {
             val params = GetSurveyListUseCase.Params(1, 20)
             getSurveyListUseCase(params)
         } returns SurveyPageModel(listOf(), 0, 0).wrapSuccess()
-        homeViewModel =
-            HomeViewModel(
-                getUserUseCase = getUserUseCase,
-                logoutUseCase = logoutUseCase,
-                getSurveyListUseCase = getSurveyListUseCase,
-            )
+        homeViewModel = HomeViewModel(
+            getUserUseCase = getUserUseCase,
+            logoutUseCase = logoutUseCase,
+            getSurveyListUseCase = getSurveyListUseCase,
+        )
     }
 
     @Test
@@ -58,53 +56,48 @@ class HomeViewModelTest : ViewModelTest() {
         }
 
     @Test
-    fun `When get user is success, it updates UserModel in the UiState`() =
-        runTest {
-            coEvery { getUserUseCase(Unit) } returns flowOf(userModel.wrapSuccess())
-            homeViewModel.getUser()
-            homeViewModel.uiStateFlow.test {
-                expectMostRecentItem().userModel shouldBe userModel
-            }
+    fun `When get user is success, it updates UserModel in the UiState`() = runTest {
+        coEvery { getUserUseCase(Unit) } returns flowOf(userModel.wrapSuccess())
+        homeViewModel.getUser()
+        homeViewModel.uiStateFlow.test {
+            expectMostRecentItem().userModel shouldBe userModel
         }
+    }
 
     @Test
-    fun `When get user is error, it emits an error`() =
-        runTest {
-            val error = Throwable()
-            coEvery { getUserUseCase(Unit) } returns flowOf(error.wrapFailure())
-            homeViewModel.getUser()
-            homeViewModel.error.test {
-                expectMostRecentItem() shouldBe error
-            }
+    fun `When get user is error, it emits an error`() = runTest {
+        val error = Throwable()
+        coEvery { getUserUseCase(Unit) } returns flowOf(error.wrapFailure())
+        homeViewModel.getUser()
+        homeViewModel.error.test {
+            expectMostRecentItem() shouldBe error
         }
+    }
 
     @Test
-    fun `When take a surveys clicks, it send a GoToSurveyDetail event`() =
-        runTest {
-            homeViewModel.onTakeSurveyClick("123")
-            homeViewModel.singleEvents.test {
-                expectMostRecentItem() shouldBe HomeViewModel.Event.GoToSurveyDetail("123")
-            }
+    fun `When take a surveys clicks, it send a GoToSurveyDetail event`() = runTest {
+        homeViewModel.onTakeSurveyClick("123")
+        homeViewModel.singleEvents.test {
+            expectMostRecentItem() shouldBe HomeViewModel.Event.GoToSurveyDetail("123")
         }
+    }
 
     @Test
-    fun `When logout is successfully, it navigate to the login`() =
-        runTest {
-            coEvery { logoutUseCase(EmptyParams) } returns Unit.wrapSuccess()
-            homeViewModel.onLogoutClick()
-            homeViewModel.singleEvents.test {
-                expectMostRecentItem() shouldBe HomeViewModel.Event.GoToLogin
-            }
+    fun `When logout is successfully, it navigate to the login`() = runTest {
+        coEvery { logoutUseCase(EmptyParams) } returns Unit.wrapSuccess()
+        homeViewModel.onLogoutClick()
+        homeViewModel.singleEvents.test {
+            expectMostRecentItem() shouldBe HomeViewModel.Event.GoToLogin
         }
+    }
 
     @Test
-    fun `When logout is error, it throws an error`() =
-        runTest {
-            val error = Throwable()
-            coEvery { logoutUseCase(EmptyParams) } returns error.wrapFailure()
-            homeViewModel.onLogoutClick()
-            homeViewModel.error.test {
-                expectMostRecentItem() shouldBe error
-            }
+    fun `When logout is error, it throws an error`() = runTest {
+        val error = Throwable()
+        coEvery { logoutUseCase(EmptyParams) } returns error.wrapFailure()
+        homeViewModel.onLogoutClick()
+        homeViewModel.error.test {
+            expectMostRecentItem() shouldBe error
         }
+    }
 }

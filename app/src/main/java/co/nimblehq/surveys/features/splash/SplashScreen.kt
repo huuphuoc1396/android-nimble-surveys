@@ -55,7 +55,7 @@ fun SplashScreen(
 private fun SplashContent() {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         Image(
             modifier = Modifier.size(202.dp, 48.dp),

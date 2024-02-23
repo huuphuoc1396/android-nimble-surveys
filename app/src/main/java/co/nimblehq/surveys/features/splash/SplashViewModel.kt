@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.features.splash
 
 import androidx.lifecycle.ViewModel
+import co.nimblehq.surveys.domain.usecases.EmptyParams
 import co.nimblehq.surveys.domain.usecases.auth.GetLoggedInUseCase
 import co.nimblehq.surveys.extensions.launch
 import co.nimblehq.surveys.features.splash.SplashViewModel.Event
@@ -12,42 +13,39 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel
-    @Inject
-    constructor(
-        private val getLoggedInUseCase: GetLoggedInUseCase,
-    ) : ViewModel(),
-        UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState) {
-        companion object {
-            private const val SPLASH_DELAY = 1500L
-        }
+class SplashViewModel @Inject constructor(
+    private val getLoggedInUseCase: GetLoggedInUseCase,
+) : ViewModel(),
+    UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState) {
 
-        data object UiState
+    companion object {
+        private const val SPLASH_DELAY = 1500L
+    }
 
-        sealed interface Event {
-            data object GoToHome : Event
+    data object UiState
 
-            data object GoToLogin : Event
-        }
+    sealed interface Event {
+        data object GoToHome : Event
+        data object GoToLogin : Event
+    }
 
-        init {
-            checkLoggedIn()
-        }
+    init {
+        checkLoggedIn()
+    }
 
-        fun checkLoggedIn() {
-            launch {
-                delay(SPLASH_DELAY)
-                getLoggedInUseCase(Unit).collect { isLoggedInResult ->
-                    val isLoggedIn =
-                        isLoggedInResult
-                            .onFailure { error -> sendError(error) }
-                            .getOrNull()
-                    if (isLoggedIn == true) {
-                        sendEvent(Event.GoToHome)
-                    } else {
-                        sendEvent(Event.GoToLogin)
-                    }
+    fun checkLoggedIn() {
+        launch {
+            delay(SPLASH_DELAY)
+            getLoggedInUseCase(Unit).collect { isLoggedInResult ->
+                val isLoggedIn = isLoggedInResult
+                    .onFailure { error -> sendError(error) }
+                    .getOrNull()
+                if (isLoggedIn == true) {
+                    sendEvent(Event.GoToHome)
+                } else {
+                    sendEvent(Event.GoToLogin)
                 }
             }
         }
     }
+}

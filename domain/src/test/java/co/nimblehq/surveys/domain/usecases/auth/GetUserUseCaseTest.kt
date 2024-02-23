@@ -13,26 +13,24 @@ import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class GetUserUseCaseTest {
+
     private val userRepository = mockk<UserRepository>()
-    private val getUserUseCase =
-        GetUserUseCase(
-            userRepository = userRepository,
-            dispatcher = UnconfinedTestDispatcher(),
-        )
+    private val getUserUseCase = GetUserUseCase(
+        userRepository = userRepository,
+        dispatcher = UnconfinedTestDispatcher(),
+    )
 
     @Test
-    fun `When get user is successful, it returns UserModel`() =
-        runTest {
-            val userModel =
-                UserModel(
-                    id = "1",
-                    name = "Tester",
-                    email = "tester@mail.com",
-                    avatarUrl = "https://nimble.hq/avatar/1",
-                )
-            coEvery { userRepository.getUser() } returns flowOf(userModel)
-            getUserUseCase(Unit).collect { result ->
-                result.getOrNull() shouldBe userModel
-            }
+    fun `When get user is successful, it returns UserModel`() = runTest {
+        val userModel = UserModel(
+            id = "1",
+            name = "Tester",
+            email = "tester@mail.com",
+            avatarUrl = "https://nimble.hq/avatar/1"
+        )
+        coEvery { userRepository.getUser() } returns flowOf(userModel)
+        getUserUseCase(Unit).collect { result ->
+            result.getOrNull() shouldBe userModel
         }
+    }
 }

@@ -13,11 +13,12 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import co.nimblehq.surveys.state.UiStateDelegate as Loading
 
+
 fun ViewModel.launch(
     context: CoroutineContext = EmptyCoroutineContext,
     start: CoroutineStart = CoroutineStart.DEFAULT,
     loading: Loading<*, *>? = null,
-    block: suspend CoroutineScope.() -> Unit,
+    block: suspend CoroutineScope.() -> Unit
 ): Job {
     loading?.showLoading()
     return viewModelScope
@@ -33,7 +34,8 @@ fun ViewModel.launch(
         }
 }
 
-fun <T> Flow<T>.injectLoading(loading: Loading<*, *>): Flow<T> =
-    this
-        .onStart { loading.showLoading() }
-        .onCompletion { loading.hideLoading() }
+fun <T> Flow<T>.injectLoading(
+    loading: Loading<*, *>,
+): Flow<T> = this
+    .onStart { loading.showLoading() }
+    .onCompletion { loading.hideLoading() }

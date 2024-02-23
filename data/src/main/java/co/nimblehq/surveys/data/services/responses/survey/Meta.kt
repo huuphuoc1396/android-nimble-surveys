@@ -1,5 +1,6 @@
 package co.nimblehq.surveys.data.services.responses.survey
 
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -12,5 +13,5 @@ data class Meta(
     @Json(name = "pages")
     val pages: Int?,
     @Json(name = "records")
-    val records: Int?,
+    val records: Int?
 )

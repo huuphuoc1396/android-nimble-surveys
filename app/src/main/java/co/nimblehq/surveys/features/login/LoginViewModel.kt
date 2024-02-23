@@ -12,54 +12,51 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel
-    @Inject
-    constructor(
-        private val loginUseCase: LoginUseCase,
-    ) : ViewModel(),
-        UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
-        data class UiState(
-            val email: String = "",
-            val password: String = "",
-        ) {
-            val isLoginEnabled: Boolean
-                get() = email.isNotBlank() && password.isNotBlank()
-        }
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+) : ViewModel(),
+    UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
 
-        sealed interface Event {
-            data object GoToHome : Event
+    data class UiState(
+        val email: String = "",
+        val password: String = "",
+    ) {
+        val isLoginEnabled: Boolean
+            get() = email.isNotBlank() && password.isNotBlank()
+    }
 
-            data object GoToForgotPassword : Event
-        }
+    sealed interface Event {
+        data object GoToHome : Event
 
-        fun onEmailChanged(email: String) {
-            reduceAsync(viewModelScope) { state -> state.copy(email = email) }
-        }
+        data object GoToForgotPassword : Event
+    }
 
-        fun onPasswordChanged(password: String) {
-            reduceAsync(viewModelScope) { state -> state.copy(password = password) }
-        }
+    fun onEmailChanged(email: String) {
+        reduceAsync(viewModelScope) { state -> state.copy(email = email) }
+    }
 
-        fun onLoginClick() {
-            launch(loading = this) {
-                val loginParams =
-                    LoginUseCase.Params(
-                        email = uiState.email,
-                        password = uiState.password,
-                    )
-                val isLoggedIn =
-                    loginUseCase(loginParams)
-                        .onFailure { error -> sendError(error) }
-                        .getOrNull()
-                if (isLoggedIn == true) {
-                    sendEvent(Event.GoToHome)
-                }
-            }
-        }
+    fun onPasswordChanged(password: String) {
+        reduceAsync(viewModelScope) { state -> state.copy(password = password) }
+    }
 
-        fun onForgotClick() {
-            launch {
-                sendEvent(Event.GoToForgotPassword)
+    fun onLoginClick() {
+        launch(loading = this) {
+            val loginParams = LoginUseCase.Params(
+                email = uiState.email,
+                password = uiState.password,
+            )
+            val isLoggedIn = loginUseCase(loginParams)
+                .onFailure { error -> sendError(error) }
+                .getOrNull()
+            if (isLoggedIn == true) {
+                sendEvent(Event.GoToHome)
             }
         }
     }
+
+    fun onForgotClick() {
+        launch {
+            sendEvent(Event.GoToForgotPassword)
+        }
+    }
+}

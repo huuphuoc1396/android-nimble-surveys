@@ -25,7 +25,7 @@ fun HomeTopBar(
     onAccountClick: () -> Unit = {},
 ) {
     Column(
-        modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+        modifier.padding(horizontal = 20.dp, vertical = 16.dp)
     ) {
         Text(
             text = Date().format("EEEE, MMMM dd").uppercase(),

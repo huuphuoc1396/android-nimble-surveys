@@ -20,7 +20,7 @@ fun HomeDrawer(
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalLayoutDirection provides LayoutDirection.Rtl,
+        LocalLayoutDirection provides LayoutDirection.Rtl
     ) {
         ModalDrawer(
             drawerState = drawerState,
@@ -33,7 +33,7 @@ fun HomeDrawer(
                 }
             },
             drawerBackgroundColor = Color.Black.copy(alpha = 0f),
-            drawerElevation = 0.dp,
+            drawerElevation = 0.dp
         ) {
             CompositionLocalProvider(
                 LocalLayoutDirection provides LayoutDirection.Ltr,

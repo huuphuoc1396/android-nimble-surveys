@@ -15,12 +15,13 @@ import androidx.navigation.compose.rememberNavController
 import co.nimblehq.surveys.ui.theme.SurveysTheme
 
 @Composable
-fun ForgotPasswordScreen(navController: NavHostController = rememberNavController()) {
+fun ForgotPasswordScreen(
+    navController: NavHostController = rememberNavController(),
+) {
     Box(
-        modifier =
-            Modifier
-                .statusBarsPadding()
-                .fillMaxSize(),
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxSize()
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),

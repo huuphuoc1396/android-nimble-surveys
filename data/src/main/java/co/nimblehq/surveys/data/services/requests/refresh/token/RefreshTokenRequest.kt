@@ -1,5 +1,7 @@
 package co.nimblehq.surveys.data.services.requests.refresh.token
 
+
+import co.nimblehq.surveys.data.services.providers.ApiServiceProvider
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

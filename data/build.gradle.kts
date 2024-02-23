@@ -8,7 +8,6 @@ plugins {
     id(Plugins.KOVER)
     id(Plugins.ANDROID_JUNIT5)
     id(Plugins.DETEKT)
-    id(Plugins.KTLINT)
 }
 
 android {
@@ -50,10 +49,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "${JavaVersion.VERSION_17}"
-        freeCompilerArgs =
-            listOf(
-                "-Xstring-concat=inline",
-            )
+        freeCompilerArgs = listOf(
+            "-Xstring-concat=inline",
+        )
     }
 
     testOptions {

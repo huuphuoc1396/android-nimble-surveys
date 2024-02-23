@@ -60,7 +60,7 @@ object LoginTestTag {
 @Composable
 fun LoginScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     viewModel.collectEventEffect { event ->
         when (event) {
@@ -89,7 +89,7 @@ fun LoginScreen(
             onEmailChanged = viewModel::onEmailChanged,
             onPasswordChanged = viewModel::onPasswordChanged,
             onLoginClick = viewModel::onLoginClick,
-            onForgotClick = viewModel::onForgotClick,
+            onForgotClick = viewModel::onForgotClick
         )
     }
 }
@@ -103,21 +103,19 @@ private fun LoginContent(
     onForgotClick: () -> Unit = {},
 ) {
     Box(
-        modifier =
-            Modifier
-                .statusBarsPadding()
-                .fillMaxSize()
-                .paint(
-                    painter = painterResource(id = R.drawable.bg_blur_overlay),
-                    contentScale = ContentScale.Crop,
-                ),
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxSize()
+            .paint(
+                painter = painterResource(id = R.drawable.bg_blur_overlay),
+                contentScale = ContentScale.Crop,
+            )
     ) {
         Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .imePadding()
-                    .padding(horizontal = 24.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .imePadding()
+                .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -132,11 +130,10 @@ private fun LoginContent(
                 hint = stringResource(R.string.email),
                 value = uiState.email,
                 onValueChange = onEmailChanged,
-                keyboardOptions =
-                    KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next,
-                    ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
             )
             Spacer(modifier = Modifier.size(20.dp))
             Box(
@@ -148,35 +145,31 @@ private fun LoginContent(
                     value = uiState.password,
                     onValueChange = onPasswordChanged,
                     visualTransformation = PasswordVisualTransformation(),
-                    keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Go,
-                        ),
-                    keyboardActions =
-                        KeyboardActions(onGo = {
-                            onLoginClick()
-                        }),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Go,
+                    ),
+                    keyboardActions = KeyboardActions(onGo = {
+                        onLoginClick()
+                    })
                 )
                 TextButton(
                     onClick = onForgotClick,
                 ) {
                     Text(
                         text = stringResource(R.string.forgot_question),
-                        style =
-                            MaterialTheme.typography.body2.copy(
-                                color = Color.White.copy(alpha = 0.5f),
-                            ),
+                        style = MaterialTheme.typography.body2.copy(
+                            color = Color.White.copy(alpha = 0.5f)
+                        )
                     )
                 }
             }
             Spacer(modifier = Modifier.size(20.dp))
             Button(
-                modifier =
-                    Modifier
-                        .testTag(LoginTestTag.TAG_BUTTON_LOGIN)
-                        .fillMaxWidth()
-                        .height(50.dp),
+                modifier = Modifier
+                    .testTag(LoginTestTag.TAG_BUTTON_LOGIN)
+                    .fillMaxWidth()
+                    .height(50.dp),
                 onClick = onLoginClick,
                 enabled = uiState.isLoginEnabled,
             ) {
@@ -185,6 +178,7 @@ private fun LoginContent(
         }
     }
 }
+
 
 @Preview
 @Composable

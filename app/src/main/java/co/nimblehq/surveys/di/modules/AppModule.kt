@@ -16,17 +16,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
+
     @ApplicationScope
     @Singleton
     @Provides
     fun providesApplicationScope(
-        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher)
+
 
     @DatastoreScope
     @Singleton
     @Provides
-    fun provideDatastoreScope(
-        @IoDispatcher dispatcher: CoroutineDispatcher,
-    ) = CoroutineScope(dispatcher + SupervisorJob())
+    fun provideDatastoreScope(@IoDispatcher dispatcher: CoroutineDispatcher) =
+        CoroutineScope(dispatcher + SupervisorJob())
 }

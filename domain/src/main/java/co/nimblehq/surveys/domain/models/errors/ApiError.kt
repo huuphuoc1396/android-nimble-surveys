@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.domain.models.errors
 
 sealed class ApiError : Throwable() {
+
     data object NoConnection : ApiError()
 
     data class Server(

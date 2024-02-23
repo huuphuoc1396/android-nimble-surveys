@@ -17,32 +17,29 @@ fun shimmerBrush(
     angleOfAxisY: Float = 0f,
     durationMillis: Int = 2000,
 ): Brush {
-    val shimmerColors =
-        listOf(
-            Color.White.copy(alpha = 0.12f),
-            Color.White.copy(alpha = 0.24f),
-            Color.White.copy(alpha = 0.48f),
-            Color.White.copy(alpha = 0.24f),
-            Color.White.copy(alpha = 0.12f),
-        )
+
+    val shimmerColors = listOf(
+        Color.White.copy(alpha = 0.12f),
+        Color.White.copy(alpha = 0.24f),
+        Color.White.copy(alpha = 0.48f),
+        Color.White.copy(alpha = 0.24f),
+        Color.White.copy(alpha = 0.12f),
+    )
 
     val transition = rememberInfiniteTransition(label = "Shimmer Loading")
 
-    val translateAnimation =
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = (durationMillis + widthOfShadowBrush).toFloat(),
-            animationSpec =
-                infiniteRepeatable(
-                    animation =
-                        tween(
-                            durationMillis = durationMillis,
-                            easing = LinearEasing,
-                        ),
-                    repeatMode = RepeatMode.Restart,
-                ),
-            label = "Shimmer Loading",
-        )
+    val translateAnimation = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = (durationMillis + widthOfShadowBrush).toFloat(),
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = durationMillis,
+                easing = LinearEasing,
+            ),
+            repeatMode = RepeatMode.Restart,
+        ),
+        label = "Shimmer Loading",
+    )
 
     return Brush.linearGradient(
         colors = shimmerColors,

@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.surveys.ui.theme.SurveysTheme
 
+
 @Composable
 fun CustomTextField(
     modifier: Modifier = Modifier,
@@ -29,30 +30,26 @@ fun CustomTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     OutlinedTextField(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .background(
-                    color = Color.White.copy(alpha = 0.18f),
-                    shape = RoundedCornerShape(10.dp),
-                ),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .background(
+                color = Color.White.copy(alpha = 0.18f),
+                shape = RoundedCornerShape(10.dp)
+            ),
         value = value,
         placeholder = {
             Text(
-                hint,
-                style =
-                    MaterialTheme.typography.body1.copy(
-                        Color.White.copy(alpha = 0.3f),
-                    ),
+                hint, style = MaterialTheme.typography.body1.copy(
+                    Color.White.copy(alpha = 0.3f)
+                )
             )
         },
         onValueChange = onValueChange,
-        colors =
-            TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-            ),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.Transparent,
+            unfocusedBorderColor = Color.Transparent,
+        ),
         textStyle = MaterialTheme.typography.body1,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
@@ -67,7 +64,7 @@ fun CustomTextFieldPreview() {
         CustomTextField(
             value = "",
             onValueChange = {},
-            hint = "Email",
+            hint = "Email"
         )
     }
 }

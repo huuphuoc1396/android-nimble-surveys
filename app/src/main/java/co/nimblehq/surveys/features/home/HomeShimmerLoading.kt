@@ -23,11 +23,10 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 @Composable
 fun HomeShimmerLoading(modifier: Modifier = Modifier) {
     Box(
-        modifier =
-            modifier
-                .background(Color.Black)
-                .statusBarsPadding()
-                .fillMaxSize(),
+        modifier = modifier
+            .background(Color.Black)
+            .statusBarsPadding()
+            .fillMaxSize()
     ) {
         Column(Modifier.padding(start = 20.dp, end = 20.dp, bottom = 28.dp)) {
             Spacer(Modifier.size(16.dp))
@@ -55,26 +54,24 @@ fun HomeShimmerLoading(modifier: Modifier = Modifier) {
 @Composable
 fun HomeShimmerItem(modifier: Modifier = Modifier) {
     Box(
-        modifier =
-            modifier
-                .background(
-                    brush = shimmerBrush(),
-                    shape = RoundedCornerShape(18.dp),
-                )
-                .height(18.dp),
+        modifier = modifier
+            .background(
+                brush = shimmerBrush(),
+                shape = RoundedCornerShape(18.dp),
+            )
+            .height(18.dp)
     )
 }
 
 @Composable
 fun AvatarShimmerItem(modifier: Modifier = Modifier) {
     Box(
-        modifier =
-            modifier
-                .size(36.dp)
-                .background(
-                    brush = shimmerBrush(),
-                    shape = RoundedCornerShape(18.dp),
-                ),
+        modifier = modifier
+            .size(36.dp)
+            .background(
+                brush = shimmerBrush(),
+                shape = RoundedCornerShape(18.dp),
+            )
     )
 }
 
@@ -85,3 +82,4 @@ fun HomeShimmerLoadingPreview() {
         HomeShimmerLoading()
     }
 }
+

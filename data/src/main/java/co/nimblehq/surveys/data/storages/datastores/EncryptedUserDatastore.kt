@@ -8,6 +8,7 @@ import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKeys
+import co.nimblehq.surveys.data.storages.datastores.UserData
 import co.nimblehq.surveys.domain.di.annotations.DatastoreScope
 import co.nimblehq.surveys.domain.models.user.UserModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -29,69 +30,62 @@ interface EncryptedUserDatastore {
 }
 
 @Singleton
-class EncryptedUserDatastoreImpl
-    @Inject
-    constructor(
-        @ApplicationContext context: Context,
-        @DatastoreScope coroutineScope: CoroutineScope,
-    ) : EncryptedUserDatastore {
-        companion object {
-            private const val FILE_NAME = "encrypted_user_data"
-        }
+class EncryptedUserDatastoreImpl @Inject constructor(
+    @ApplicationContext context: Context,
+    @DatastoreScope coroutineScope: CoroutineScope,
+) : EncryptedUserDatastore {
 
-        private val dataStore =
-            DataStoreFactory.createEncrypted(UserPreferencesSerializer, scope = coroutineScope) {
-                EncryptedFile.Builder(
-                    context.dataStoreFile(FILE_NAME),
-                    context,
-                    MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
-                    EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB,
-                ).build()
-            }
+    companion object {
+        private const val FILE_NAME = "encrypted_user_data"
+    }
 
-        override suspend fun saveUser(userModel: UserModel) {
-            dataStore.updateData { userData ->
-                userData.toBuilder()
-                    .setId(userModel.id)
-                    .setName(userModel.name)
-                    .setEmail(userModel.email)
-                    .setAvatarUrl(userModel.avatarUrl)
-                    .build()
-            }
-        }
+    private val dataStore = DataStoreFactory.createEncrypted(UserPreferencesSerializer, scope = coroutineScope) {
+        EncryptedFile.Builder(
+            context.dataStoreFile(FILE_NAME),
+            context,
+            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+        ).build()
+    }
 
-        override fun getUser(): Flow<UserModel> {
-            return dataStore.data.map { userData -> userData.toUserModel() }
-        }
-
-        override suspend fun clearAll() {
-            dataStore.updateData { userData ->
-                userData.toBuilder().clear().build()
-            }
-        }
-
-        private fun UserData.toUserModel(): UserModel =
-            UserModel(
-                id = id,
-                name = name,
-                email = email,
-                avatarUrl = avatarUrl,
-            )
-
-        private object UserPreferencesSerializer : Serializer<UserData> {
-            override val defaultValue: UserData = UserData.getDefaultInstance()
-
-            override suspend fun readFrom(input: InputStream): UserData {
-                try {
-                    return UserData.parseFrom(input)
-                } catch (exception: InvalidProtocolBufferException) {
-                    throw CorruptionException("Cannot read proto.", exception)
-                }
-            }
-
-            override suspend fun writeTo(
-                t: UserData,
-                output: OutputStream,
-            ) = t.writeTo(output)
+    override suspend fun saveUser(userModel: UserModel) {
+        dataStore.updateData { userData ->
+            userData.toBuilder()
+                .setId(userModel.id)
+                .setName(userModel.name)
+                .setEmail(userModel.email)
+                .setAvatarUrl(userModel.avatarUrl)
+                .build()
         }
     }
+
+    override fun getUser(): Flow<UserModel> {
+        return dataStore.data.map { userData -> userData.toUserModel() }
+    }
+
+    override suspend fun clearAll() {
+        dataStore.updateData { userData ->
+            userData.toBuilder().clear().build()
+        }
+    }
+
+    private fun UserData.toUserModel(): UserModel = UserModel(
+        id = id,
+        name = name,
+        email = email,
+        avatarUrl = avatarUrl,
+    )
+
+    private object UserPreferencesSerializer : Serializer<UserData> {
+        override val defaultValue: UserData = UserData.getDefaultInstance()
+        override suspend fun readFrom(input: InputStream): UserData {
+            try {
+                return UserData.parseFrom(input)
+            } catch (exception: InvalidProtocolBufferException) {
+                throw CorruptionException("Cannot read proto.", exception)
+            }
+        }
+
+        override suspend fun writeTo(t: UserData, output: OutputStream) = t.writeTo(output)
+    }
+}

@@ -39,10 +39,9 @@ fun SurveyList(
     val flingBehavior = rememberSnapFlingBehavior(listState)
     val selectedIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     BoxWithConstraints(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .background(Color.Black),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.BottomStart,
     ) {
         LazyRow(

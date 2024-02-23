@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 object OkHttpClientProvider {
+
     private const val READ_TIMEOUT_IN_SECS = 30L
     private const val WRITE_TIMEOUT_IN_SECS = 30L
 
@@ -22,31 +23,28 @@ object OkHttpClientProvider {
         headerInterceptor: HeaderInterceptor,
         authInterceptor: AuthInterceptor? = null,
         tokenAuthenticator: TokenAuthenticator? = null,
-    ): OkHttpClient.Builder =
-        OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(httpLoggingInterceptor)
-                addInterceptor(chuckerInterceptor)
-            }
-            addInterceptor(headerInterceptor)
-            authInterceptor?.let(::addInterceptor)
-            tokenAuthenticator?.let(::authenticator)
-            readTimeout(READ_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
-            writeTimeout(WRITE_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
+    ): OkHttpClient.Builder = OkHttpClient.Builder().apply {
+        if (BuildConfig.DEBUG) {
+            addInterceptor(httpLoggingInterceptor)
+            addInterceptor(chuckerInterceptor)
         }
+        addInterceptor(headerInterceptor)
+        authInterceptor?.let(::addInterceptor)
+        tokenAuthenticator?.let(::authenticator)
+        readTimeout(READ_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
+        writeTimeout(WRITE_TIMEOUT_IN_SECS, TimeUnit.SECONDS)
+    }
 
-    fun getHttpLoggingInterceptor() =
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+    fun getHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
     fun getChuckerInterceptor(context: Context): ChuckerInterceptor {
-        val chuckerCollector =
-            ChuckerCollector(
-                context = context,
-                showNotification = true,
-                retentionPeriod = RetentionManager.Period.ONE_HOUR,
-            )
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
 
         return ChuckerInterceptor.Builder(context)
             .collector(chuckerCollector)

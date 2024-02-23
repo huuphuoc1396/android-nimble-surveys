@@ -1,6 +1,7 @@
 package co.nimblehq.surveys.data.storages.providers
 
 object NativeLibProvider {
+
     init {
         System.loadLibrary("native-lib")
     }

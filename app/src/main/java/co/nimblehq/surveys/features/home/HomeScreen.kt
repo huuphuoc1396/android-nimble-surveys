@@ -54,6 +54,7 @@ fun HomeScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
+
     viewModel.collectEventEffect { event ->
         when (event) {
             HomeViewModel.Event.GoToLogin -> {
@@ -96,12 +97,11 @@ private fun HomeContent(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     HomeDrawer(
-        modifier =
-            modifier.pointerInput(Unit) {
-                detectTapGestures {
-                    coroutineScope.launch { drawerState.close() }
-                }
-            },
+        modifier = modifier.pointerInput(Unit) {
+            detectTapGestures {
+                coroutineScope.launch { drawerState.close() }
+            }
+        },
         drawerState = drawerState,
         drawerContent = {
             HomeDrawerContent(
@@ -110,9 +110,9 @@ private fun HomeContent(
                 onLogoutClick = {
                     onLogoutClick()
                     coroutineScope.launch { drawerState.close() }
-                },
+                }
             )
-        },
+        }
     ) {
         Box(Modifier.fillMaxSize()) {
             uiState.surveyPagingData?.let { pagingData ->
@@ -125,22 +125,20 @@ private fun HomeContent(
                 )
 
                 val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
-                val pullRefreshState =
-                    rememberPullRefreshState(
-                        refreshing = isRefreshing,
-                        onRefresh = {
-                            coroutineScope.launch {
-                                listState.scrollToItem(0)
-                                pagingItems.refresh()
-                            }
-                        },
-                    )
+                val pullRefreshState = rememberPullRefreshState(
+                    refreshing = isRefreshing,
+                    onRefresh = {
+                        coroutineScope.launch {
+                            listState.scrollToItem(0)
+                            pagingItems.refresh()
+                        }
+                    },
+                )
                 HomeTopBar(
-                    modifier =
-                        Modifier
-                            .statusBarsPadding()
-                            .pullRefresh(pullRefreshState)
-                            .verticalScroll(rememberScrollState()),
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .pullRefresh(pullRefreshState)
+                        .verticalScroll(rememberScrollState()),
                     avatarUrl = uiState.userModel?.avatarUrl,
                     onAccountClick = {
                         coroutineScope.launch { drawerState.open() }
@@ -159,12 +157,13 @@ private fun HomeContent(
                     refreshing = isRefreshing,
                     state = pullRefreshState,
                     modifier = Modifier.align(Alignment.TopCenter),
-                    contentColor = Color.DarkGray,
+                    contentColor = Color.DarkGray
                 )
             }
         }
     }
 }
+
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi

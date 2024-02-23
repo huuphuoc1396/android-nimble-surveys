@@ -12,28 +12,26 @@ import org.junit.jupiter.api.Test
 
 @ExperimentalCoroutinesApi
 class LogoutUseCaseTest {
+
     private val authRepository = mockk<AuthRepository>()
-    private val logoutUseCase =
-        LogoutUseCase(
-            authRepository = authRepository,
-            dispatcher = UnconfinedTestDispatcher(),
-        )
+    private val logoutUseCase = LogoutUseCase(
+        authRepository = authRepository,
+        dispatcher = UnconfinedTestDispatcher(),
+    )
 
     @Test
-    fun `When logout is successful, it returns Unit`() =
-        runTest {
-            coEvery { authRepository.logout() } returns Unit
-            val result = logoutUseCase(EmptyParams)
-            result.getOrNull() shouldBe Unit
-        }
+    fun `When logout is successful, it returns Unit`() = runTest {
+        coEvery { authRepository.logout() } returns Unit
+        val result = logoutUseCase(EmptyParams)
+        result.getOrNull() shouldBe Unit
+    }
 
     @Test
-    fun `When logout is fail, it throw error`() =
-        runTest {
-            val error = Exception()
-            coEvery { authRepository.logout() } throws error
+    fun `When logout is fail, it throw error`() = runTest {
+        val error = Exception()
+        coEvery { authRepository.logout() } throws error
 
-            val result = logoutUseCase(EmptyParams)
-            result.exceptionOrNull() shouldBe error
-        }
+        val result = logoutUseCase(EmptyParams)
+        result.exceptionOrNull() shouldBe error
+    }
 }

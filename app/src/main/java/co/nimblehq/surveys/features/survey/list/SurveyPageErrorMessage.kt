@@ -22,7 +22,7 @@ import co.nimblehq.surveys.ui.theme.SurveysTheme
 fun SurveyPageErrorMessage(
     modifier: Modifier = Modifier,
     message: String,
-    onRetryClick: () -> Unit,
+    onRetryClick: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),

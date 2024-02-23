@@ -25,11 +25,11 @@ import co.nimblehq.surveys.features.survey.detail.SurveyDetailScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestination.Splash.destination,
+    startDestination: String = AppDestination.Splash.destination
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = startDestination
     ) {
         composable(destination = AppDestination.Splash) {
             SplashScreen(navController = navController)
@@ -59,13 +59,13 @@ fun AppNavHost(
 private fun NavGraphBuilder.composable(
     destination: AppDestination,
     deepLinks: List<NavDeepLink> = emptyList(),
-    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = destination.route,
         arguments = destination.arguments,
         deepLinks = deepLinks,
-        content = content,
+        content = content
     )
 }
 

@@ -8,17 +8,17 @@ import co.nimblehq.surveys.extensions.showToast
 
 fun Throwable.userReadableMessage(context: Context): String {
     return when (this) {
-        is ApiError ->
-            when (this) {
-                ApiError.NoConnection -> context.getString(R.string.no_connection)
+        is ApiError -> when (this) {
+            ApiError.NoConnection -> context.getString(R.string.no_connection)
 
-                is ApiError.Server -> serverMsg.ifEmpty { context.getString(R.string.unknown_error) }
+            is ApiError.Server -> serverMsg.ifEmpty { context.getString(R.string.unknown_error) }
 
-                ApiError.Unauthorized -> context.getString(R.string.unauthorized_error)
-            }
+            ApiError.Unauthorized -> context.getString(R.string.unauthorized_error)
+        }
 
         else -> message.defaultEmpty()
     }
 }
 
-fun Throwable.showToast(context: Context) = context.showToast(userReadableMessage(context))
+fun Throwable.showToast(context: Context) =
+    context.showToast(userReadableMessage(context))

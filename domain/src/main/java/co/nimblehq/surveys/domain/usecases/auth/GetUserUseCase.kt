@@ -8,13 +8,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetUserUseCase
-    @Inject
-    constructor(
-        private val userRepository: UserRepository,
-        @IoDispatcher dispatcher: CoroutineDispatcher,
-    ) : StreamUseCase<Unit, UserModel>(dispatcher) {
-        override suspend fun execute(params: Unit): Flow<UserModel> {
-            return userRepository.getUser()
-        }
+class GetUserUseCase @Inject constructor(
+    private val userRepository: UserRepository,
+    @IoDispatcher dispatcher: CoroutineDispatcher,
+) : StreamUseCase<Unit, UserModel>(dispatcher) {
+
+    override suspend fun execute(params: Unit): Flow<UserModel> {
+        return userRepository.getUser()
     }
+}

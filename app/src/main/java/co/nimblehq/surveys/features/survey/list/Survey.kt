@@ -33,10 +33,9 @@ fun Survey(
     onTakeSurveyClick: (String) -> Unit,
 ) {
     Column(
-        modifier =
-            modifier
-                .height(152.dp)
-                .navigationBarsPadding(),
+        modifier = modifier
+            .height(152.dp)
+            .navigationBarsPadding(),
         verticalArrangement = Arrangement.Bottom,
     ) {
         Text(
@@ -48,25 +47,22 @@ fun Survey(
         )
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(
-                modifier =
-                    Modifier
-                        .weight(1f)
-                        .padding(top = 16.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 16.dp),
                 text = surveyModel.description,
-                style =
-                    MaterialTheme.typography.body1.copy(
-                        color = Color.White.copy(alpha = 0.7f),
-                    ),
+                style = MaterialTheme.typography.body1.copy(
+                    color = Color.White.copy(alpha = 0.7f)
+                ),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.size(20.dp))
             IconButton(
-                modifier =
-                    Modifier
-                        .size(56.dp, 56.dp)
-                        .padding(top = 2.dp)
-                        .background(Color.White, CircleShape),
+                modifier = Modifier
+                    .size(56.dp, 56.dp)
+                    .padding(top = 2.dp)
+                    .background(Color.White, CircleShape),
                 onClick = { onTakeSurveyClick(surveyModel.id) },
             ) {
                 Image(
@@ -85,14 +81,14 @@ fun Survey(
 fun SurveyPreview() {
     SurveysTheme {
         Survey(
-            surveyModel =
-                SurveyModel(
-                    id = "1",
-                    title = "Working from home Check-In",
-                    description = "We would like to know how you feel about our work from home...",
-                    coverUrl = "",
-                ),
+            surveyModel = SurveyModel(
+                id = "1",
+                title = "Working from home Check-In",
+                description = "We would like to know how you feel about our work from home...",
+                coverUrl = "",
+            ),
             onTakeSurveyClick = {},
         )
     }
 }
+
