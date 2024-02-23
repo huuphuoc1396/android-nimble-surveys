@@ -8,6 +8,7 @@ plugins {
     id(Plugins.FIREBASE_CRASHLYTICS)
     id(Plugins.KOVER)
     id(Plugins.ANDROID_JUNIT5)
+    id(Plugins.DETEKT)
 }
 
 android {
@@ -104,10 +105,10 @@ android {
 }
 
 dependencies {
-
     implementation(project(Modules.DATA))
     implementation(project(Modules.DOMAIN))
-
+    detekt(project(Modules.CUSTOM_RULES))
+    detekt(Libs.Detekt.DETEKT_CLI)
     implementation(Libs.AndroidX.CORE_KTX)
     implementation(Libs.AndroidX.LIFECYCLE_RUNTIME_KTX)
     implementation(Libs.AndroidX.LIFECYCLE_RUNTIME_COMPOSE)

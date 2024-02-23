@@ -67,4 +67,6 @@ object Versions {
     const val ROOM = "2.6.1"
     const val SQL_CIPHER = "4.5.3"
     const val SQL_CORE = "2.4.0"
+
+    const val DETEKT = "1.23.5"
 }

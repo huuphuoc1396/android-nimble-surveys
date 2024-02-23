@@ -18,3 +18,4 @@ rootProject.name = "Android Nimble Surveys"
 include(":app")
 include(":data")
 include(":domain")
+include(":customRules")

@@ -7,6 +7,7 @@ plugins {
     id(Plugins.PROTOBUF)
     id(Plugins.KOVER)
     id(Plugins.ANDROID_JUNIT5)
+    id(Plugins.DETEKT)
 }
 
 android {
@@ -117,6 +118,9 @@ dependencies {
 
     implementation(Libs.Sql.SQL_CIPHER)
     implementation(Libs.Sql.SQL_CORE)
+
+    detekt(project(Modules.CUSTOM_RULES))
+    detekt(Libs.Detekt.DETEKT_CLI)
 }
 
 protobuf {

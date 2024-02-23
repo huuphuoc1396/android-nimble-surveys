@@ -1,5 +1,4 @@
 object Libs {
-
     object AndroidX {
         const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
         const val LIFECYCLE_RUNTIME_KTX =
@@ -9,18 +8,17 @@ object Libs {
         const val ACTIVITY_COMPOSE =
             "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
         const val SECURITY_CRYPTO = "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}"
-
         const val COMPOSE_BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
         const val COMPOSE_UI = "androidx.compose.ui:ui"
         const val COMPOSE_UI_GRAPHICS = "androidx.compose.ui:ui-graphics"
         const val COMPOSE_UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview"
         const val COMPOSE_UI_TEST_JUNIT4 = "androidx.compose.ui:ui-test-junit4"
-        const val COMPOSE_UI_TEST_JUNIT5 = "de.mannodermaus.junit5:android-test-compose:${Versions.COMPOSE_JUNIT5}"
+        const val COMPOSE_UI_TEST_JUNIT5 =
+            "de.mannodermaus.junit5:android-test-compose:${Versions.COMPOSE_JUNIT5}"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling"
         const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material"
         const val NAV_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAV_COMPOSE}"
-
         const val CORE_TESTING = "androidx.arch.core:core-testing:${Versions.CORE_TESTING}"
         const val TEST_JUNIT = "org.junit.jupiter:junit-jupiter-api:${Versions.TEST_JUNIT}"
         const val TEST_ESPRESSO_CORE =
@@ -38,7 +36,6 @@ object Libs {
     }
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-
     const val JAVAX_INJECT = "javax.inject:javax.inject:${Versions.JAVAX_INJECT}"
 
     object Hilt {
@@ -59,7 +56,6 @@ object Libs {
     }
 
     const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
-
     const val LOGGING_INTERCEPTOR =
         "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
 
@@ -86,7 +82,6 @@ object Libs {
     }
 
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
-
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
     const val MOCKK_ANDROID = "io.mockk:mockk-android:${Versions.MOCKK}"
@@ -120,5 +115,10 @@ object Libs {
         const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
         const val PAGING_TEST = "androidx.paging:paging-testing:${Versions.PAGING_RUNTIME}"
         const val PAGING_COMMON = "androidx.paging:paging-common-ktx:${Versions.PAGING_RUNTIME}"
+    }
+
+    object Detekt {
+        const val DETEKT_API = "io.gitlab.arturbosch.detekt:detekt-api:${Versions.DETEKT}"
+        const val DETEKT_CLI = "io.gitlab.arturbosch.detekt:detekt-cli:${Versions.DETEKT}"
     }
 }

@@ -2,6 +2,7 @@ plugins {
     id(Plugins.JAVA_LIB)
     id(Plugins.KOTLIN_JVM)
     id(Plugins.KOVER)
+    id(Plugins.DETEKT)
 }
 
 java {
@@ -10,7 +11,6 @@ java {
 }
 
 dependencies {
-
     implementation(Libs.Kotlin.COROUTINES_CORE)
     implementation(Libs.JAVAX_INJECT)
     implementation(Libs.Paging.PAGING_COMMON)
@@ -20,6 +20,9 @@ dependencies {
     testImplementation(Libs.MOCKK)
     testImplementation(Libs.KOTEST)
     testImplementation(Libs.Kotlin.COROUTINES_TEST)
+
+    detekt(project(Modules.CUSTOM_RULES))
+    detekt(Libs.Detekt.DETEKT_CLI)
 }
 
 tasks.test {
