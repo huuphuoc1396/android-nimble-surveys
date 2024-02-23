@@ -18,63 +18,67 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val getSurveyListUseCase: GetSurveyListUseCase,
-) : ViewModel(),
-    UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
-    data class UiState(
-        val userModel: UserModel? = null,
-        val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
-    )
+class HomeViewModel
+    @Inject
+    constructor(
+        private val getUserUseCase: GetUserUseCase,
+        private val logoutUseCase: LogoutUseCase,
+        private val getSurveyListUseCase: GetSurveyListUseCase,
+    ) : ViewModel(),
+        UiStateDelegate<UiState, Event> by UiStateDelegateImpl(UiState()) {
+        data class UiState(
+            val userModel: UserModel? = null,
+            val surveyPagingData: Flow<PagingData<SurveyModel>>? = null,
+        )
 
-    sealed interface Event {
-        data object GoToLogin : Event
-        data class GoToSurveyDetail(val id: String) : Event
-    }
+        sealed interface Event {
+            data object GoToLogin : Event
 
-    init {
-        getUser()
-        getSurveyList()
-    }
+            data class GoToSurveyDetail(val id: String) : Event
+        }
 
-    fun getSurveyList() {
-        launch {
-            getSurveyListUseCase.invoke(EmptyParams).onSuccess {
-                reduce { uiState ->
-                    uiState.copy(surveyPagingData = it)
+        init {
+            getUser()
+            getSurveyList()
+        }
+
+        fun getSurveyList() {
+            launch {
+                getSurveyListUseCase.invoke(EmptyParams).onSuccess {
+                    reduce { uiState ->
+                        uiState.copy(surveyPagingData = it)
+                    }
                 }
             }
         }
-    }
 
-    fun getUser() {
-        launch {
-            getUserUseCase(Unit).collect { userResult ->
-                val userModel = userResult
+        fun getUser() {
+            launch {
+                getUserUseCase(Unit).collect { userResult ->
+                    val userModel =
+                        userResult
+                            .onFailure { error -> sendError(error) }
+                            .getOrNull()
+                    reduce { uiState ->
+                        uiState.copy(userModel = userModel)
+                    }
+                }
+            }
+        }
+
+        fun onLogoutClick() {
+            launch(loading = this) {
+                logoutUseCase(EmptyParams)
                     .onFailure { error -> sendError(error) }
-                    .getOrNull()
-                reduce { uiState ->
-                    uiState.copy(userModel = userModel)
-                }
+                    .onSuccess {
+                        sendEvent(Event.GoToLogin)
+                    }
+            }
+        }
+
+        fun onTakeSurveyClick(id: String) {
+            launch {
+                sendEvent(Event.GoToSurveyDetail(id))
             }
         }
     }
-
-    fun onLogoutClick() {
-        launch(loading = this) {
-            logoutUseCase(EmptyParams)
-                .onFailure { error -> sendError(error) }
-                .onSuccess {
-                    sendEvent(Event.GoToLogin)
-                }
-        }
-    }
-
-    fun onTakeSurveyClick(id: String) {
-        launch {
-            sendEvent(Event.GoToSurveyDetail(id))
-        }
-    }
-}

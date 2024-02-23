@@ -3,6 +3,7 @@ plugins {
     id(Plugins.KOTLIN_JVM)
     id(Plugins.KOVER)
     id(Plugins.DETEKT)
+    id(Plugins.KTLINT)
 }
 
 java {

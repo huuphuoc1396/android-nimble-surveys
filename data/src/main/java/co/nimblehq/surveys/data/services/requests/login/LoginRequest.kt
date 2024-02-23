@@ -1,6 +1,5 @@
 package co.nimblehq.surveys.data.services.requests.login
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

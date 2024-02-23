@@ -10,13 +10,18 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface NonAuthApiService {
+    @POST("/api/v1/oauth/token")
+    suspend fun login(
+        @Body request: LoginRequest,
+    ): DataResponse<LoginResponse>
 
     @POST("/api/v1/oauth/token")
-    suspend fun login(@Body request: LoginRequest): DataResponse<LoginResponse>
-
-    @POST("/api/v1/oauth/token")
-    suspend fun refreshToken(@Body request: RefreshTokenRequest): DataResponse<RefreshTokenResponse>
+    suspend fun refreshToken(
+        @Body request: RefreshTokenRequest,
+    ): DataResponse<RefreshTokenResponse>
 
     @POST("/api/v1/oauth/revoke")
-    suspend fun logout(@Body request: LogoutRequest)
+    suspend fun logout(
+        @Body request: LogoutRequest,
+    )
 }

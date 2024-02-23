@@ -9,7 +9,6 @@ import co.nimblehq.surveys.domain.extensions.defaultEmpty
 sealed class AppDestination(
     val route: String = "",
 ) {
-
     companion object {
         const val KEY_ID = "id"
     }
@@ -31,16 +30,16 @@ sealed class AppDestination(
     data object ForgotPassword : AppDestination("forgot_password")
 
     data object SurveyDetail : AppDestination("survey_detail/{$KEY_ID}") {
+        override val arguments =
+            listOf(
+                navArgument(KEY_ID) { type = NavType.StringType },
+            )
 
-        override val arguments = listOf(
-            navArgument(KEY_ID) { type = NavType.StringType }
-        )
+        fun getId(backStackEntry: NavBackStackEntry) = backStackEntry.arguments?.getString(KEY_ID).defaultEmpty()
 
-        fun getId(backStackEntry: NavBackStackEntry) =
-            backStackEntry.arguments?.getString(KEY_ID).defaultEmpty()
-
-        fun createRoute(id: String) = apply {
-            destination = "survey_detail/$id"
-        }
+        fun createRoute(id: String) =
+            apply {
+                destination = "survey_detail/$id"
+            }
     }
 }

@@ -26,21 +26,23 @@ fun SurveyItem(
 ) {
     Box(
         modifier.fillMaxHeight(),
-        contentAlignment = Alignment.BottomStart
+        contentAlignment = Alignment.BottomStart,
     ) {
         AsyncImage(
             surveyModel.coverUrl,
-            modifier = Modifier
-                .fillMaxSize()
-                .drawWithCache {
-                    val gradient = Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color.Black)
-                    )
-                    onDrawWithContent {
-                        drawContent()
-                        drawRect(gradient, blendMode = BlendMode.Multiply)
-                    }
-                },
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .drawWithCache {
+                        val gradient =
+                            Brush.verticalGradient(
+                                colors = listOf(Color.Transparent, Color.Black),
+                            )
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(gradient, blendMode = BlendMode.Multiply)
+                        }
+                    },
             contentDescription = null,
             contentScale = ContentScale.Crop,
         )
@@ -57,12 +59,13 @@ fun SurveyItem(
 fun SurveyItemPreview() {
     SurveysTheme {
         SurveyItem(
-            surveyModel = SurveyModel(
-                id = "1",
-                title = "Working from home Check-In",
-                description = "We would like to know how you feel about our work from home...",
-                coverUrl = "",
-            ),
+            surveyModel =
+                SurveyModel(
+                    id = "1",
+                    title = "Working from home Check-In",
+                    description = "We would like to know how you feel about our work from home...",
+                    coverUrl = "",
+                ),
             onTakeSurveyClick = {},
         )
     }

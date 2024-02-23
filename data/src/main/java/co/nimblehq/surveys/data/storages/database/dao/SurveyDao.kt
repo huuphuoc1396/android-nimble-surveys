@@ -20,7 +20,10 @@ interface SurveyDao {
     suspend fun deleteSurveys()
 
     @Transaction
-    suspend fun insertAndDeleteSurvey(needToDelete: Boolean, surveys: List<SurveyEntity>) {
+    suspend fun insertAndDeleteSurvey(
+        needToDelete: Boolean,
+        surveys: List<SurveyEntity>,
+    ) {
         if (needToDelete) {
             deleteSurveys()
         }

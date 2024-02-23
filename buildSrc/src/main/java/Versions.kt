@@ -1,5 +1,4 @@
 object Versions {
-
     const val GRADLE = "8.1.3"
     const val KOTLIN = "1.9.10"
     const val COMPOSE_COMPILER = "1.5.3"
@@ -69,4 +68,6 @@ object Versions {
     const val SQL_CORE = "2.4.0"
 
     const val DETEKT = "1.23.5"
+
+    const val KTLINT = "12.1.0"
 }

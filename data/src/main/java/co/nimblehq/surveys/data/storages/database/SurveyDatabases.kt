@@ -10,9 +10,10 @@ import co.nimblehq.surveys.data.storages.database.entity.SurveyKeyEntity
 @Database(
     entities = [SurveyEntity::class, SurveyKeyEntity::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class SurveyDatabases : RoomDatabase() {
     abstract fun surveyDao(): SurveyDao
+
     abstract fun surveyKeyDao(): SurveyKeyDao
 }

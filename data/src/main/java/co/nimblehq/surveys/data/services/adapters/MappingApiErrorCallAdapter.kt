@@ -23,7 +23,7 @@ class MappingApiErrorCallAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): CallAdapter<*, *> {
         val responseType = getParameterUpperBound(0, returnType as ParameterizedType)
         return MappingApiErrorCallAdapter<Any>(responseType)
@@ -37,7 +37,6 @@ class MappingApiErrorCallAdapterFactory : CallAdapter.Factory() {
 class MappingApiErrorCallAdapter<R>(
     private val responseType: Type,
 ) : CallAdapter<R, Call<R>> {
-
     override fun responseType(): Type = responseType
 
     override fun adapt(call: Call<R>): Call<R> = MappingApiErrorCall(call)
@@ -68,7 +67,10 @@ class MappingApiErrorCallAdapter<R>(
 class MappingApiErrorCallback<R>(
     private val delegate: Callback<R>,
 ) : Callback<R> {
-    override fun onResponse(call: Call<R>, response: Response<R>) {
+    override fun onResponse(
+        call: Call<R>,
+        response: Response<R>,
+    ) {
         when {
             response.isSuccessful -> delegate.onResponse(call, response)
             response.code() == 404 -> delegate.onFailure(call, parseError404Response(response))
@@ -76,10 +78,14 @@ class MappingApiErrorCallback<R>(
         }
     }
 
-    override fun onFailure(call: Call<R>, t: Throwable) {
+    override fun onFailure(
+        call: Call<R>,
+        t: Throwable,
+    ) {
         when (t) {
             is UnknownHostException,
-            is InterruptedIOException -> delegate.onFailure(call, ApiError.NoConnection)
+            is InterruptedIOException,
+            -> delegate.onFailure(call, ApiError.NoConnection)
 
             else -> delegate.onFailure(call, t)
         }
@@ -87,34 +93,36 @@ class MappingApiErrorCallback<R>(
 
     private fun parseErrorsResponse(response: Response<*>?): ApiError.Server {
         val jsonString = response?.errorBody()?.string()
-        val errorResponse = try {
-            val moshi = MoshiBuilderProvider.moshiBuilder.build()
-            val adapter = moshi.adapter(ErrorsResponse::class.java)
-            adapter.fromJson(jsonString.defaultEmpty())
-        } catch (exception: Exception) {
-            Timber.e(exception)
-            null
-        }
+        val errorResponse =
+            try {
+                val moshi = MoshiBuilderProvider.moshiBuilder.build()
+                val adapter = moshi.adapter(ErrorsResponse::class.java)
+                adapter.fromJson(jsonString.defaultEmpty())
+            } catch (exception: Exception) {
+                Timber.e(exception)
+                null
+            }
         val error = errorResponse?.errors?.firstOrNull()
         return ApiError.Server(
             code = response?.code().defaultZero(),
-            serverMsg = error?.detail.defaultEmpty()
+            serverMsg = error?.detail.defaultEmpty(),
         )
     }
 
     private fun parseError404Response(response: Response<*>?): ApiError.Server {
         val jsonString = response?.errorBody()?.string()
-        val errorResponse = try {
-            val moshi = MoshiBuilderProvider.moshiBuilder.build()
-            val adapter = moshi.adapter(Error404Response::class.java)
-            adapter.fromJson(jsonString.defaultEmpty())
-        } catch (exception: Exception) {
-            Timber.e(exception)
-            null
-        }
+        val errorResponse =
+            try {
+                val moshi = MoshiBuilderProvider.moshiBuilder.build()
+                val adapter = moshi.adapter(Error404Response::class.java)
+                adapter.fromJson(jsonString.defaultEmpty())
+            } catch (exception: Exception) {
+                Timber.e(exception)
+                null
+            }
         return ApiError.Server(
             code = response?.code().defaultZero(),
-            serverMsg = errorResponse?.error.defaultEmpty()
+            serverMsg = errorResponse?.error.defaultEmpty(),
         )
     }
 }

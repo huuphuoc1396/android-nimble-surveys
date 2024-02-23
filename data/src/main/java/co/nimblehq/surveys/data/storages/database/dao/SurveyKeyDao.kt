@@ -22,7 +22,10 @@ interface SurveyKeyDao {
     suspend fun getCreationTime(): Long?
 
     @Transaction
-    suspend fun insertAndDeleteSurveyKey(needToDelete: Boolean, surveyKeys: List<SurveyKeyEntity>) {
+    suspend fun insertAndDeleteSurveyKey(
+        needToDelete: Boolean,
+        surveyKeys: List<SurveyKeyEntity>,
+    ) {
         if (needToDelete) {
             deleteSurveyKeys()
         }

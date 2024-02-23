@@ -1,5 +1,4 @@
 object Plugins {
-
     const val ANDROID_APP = "com.android.application"
     const val ANDROID_LIB = "com.android.library"
 
@@ -22,4 +21,6 @@ object Plugins {
     const val ANDROID_JUNIT5 = "de.mannodermaus.android-junit5"
 
     const val DETEKT = "io.gitlab.arturbosch.detekt"
+
+    const val KTLINT = "org.jlleitschuh.gradle.ktlint"
 }
